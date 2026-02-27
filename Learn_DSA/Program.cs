@@ -45,6 +45,9 @@ namespace Learn_DSA
                         BubbleSort.Run(a);
                         break;
 
+                    case 2:
+                        SelectionSort.Run(a);
+                        break;
                     default:
                         Console.WriteLine("Chưa cài thuật toán này");
                         break;

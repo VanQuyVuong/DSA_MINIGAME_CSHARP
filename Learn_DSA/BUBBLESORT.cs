@@ -12,19 +12,32 @@ namespace Learn_DSA
 
             Console.WriteLine("\nQuá trình sắp xếp:");
 
-            for (int i = 0; i < n - 1; i++)
+            for (int i = 1; i <= n - 1; i++)
             {
-                for (int j = n - 1; j > i; j--)
+                for (int j = n - 1; j >= i; j--)
                 {
-                    if (a[j] < a[j - 1])
-                    {
-                        int temp = a[j];
-                        a[j] = a[j - 1];
-                        a[j - 1] = temp;
+                    int realJ = j;
 
-                        Console.Write($"i={i + 1} j={j + 1}: ");
-                        PrintArray(a);
+                    Console.WriteLine(
+                        $"So sánh a[{j}]={a[realJ]} và a[{j - 1}]={a[realJ - 1]}"
+                    );
+
+                    if (a[realJ] < a[realJ - 1])
+                    {
+                        int temp = a[realJ];
+                        a[realJ] = a[realJ - 1];
+                        a[realJ - 1] = temp;
+
+                        Console.WriteLine("→ Có đổi chỗ");
                     }
+                    else
+                    {
+                        Console.WriteLine("→ Không đổi");
+                    }
+
+                    Console.Write($"i={i} j={j}: ");
+                    PrintArray(a);
+                    Console.WriteLine();
                 }
             }
 
