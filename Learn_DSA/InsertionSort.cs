@@ -1,37 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Learn_DSA
 {
     /*
-     * BÀI 6: SẮP XẾP CHỌN (SELECTION SORT)
+     * BÀI 7: SẮP XẾP CHÈN (INSERTION SORT)
      * 
      * Đề bài:
      *   Cho mảng số nguyên gồm N phần tử. Hãy sắp xếp mảng theo thứ tự tăng dần.
      * 
      * Độ phức tạp:
-     *   - Thời gian (Time Complexity): O(N^2) trong mọi trường hợp (tốt nhất, trung bình, tệ nhất) vì luôn duyệt hai vòng lặp lồng nhau.
+     *   - Thời gian (Time Complexity):
+     *     + Tốt nhất: O(N) khi mảng đã được sắp xếp sẵn.
+     *     + Tệ nhất & Trung bình: O(N^2) khi mảng bị ngược thứ tự hoàn toàn.
      *   - Không gian (Space Complexity): O(1) do sắp xếp tại chỗ.
      * 
      * Ý tưởng:
-     *   - Chia mảng thành 2 phần: phần đã sắp xếp (nằm bên trái) và phần chưa sắp xếp (nằm bên phải).
-     *   - Ở mỗi bước, tìm phần tử nhỏ nhất từ phần chưa sắp xếp, đổi chỗ nó với phần tử đầu tiên của phần chưa sắp xếp.
+     *   - Duyệt qua từng phần tử và "chèn" nó vào vị trí thích hợp trong đoạn mảng đã sắp xếp phía trước nó.
+     *   - Tương tự như cách ta sắp xếp các quân bài trên tay.
      */
-    internal class SelectionSort
+    internal class InsertionSort
     {
         public static void Run()
         {
             Console.Clear();
             Console.WriteLine("=================================================================");
-            Console.WriteLine("BÀI 6: SẮP XẾP CHỌN (SELECTION SORT)");
+            Console.WriteLine("BÀI 7: SẮP XẾP CHÈN (INSERTION SORT)");
             Console.WriteLine("=================================================================");
-            Console.WriteLine("Đề bài: Sắp xếp mảng tăng dần bằng cách tìm phần tử bé nhất đổi lên đầu.");
+            Console.WriteLine("Đề bài: Sắp xếp mảng tăng dần bằng cách chèn phần tử vào đoạn đã xếp.");
             Console.WriteLine("Độ phức tạp: Thời gian O(N^2) | Không gian O(1)");
             Console.WriteLine("-----------------------------------------------------------------\n");
 
             Console.WriteLine("Bạn muốn dùng mảng mặc định hay tự nhập?");
-            Console.WriteLine("1. Dùng mảng mặc định [64, 25, 12, 22, 11]");
+            Console.WriteLine("1. Dùng mảng mặc định [12, 11, 13, 5, 6]");
             Console.WriteLine("2. Tự nhập mảng");
             Console.Write("Lựa chọn (1-2): ");
 
@@ -43,7 +43,7 @@ namespace Learn_DSA
                 if (!int.TryParse(Console.ReadLine(), out int n) || n <= 0)
                 {
                     Console.WriteLine("Số lượng không hợp lệ! Dùng mảng mặc định.");
-                    a = new int[] { 64, 25, 12, 22, 11 };
+                    a = new int[] { 12, 11, 13, 5, 6 };
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace Learn_DSA
             }
             else
             {
-                a = new int[] { 64, 25, 12, 22, 11 };
+                a = new int[] { 12, 11, 13, 5, 6 };
             }
 
             Console.WriteLine($"\nMảng ban đầu: [{string.Join(" ", a)}]");
@@ -76,25 +76,30 @@ namespace Learn_DSA
         // Logic sắp xếp gốc do bạn tự build
         private static void RunSort(int[] a)
         {
-            int min;
             int n = a.Length;
-            for(int i = 0; i <= n-1 ;i++)
-            {
-                min = i;
-                for(int j = i+1; j< n; j++)
-                {
-                    if( a[j] < a[min])
-                    {
-                        min = j;
-                    }
-                }
-                int tg = a[i];
-                a[i] = a[min];
-                a[min] = tg;
+            Console.WriteLine("\nQuá trình sắp xếp (Insertion Sort):");
 
-                Console.Write($"i={i + 1}: ");
+            for (int i = 1; i < n; i++)
+            {
+                int key = a[i];
+                int j = i - 1;
+
+                Console.WriteLine($"\nChèn phần tử a[{i}]={key} vào mảng đã sắp xếp:");
+
+                while (j >= 0 && a[j] > key)
+                {
+                    Console.WriteLine($"  a[{j}]={a[j]} > {key}, dời a[{j}] sang phải");
+                    a[j + 1] = a[j];
+                    j = j - 1;
+                }
+                a[j + 1] = key;
+                
+                Console.Write($"Kết quả sau bước i={i}: ");
                 Console.WriteLine(string.Join(" ", a));
             }
+
+            Console.WriteLine("\nDãy sau khi sắp xếp:");
+            Console.WriteLine(string.Join(" ", a));
         }
     }
 }
