@@ -163,9 +163,28 @@ namespace Learn_DSA
         /// </summary>
         public static int Loang(int[,] banDo, int dong, int cot, bool[,] daDiQua)
         {
-            // TODO: Bạn hãy viết code của bạn ở đây!
+            // 1. Điều kiện dừng: Nếu vượt ranh giới ma trận, hoặc gặp tường (1), hoặc đã duyệt qua -> diện tích = 0
+            if (dong < 0 || dong >= 5 || cot < 0 || cot >= 5)
+            {
+                return 0;
+            }
 
-            return 0; // Thay thế bằng kết quả của bạn
+            if (banDo[dong, cot] == 1 || daDiQua[dong, cot])
+            {
+                return 0;
+            }
+
+            // 2. Đánh dấu ô hiện tại đã duyệt qua
+            daDiQua[dong, cot] = true;
+
+            // 3. Gọi đệ quy loang ra 4 hướng
+            int tren = Loang(banDo, dong - 1, cot, daDiQua);
+            int duoi = Loang(banDo, dong + 1, cot, daDiQua);
+            int trai = Loang(banDo, dong, cot - 1, daDiQua);
+            int phai = Loang(banDo, dong, cot + 1, daDiQua);
+
+            // 4. Tổng diện tích = 1 (ô hiện tại) + diện tích loang được ở 4 hướng
+            return 1 + tren + duoi + trai + phai;
         }
 
         #endregion

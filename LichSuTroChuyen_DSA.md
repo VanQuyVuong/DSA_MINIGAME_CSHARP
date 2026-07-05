@@ -123,6 +123,34 @@ feat(dsa): implement Lesson 5 Part B queue ticket simulation
 - Add Enqueue, Dequeue, and Print options for Movie Queue
 - Fix case-4 switch-break issue to return correctly to main menu
 - Update master README.md and LichSuTroChuyen_DSA.md
-- Reference Issue #1 (or #5)
+- Reference Issue #1
 ```
+
+---
+
+## 📖 BÀI HỌC 6: ĐỆ QUY & THUẬT TOÁN LOANG (DFS/BFS)
+*   **File mã nguồn**: `Bai6_DeQuyVaThuatToanLoang.cs`
+*   **Độ phức tạp**: 
+    *   *Phần A (Fibonacci)*: Thời gian $O(2^N)$ cho đệ quy thuần túy | Không gian $O(N)$ (độ sâu đống gọi hàm Call Stack).
+    *   *Phần B (Loang Flood Fill)*: Thời gian $O(V + E) \approx O(R \times C)$ với $R, C$ là kích thước ma trận | Không gian $O(R \times C)$ để lưu mảng đánh dấu `daDiQua`.
+
+### Phân tích thuật toán:
+*   **Phần A (Đệ quy Fibonacci)**: Sử dụng các điều kiện biên dừng `n == 0 -> return 0` và `n == 1 -> return 1`. Phần đệ quy trả về trực tiếp phép cộng `Fibonacci(n - 1) + Fibonacci(n - 2)`.
+*   **Phần B (Loang đếm vùng trống)**: Khởi đầu từ một ô `(dong, cot)`, gọi đệ quy ra 4 hướng (Trên, Dưới, Trái, Phải). Ràng buộc dừng đệ quy cực kỳ quan trọng:
+    - Vị trí nằm ngoài biên ma trận.
+    - Ô hiện tại là tường (`banDo[dong, cot] == 1`).
+    - Ô hiện tại đã đi qua rồi (`daDiQua[dong, cot] == true`).
+    Diện tích vùng trống liên thông bằng `1` (ô hiện tại) cộng diện tích loang được ở 4 hướng xung quanh.
+
+### Mẫu Git Commit:
+```text
+feat(dsa): hoàn thành bài 6 đệ quy Fibonacci và thuật toán loang DFS
+
+- Cài đặt đệ quy Fibonacci(n) phần A
+- Cài đặt thuật toán Loang (DFS) đếm diện tích vùng liên thông phần B
+- Tách biệt logic giải thuật và in ấn Console sử dụng các biến tiếng Việt
+- Cập nhật tài liệu README.md và nhật ký trò chuyện
+- Đóng tự động Issue #3
+```
+
 
