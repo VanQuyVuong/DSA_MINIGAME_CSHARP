@@ -26,16 +26,19 @@ namespace Learn_DSA
                 Console.WriteLine("   4. Bài 4: Tìm kiếm nhị phân (Đã học)");
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine(" [ NHÓM 3: CẤU TRÚC DỮ LIỆU ĐỘNG ]");
-                Console.WriteLine("   5. Bài 5: Ngăn xếp (Stack) & Hàng đợi (Queue) (BẠN ĐANG TỰ CODE)");
+                Console.WriteLine("   5. Bài 5: Ngăn xếp (Stack) & Hàng đợi (Queue) (Đã học)");
                 Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine(" [ NHÓM 4: CÁC THUẬT TOÁN SẮP XẾP ]");
-                Console.WriteLine("   6. Bài 6: Sắp xếp nổi bọt (Bubble Sort)");
-                Console.WriteLine("   7. Bài 7: Sắp xếp chọn (Selection Sort)");
-                Console.WriteLine("   8. Bài 8: Sắp xếp chèn (Insertion Sort)");
+                Console.WriteLine(" [ NHÓM 4: ĐỆ QUY & THUẬT TOÁN LOANG ]");
+                Console.WriteLine("   6. Bài 6: Đệ quy & Thuật toán Loang (BẠN ĐANG TỰ CODE)");
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine(" [ NHÓM 5: CÁC THUẬT TOÁN SẮP XẾP ]");
+                Console.WriteLine("   7. Bài 7: Sắp xếp nổi bọt (Bubble Sort)");
+                Console.WriteLine("   8. Bài 8: Sắp xếp chọn (Selection Sort)");
+                Console.WriteLine("   9. Bài 9: Sắp xếp chèn (Insertion Sort)");
                 Console.WriteLine("=================================================================");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài học của bạn (0-8): ");
+                Console.Write("Chọn bài học của bạn (0-9): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (!int.TryParse(input, out int choice))
@@ -69,16 +72,19 @@ namespace Learn_DSA
                         Bai5_NganXepVaHangDoi.Run();
                         break;
                     case 6:
-                        BubbleSort.Run();
+                        Bai6_DeQuyVaThuatToanLoang.Run();
                         break;
                     case 7:
-                        SelectionSort.Run();
+                        BubbleSort.Run();
                         break;
                     case 8:
+                        SelectionSort.Run();
+                        break;
+                    case 9:
                         InsertionSort.Run();
                         break;
                     default:
-                        Console.WriteLine("\nLựa chọn ngoài danh sách (0-8)! Nhấn phím bất kỳ để tiếp tục...");
+                        Console.WriteLine("\nLựa chọn ngoài danh sách (0-9)! Nhấn phím bất kỳ để tiếp tục...");
                         Console.ReadKey();
                         break;
                 }
