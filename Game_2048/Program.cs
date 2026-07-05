@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Game_2048
 {
@@ -9,6 +10,8 @@ namespace Game_2048
         // Ma trận game 4x4
         static int[,] banDo = new int[4, 4];
         static int diemSo = 0;
+        static int diemCao = 0;
+        static string fileDiemCao = "diem_cao.txt";
         static Random rand = new Random();
 
         static void Main(string[] args)
@@ -64,6 +67,7 @@ namespace Game_2048
                     banDo[i, j] = 0;
 
             diemSo = 0;
+            diemCao = DocDiemCao();
 
             // Sinh 2 số ngẫu nhiên ban đầu
             SinhSoNgauNhien();
@@ -104,9 +108,8 @@ namespace Game_2048
                 int viTriNgauNhien = rand.Next(oTrong.Count);
                 var oDuocChon = oTrong[viTriNgauNhien];
 
-                //SINH SỐ 2 VỚI TỶ LỆ 90% (NẾU RAND.NEXT(10)<9) NGƯỢC LẠI SINH SỐ 4(10%)
-
-                banDo[oDuocChon.dong, oDuocChon.cot] = rand.Next(10) < 9 ? 4 : 2;
+                // SINH SỐ 2 VỚI TỶ LỆ 90% (NẾU RAND.NEXT(10)<9) NGƯỢC LẠI SINH SỐ 4(10%)
+                banDo[oDuocChon.dong, oDuocChon.cot] = rand.Next(10) < 9 ? 2 : 4;
             }
                 
         }
@@ -324,7 +327,12 @@ namespace Game_2048
             Console.WriteLine("            GAME 2048            ");
             Console.WriteLine("=================================");
             Console.ResetColor();
-            Console.WriteLine($" Điểm số: {diemSo}");
+            if (diemSo > diemCao)
+            {
+                diemCao = diemSo;
+                LuuDiemCao(diemCao);
+            }
+            Console.WriteLine($" Điểm số: {diemSo}  |  Kỷ lục: {diemCao}");
             Console.WriteLine("---------------------------------");
 
             for (int i = 0; i < 4; i++)
@@ -409,6 +417,44 @@ namespace Game_2048
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.DarkGreen;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Đọc điểm kỷ lục từ file lưu trữ
+        /// </summary>
+        static int DocDiemCao()
+        {
+            try
+            {
+                if (File.Exists(fileDiemCao))
+                {
+                    string noiDung = File.ReadAllText(fileDiemCao);
+                    if (int.TryParse(noiDung, out int diem))
+                    {
+                        return diem;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Bỏ qua lỗi đọc file
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Lưu điểm kỷ lục mới vào file
+        /// </summary>
+        static void LuuDiemCao(int diem)
+        {
+            try
+            {
+                File.WriteAllText(fileDiemCao, diem.ToString());
+            }
+            catch (Exception)
+            {
+                // Bỏ qua lỗi ghi file
             }
         }
     }
