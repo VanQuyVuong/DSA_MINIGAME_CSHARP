@@ -102,3 +102,27 @@ feat(dsa): implement Lesson 4 Bai4_TimKiemNhiPhan
 - Update Program.cs switch-case mappings and README.md roadmap
 - Append Lesson 4 to LichSuTroChuyen_DSA.md
 ```
+
+---
+
+## 📖 BÀI HỌC 5: NGĂN XẾP (STACK) & HÀNG ĐỢI (QUEUE)
+*   **File mã nguồn**: `Bai5_NganXepVaHangDoi.cs`
+*   **Độ phức tạp**: 
+    *   *Phần A (Kiểm tra ngoác)*: Thời gian $O(N)$ | Không gian $O(N)$
+    *   *Phần B (Mô phỏng hàng chờ)*: Thời gian $O(1)$ cho mỗi thao tác Enqueue/Dequeue | Không gian $O(N)$
+
+### Phân tích thuật toán:
+*   **Phần A (Stack - LIFO)**: Duyệt từng ký tự ngoặc, gặp ngoặc mở thì đẩy (`Push`) vào Stack. Gặp ngoặc đóng thì lấy ở đỉnh (`Pop`) ra so khớp. Nếu rỗng giữa chừng hoặc không khớp cặp -> trả về `false`. Cuối cùng kiểm tra Stack rỗng.
+*   **Phần B (Queue - FIFO)**: Dùng `Queue<string>` mô phỏng khách mua vé. Khách mới dùng `Enqueue` xếp ở đuôi, phục vụ khách đầu hàng dùng `Dequeue`. Có Menu tương tác để quản lý trực quan.
+
+### Mẫu Git Commit:
+```text
+feat(dsa): implement Lesson 5 Part B queue ticket simulation
+
+- Implement interactive Menu loop for Queue simulation in ChayBaiTapQueue()
+- Add Enqueue, Dequeue, and Print options for Movie Queue
+- Fix case-4 switch-break issue to return correctly to main menu
+- Update master README.md and LichSuTroChuyen_DSA.md
+- Reference Issue #1 (or #5)
+```
+

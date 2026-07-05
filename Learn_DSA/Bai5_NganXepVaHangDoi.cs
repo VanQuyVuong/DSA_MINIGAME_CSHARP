@@ -142,17 +142,72 @@ namespace Learn_DSA
             Console.WriteLine("Khởi tạo hàng chờ...");
 
             // TODO: Bạn hãy viết code mô phỏng hàng chờ mua vé của bạn ở đây!
-            // Ví dụ:
             // 1. Tạo hàng đợi khách hàng: Queue<string> hangCho = new Queue<string>();
             // 2. Thêm khách hàng vào hàng đợi (Enqueue): "Nguyễn Văn A", "Trần Thị B", "Lê Văn C".
             // 3. Hiển thị danh sách người đang xếp hàng.
             // 4. Lần lượt phục vụ khách hàng từ đầu hàng (Dequeue) và in ra màn hình.
-            
-            Console.WriteLine("\n(Mẹo: Hãy mở file code và tự cài đặt phần này nhé!)");
+            Queue<string> hangCho = new Queue<string>();
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("== MENU MÔ PHỎNG HÀNG CHỜ VÉ ==");
+                Console.WriteLine("1. Xếp hàng (Enqueue)");
+                Console.WriteLine("2. Bán vé (Dequeue)");
+                Console.WriteLine("3. Xem hàng chờ (Print)");
+                Console.WriteLine("4. Quay lại Menu chính");
+                Console.Write("Lựa chọn của bạn: ");
+                
+                string chon = Console.ReadLine() ?? "";
+                switch(chon)
+                {
+                    case "1":
+                        Console.Write("Nhập tên khách hàng mới: ");
+                        string tenKhach = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrEmpty(tenKhach))
+                        {
+                            hangCho.Enqueue(tenKhach);
+                            Console.WriteLine($"Đã thêm [{tenKhach}] vào cuối hàng chờ.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Tên khách hàng không được để trống!");
+                        }
+                        Console.WriteLine("\nNhấn phím bất kỳ để tiếp tục...");
+                        Console.ReadKey();
+                        break;
 
-            Console.WriteLine("=================================================================");
-            Console.WriteLine("\nNhấn Enter để quay lại...");
-            Console.ReadLine();
+                    case "2":
+                        if (hangCho.Count != 0)
+                        {
+                            string khachDuocPhucVu = hangCho.Dequeue();
+                            Console.WriteLine($"Đã bán vé cho khách: {khachDuocPhucVu}. Người này rời hàng.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Hiện tại không có ai xếp hàng chờ mua vé.");
+                        }
+                        Console.WriteLine("\nNhấn phím bất kỳ để tiếp tục...");
+                        Console.ReadKey();
+                        break;
+
+                    case "3":
+                        if (hangCho.Count != 0)
+                        {
+                            Console.WriteLine("Danh sách hàng chờ (từ đầu đến cuối):");
+                            Console.WriteLine(string.Join(" -> ", hangCho));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Hàng chờ hiện tại đang rỗng.");
+                        }
+                        Console.WriteLine("\nNhấn phím bất kỳ để tiếp tục...");
+                        Console.ReadKey();
+                        break;
+
+                    case "4":
+                        return; // Thoát hẳn hàm ChayBaiTapQueue để về Menu chính
+                }    
+            }
         }
 
         #endregion
