@@ -153,4 +153,28 @@ feat(dsa): hoàn thành bài 6 đệ quy Fibonacci và thuật toán loang DFS
 - Đóng tự động Issue #3
 ```
 
+---
+
+## 🎮 DỰ ÁN 1: GAME 2048 CONSOLE
+*   **Thư mục dự án**: `Game_2048`
+*   **File mã nguồn**: `Program.cs`
+*   **Cấu trúc dữ liệu**: **Ma trận (Mảng 2 chiều)** kích thước $4 \times 4$.
+*   **Giải thuật**: 
+    - Dồn và gộp mảng từ phải sang trái (`DonTrai`).
+    - Kỹ thuật xoay ma trận $90^{\circ}$ (`XoayMaTran90`) để tái sử dụng giải thuật dồn trái cho cả 4 hướng (Trái, Phải, Lên, Xuống).
+    - Sinh số ngẫu nhiên 2/4 ở vị trí trống (`SinhSoNgauNhien`).
+    - Kiểm tra điều kiện dừng game (`KiemTraGameOver`).
+
+### Mẫu Git Commit:
+```text
+feat(game-2048): hoàn thành trò chơi 2048 phiên bản Console đầu tiên
+
+- Khởi tạo dự án mới Game_2048 và đăng ký vào Learn_DSA.slnx
+- Cài đặt thuật toán dồn và gộp ô số sang trái (DonTrai)
+- Áp dụng kỹ thuật xoay ma trận 90 độ (XoayMaTran90) để xử lý các hướng còn lại
+- Cài đặt logic sinh số ngẫu nhiên và kiểm tra trạng thái Game Over
+- Đóng tự động Issue #5
+```
+
+
 
