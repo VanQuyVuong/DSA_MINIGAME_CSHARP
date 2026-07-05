@@ -18,21 +18,24 @@ namespace Learn_DSA
                 Console.WriteLine("        HÀNH TRÌNH CHINH PHỤC CẤU TRÚC DỮ LIỆU & GIẢI THUẬT       ");
                 Console.WriteLine("=================================================================");
                 Console.WriteLine(" [ NHÓM 1: BÀI TOÁN CƠ BẢN VỀ MẢNG & SỐ HỌC ]");
-                Console.WriteLine("   1. Bài 1: Tìm Max/Min & Tính Tổng mảng (Đã học - Click để chạy)");
-                Console.WriteLine("   2. Bài 2: Kiểm tra Số Nguyên Tố (Chưa học - Click để xem thông tin)");
+                Console.WriteLine("   1. Bài 1: Tìm Max/Min & Tính Tổng mảng (Đã học)");
+                Console.WriteLine("   2. Bài 2: Kiểm tra Số Nguyên Tố (Đã học)");
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine(" [ NHÓM 2: CÁC THUẬT TOÁN TÌM KIẾM ]");
-                Console.WriteLine("   3. Bài 3: Tìm kiếm tuyến tính (Chưa học - Click để xem thông tin)");
-                Console.WriteLine("   4. Bài 4: Tìm kiếm nhị phân (Chưa học - Click để xem thông tin)");
+                Console.WriteLine("   3. Bài 3: Tìm kiếm tuyến tính (Đã học)");
+                Console.WriteLine("   4. Bài 4: Tìm kiếm nhị phân (Đã học)");
                 Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine(" [ NHÓM 3: CÁC THUẬT TOÁN SẮP XẾP ]");
-                Console.WriteLine("   5. Bài 5: Sắp xếp nổi bọt (Bubble Sort - Đã có)");
-                Console.WriteLine("   6. Bài 6: Sắp xếp chọn (Selection Sort - Đã có)");
-                Console.WriteLine("   7. Bài 7: Sắp xếp chèn (Insertion Sort - Đã có)");
+                Console.WriteLine(" [ NHÓM 3: CẤU TRÚC DỮ LIỆU ĐỘNG ]");
+                Console.WriteLine("   5. Bài 5: Ngăn xếp (Stack) & Hàng đợi (Queue) (BẠN ĐANG TỰ CODE)");
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine(" [ NHÓM 4: CÁC THUẬT TOÁN SẮP XẾP ]");
+                Console.WriteLine("   6. Bài 6: Sắp xếp nổi bọt (Bubble Sort)");
+                Console.WriteLine("   7. Bài 7: Sắp xếp chọn (Selection Sort)");
+                Console.WriteLine("   8. Bài 8: Sắp xếp chèn (Insertion Sort)");
                 Console.WriteLine("=================================================================");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài học của bạn (0-7): ");
+                Console.Write("Chọn bài học của bạn (0-8): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (!int.TryParse(input, out int choice))
@@ -51,37 +54,31 @@ namespace Learn_DSA
                 switch (choice)
                 {
                     case 1:
-                        timMaxMinVaTongMang.Run();
+                        Bai1_TimMaxMinVaTongMang.Run();
                         break;
                     case 2:
-                        Console.WriteLine("\n[BÀI 2: KIỂM TRA SỐ NGUYÊN TỐ] - Chúng ta sẽ học bài này ở bước tiếp theo!");
-                        Console.WriteLine("Ý tưởng sơ bộ: Kiểm tra tính chia hết từ 2 đến căn bậc hai của N.");
-                        Console.WriteLine("\nNhấn Enter để quay lại...");
-                        Console.ReadLine();
+                        Bai2_KiemTraSoNguyenTo.Run();
                         break;
                     case 3:
-                        Console.WriteLine("\n[BÀI 3: TÌM KIẾM TUYẾN TÍNH] - Chúng ta sẽ học bài này ở bước tiếp theo!");
-                        Console.WriteLine("Ý tưởng sơ bộ: Duyệt tuần tự qua mảng để tìm khóa X.");
-                        Console.WriteLine("\nNhấn Enter để quay lại...");
-                        Console.ReadLine();
+                        Bai3_TimKiemTuyenTinh.Run();
                         break;
                     case 4:
-                        Console.WriteLine("\n[BÀI 4: TÌM KIẾM NHỊ PHÂN] - Chúng ta sẽ học bài này ở bước tiếp theo!");
-                        Console.WriteLine("Ý tưởng sơ bộ: Tìm kiếm trên mảng đã sắp xếp bằng cách chia đôi khoảng tìm kiếm.");
-                        Console.WriteLine("\nNhấn Enter để quay lại...");
-                        Console.ReadLine();
+                        Bai4_TimKiemNhiPhan.Run();
                         break;
                     case 5:
-                        BubbleSort.Run();
+                        Bai5_NganXepVaHangDoi.Run();
                         break;
                     case 6:
-                        SelectionSort.Run();
+                        BubbleSort.Run();
                         break;
                     case 7:
+                        SelectionSort.Run();
+                        break;
+                    case 8:
                         InsertionSort.Run();
                         break;
                     default:
-                        Console.WriteLine("\nLựa chọn ngoài danh sách (0-7)! Nhấn phím bất kỳ để tiếp tục...");
+                        Console.WriteLine("\nLựa chọn ngoài danh sách (0-8)! Nhấn phím bất kỳ để tiếp tục...");
                         Console.ReadKey();
                         break;
                 }

@@ -18,7 +18,7 @@ namespace Learn_DSA
      *   - Thời gian (Time Complexity): O(N) duyệt 1 lần (Single Pass).
      *   - Không gian (Space Complexity): O(1) không tốn bộ nhớ bổ sung.
      */
-    internal class timMaxMinVaTongMang
+    internal class Bai1_TimMaxMinVaTongMang
     {
         /// <summary>
         /// Hàm chạy giao diện tương tác và minh họa trace từng bước trên Console
