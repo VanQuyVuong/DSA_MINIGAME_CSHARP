@@ -243,10 +243,19 @@ feat(game-2048): thiết kế bảng xếp hạng dạng cây co xếp bằng ph
 - Thêm cơ chế xổ rộng/thu gọn (Expand/Collapse) động cho từng kích thước ma trận
 - Reference #5
 ```
+*   **Dự án 2: Game Minesweeper (Dò Mìn) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Rải mìn**:
+        - Thiết lập ma trận vuông `kichThuoc x kichThuoc` (mặc định 9x9) và số lượng mìn `soLuongMin` (mặc định 10).
+        - Rải mìn ngẫu nhiên giá trị `-1` vào ma trận, kiểm tra trùng lặp ô.
+        - Duyệt 8 ô lân cận của từng ô đất trống để đếm và điền số mìn bao quanh (1-8).
+        - Vẽ bản đồ hiện lộ (debug) hiển thị rõ các ô mìn `*` màu đỏ, ô trống `.` và các con số chỉ định mìn xung quanh màu Cyan.
 
+### Mẫu Git Commit Minesweeper Bước 1:
+```text
+feat(minesweeper): hoàn thiện tính toán số mìn xung quanh và vẽ bản đồ hiện lộ
 
-
-
-
-
-
+- Cài đặt tính toán số mìn ở 8 ô xung quanh cho mỗi ô đất trống
+- Viết hàm VeBanDoHienLo có tiêu đề hàng và cột trực quan
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #7
+```
