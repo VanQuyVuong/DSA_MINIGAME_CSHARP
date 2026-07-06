@@ -229,6 +229,22 @@ feat(game-2048): tích hợp menu chính Arcade và bảng xếp hạng Top 10 t
 - Reference #5
 ```
 
+*   **Tính năng nâng cấp Menu xếp hạng dạng cây gấp gọn (Collapsible Tree Menu)**:
+    - **Tương tác trực quan bằng phím mũi tên**: Dùng phím ↑/↓ để di chuyển vạch sáng chọn mục, phím Enter để thao tác và phím ESC để quay lại.
+    - **Đổ dữ liệu động & Gấp gọn (Collapse/Expand)**: Khi chọn kích thước ma trận (nút cha), cây thư mục tự động xổ ra 4 lựa chọn độ khó tương ứng (nút con). Nhấn Enter một lần nữa sẽ thu lại gọn gàng.
+    - **Xem chi tiết xếp hạng**: Chọn một độ khó (nút con) bất kỳ để hiển thị bảng điểm Top 10 của chế độ tương ứng.
+
+### Mẫu Git Commit Collapsible Menu:
+```text
+feat(game-2048): thiết kế bảng xếp hạng dạng cây co xếp bằng phím mũi tên
+
+- Xây dựng lớp MenuNode hỗ trợ hiển thị phân cấp cha-con
+- Cài đặt HienThiMenuXepHangTongHop phản hồi phím UpArrow/DownArrow/Enter/ESC
+- Thêm cơ chế xổ rộng/thu gọn (Expand/Collapse) động cho từng kích thước ma trận
+- Reference #5
+```
+
+
 
 
 

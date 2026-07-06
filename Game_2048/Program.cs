@@ -15,6 +15,16 @@ namespace Game_2048
             public string thoiGian { get; set; } = "";
         }
 
+        // Định nghĩa thực thể phục vụ vẽ cây thư mục bảng xếp hạng
+        class MenuNode
+        {
+            public string tieuDe { get; set; } = "";
+            public bool laCha { get; set; }
+            public int cKichThuoc { get; set; }
+            public int cTyLeSinhSo2 { get; set; }
+            public bool daMoRong { get; set; }
+        }
+
         // Cấu hình động cho game
         static int kichThuoc = 4; // Mặc định là 4x4
         static int tyLeSinhSo2 = 90; // Tỷ lệ sinh số 2 (mặc định 90%)
@@ -71,7 +81,7 @@ namespace Game_2048
                         VaoLuotChoiGame();
                         break;
                     case "2":
-                        // Xem bảng xếp hạng tổng hợp của các kích thước và độ khó
+                        // Xem bảng xếp hạng tổng hợp dạng cây xếp gọn (Collapsible Tree Menu)
                         HienThiMenuXepHangTongHop();
                         break;
                     case "3":
@@ -244,81 +254,136 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Menu xem bảng xếp hạng tổng hợp theo kích thước và độ khó
+        /// Menu xem bảng xếp hạng tổng hợp dạng Cây xếp gọn (Collapsible Tree Menu) dùng phím mũi tên tương tác
         /// </summary>
         static void HienThiMenuXepHangTongHop()
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("=================================================");
-            Console.WriteLine("          XEM BẢNG XẾP HẠNG TOP 10               ");
-            Console.WriteLine("=================================================");
-            Console.ResetColor();
-
-            // Chọn kích thước muốn xem
-            Console.WriteLine("Chọn kích thước ma trận muốn xem:");
-            Console.WriteLine("  1. 3 x 3");
-            Console.WriteLine("  2. 4 x 4");
-            Console.WriteLine("  3. 5 x 5");
-            Console.WriteLine("  4. 6 x 6");
-            Console.Write("Lựa chọn (1-4, mặc định 2): ");
-            string cKichThuoc = Console.ReadLine() ?? "";
-            int xemKichThuoc = cKichThuoc.Trim() switch
+            // Khởi tạo các nút gốc đại diện cho kích thước ma trận
+            List<MenuNode> cacNutGoc = new List<MenuNode>
             {
-                "1" => 3,
-                "3" => 5,
-                "4" => 6,
-                _ => 4
+                new MenuNode { tieuDe = "Kích thước 3 x 3", laCha = true, cKichThuoc = 3, daMoRong = false },
+                new MenuNode { tieuDe = "Kích thước 4 x 4", laCha = true, cKichThuoc = 4, daMoRong = false },
+                new MenuNode { tieuDe = "Kích thước 5 x 5", laCha = true, cKichThuoc = 5, daMoRong = false },
+                new MenuNode { tieuDe = "Kích thước 6 x 6", laCha = true, cKichThuoc = 6, daMoRong = false }
             };
 
-            // Chọn độ khó muốn xem
-            Console.WriteLine("\nChọn độ khó muốn xem:");
-            Console.WriteLine("  1. Dễ");
-            Console.WriteLine("  2. Trung bình");
-            Console.WriteLine("  3. Khó");
-            Console.WriteLine("  4. Siêu khó");
-            Console.Write("Lựa chọn (1-4, mặc định 2): ");
-            string cDoKho = Console.ReadLine() ?? "";
-            int xemTyLeSinhSo2 = cDoKho.Trim() switch
+            int indexChon = 0;
+
+            while (true)
             {
-                "1" => 100,
-                "3" => 70,
-                "4" => 10,
-                _ => 90
-            };
+                // Xây dựng danh sách các nút hiện đang hiển thị trên màn hình
+                List<MenuNode> cacNutHienThi = new List<MenuNode>();
+                foreach (var nut in cacNutGoc)
+                {
+                    cacNutHienThi.Add(nut);
+                    if (nut.laCha && nut.daMoRong)
+                    {
+                        cacNutHienThi.Add(new MenuNode { tieuDe = "  ├── Chế độ Dễ", laCha = false, cKichThuoc = nut.cKichThuoc, cTyLeSinhSo2 = 100 });
+                        cacNutHienThi.Add(new MenuNode { tieuDe = "  ├── Chế độ Trung bình", laCha = false, cKichThuoc = nut.cKichThuoc, cTyLeSinhSo2 = 90 });
+                        cacNutHienThi.Add(new MenuNode { tieuDe = "  ├── Chế độ Khó", laCha = false, cKichThuoc = nut.cKichThuoc, cTyLeSinhSo2 = 70 });
+                        cacNutHienThi.Add(new MenuNode { tieuDe = "  └── Chế độ Siêu khó", laCha = false, cKichThuoc = nut.cKichThuoc, cTyLeSinhSo2 = 10 });
+                    }
+                }
 
-            // Tạm thời lưu trữ cấu hình hiện tại để khôi phục sau
-            int cuKichThuoc = kichThuoc;
-            int cuTyLeSinhSo2 = tyLeSinhSo2;
+                // Đảm bảo con trỏ index không vượt quá giới hạn danh sách hiển thị
+                if (indexChon >= cacNutHienThi.Count) indexChon = cacNutHienThi.Count - 1;
+                if (indexChon < 0) indexChon = 0;
 
-            // Áp dụng cấu hình xem tạm thời
-            kichThuoc = xemKichThuoc;
-            tyLeSinhSo2 = xemTyLeSinhSo2;
+                // Vẽ giao diện menu
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("=================================================");
+                Console.WriteLine("         BẢNG XẾP HẠNG TOP 10 TỔNG HỢP           ");
+                Console.WriteLine("=================================================");
+                Console.ResetColor();
+                Console.WriteLine(" [Dùng ↑/↓ để di chuyển. Enter để Chọn/Thu gọn]");
+                Console.WriteLine(" [Bấm ESC để quay lại menu chính]");
+                Console.WriteLine("-------------------------------------------------");
 
-            // Hiển thị bảng xếp hạng
-            Console.Clear();
-            string sDoKho = tyLeSinhSo2 switch
-            {
-                100 => "Dễ",
-                70 => "Khó",
-                10 => "Siêu Khó",
-                _ => "Trung Bình"
-            };
+                for (int i = 0; i < cacNutHienThi.Count; i++)
+                {
+                    var nut = cacNutHienThi[i];
+                    if (i == indexChon)
+                    {
+                        // Tô màu xanh và vẽ dấu con trỏ cho mục đang chọn
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(" > ");
+                    }
+                    else
+                    {
+                        Console.Write("   ");
+                    }
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("=================================================");
-            Console.WriteLine($" BẢNG XẾP HẠNG {kichThuoc}x{kichThuoc} - CHẾ ĐỘ {sDoKho.ToUpper()}");
-            Console.WriteLine("=================================================");
-            Console.ResetColor();
+                    if (nut.laCha)
+                    {
+                        // Thêm biểu tượng thu gọn/mở rộng cho nút cha
+                        string bieuTuong = nut.daMoRong ? "[-]" : "[+]";
+                        Console.WriteLine($"{bieuTuong} {nut.tieuDe}");
+                    }
+                    else
+                    {
+                        Console.WriteLine(nut.tieuDe);
+                    }
+                    Console.ResetColor();
+                }
+                Console.WriteLine("-------------------------------------------------");
 
-            HienThiBangXepHang();
+                // Đọc phím tương tác
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return; // Quay lại Menu chính
+                }
+                else if (key.Key == ConsoleKey.UpArrow)
+                {
+                    indexChon--;
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    indexChon++;
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    var nutChon = cacNutHienThi[indexChon];
+                    if (nutChon.laCha)
+                    {
+                        // Đảo trạng thái mở rộng của nút gốc
+                        nutChon.daMoRong = !nutChon.daMoRong;
+                    }
+                    else
+                    {
+                        // Xem bảng xếp hạng của chế độ được chọn
+                        int cuKichThuoc = kichThuoc;
+                        int cuTyLeSinhSo2 = tyLeSinhSo2;
 
-            Console.WriteLine("\nNhấn Enter để quay lại menu chính...");
-            Console.ReadLine();
+                        kichThuoc = nutChon.cKichThuoc;
+                        tyLeSinhSo2 = nutChon.cTyLeSinhSo2;
 
-            // Khôi phục lại cấu hình ban đầu
-            kichThuoc = cuKichThuoc;
-            tyLeSinhSo2 = cuTyLeSinhSo2;
+                        Console.Clear();
+                        string sDoKho = tyLeSinhSo2 switch
+                        {
+                            100 => "Dễ",
+                            70 => "Khó",
+                            10 => "Siêu Khó",
+                            _ => "Trung Bình"
+                        };
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("=================================================");
+                        Console.WriteLine($" BẢNG XẾP HẠNG {kichThuoc}x{kichThuoc} - CHẾ ĐỘ {sDoKho.ToUpper()}");
+                        Console.WriteLine("=================================================");
+                        Console.ResetColor();
+
+                        HienThiBangXepHang();
+
+                        Console.WriteLine("\nNhấn phím bất kỳ để quay lại...");
+                        Console.ReadKey(true);
+
+                        kichThuoc = cuKichThuoc;
+                        tyLeSinhSo2 = cuTyLeSinhSo2;
+                    }
+                }
+            }
         }
 
         /// <summary>
