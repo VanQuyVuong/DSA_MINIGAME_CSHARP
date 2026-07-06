@@ -7,21 +7,31 @@ namespace Game_2048
 {
     class Program
     {
-        // Ma trận game 4x4
+        // Cấu hình động cho game
+        static int kichThuoc = 4; // Mặc định là 4x4
+        static int tyLeSinhSo2 = 90; // Tỷ lệ sinh số 2 (mặc định 90%)
+        
         static int[,] banDo = new int[4, 4];
         static int diemSo = 0;
         static int diemCao = 0;
-        static string fileDiemCao = "diem_cao.txt";
         static Random rand = new Random();
+
+        // Đường dẫn file điểm cao thay đổi động theo kích thước ma trận
+        static string fileDiemCao => $"diem_cao_{kichThuoc}x{kichThuoc}.txt";
 
         static void Main(string[] args)
         {
             // Thiết lập hiển thị tiếng Việt và Unicode
             Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
 
             while (true)
             {
+                // Bước 1: Cho người chơi thiết lập thông số game
+                HienThiMenuCaiDat();
+
+                // Bước 2: Khởi tạo game mới dựa trên cài đặt
                 KhoiTaoGame();
                 bool dangChoi = true;
 
@@ -41,13 +51,13 @@ namespace Game_2048
                             ConsoleKeyInfo traLoi = Console.ReadKey(true);
                             if (traLoi.Key == ConsoleKey.Y)
                             {
-                                dangChoi = false; // Thoát vòng lặp chơi hiện tại, vòng lặp cha sẽ gọi KhoiTaoGame() để bắt đầu lại
+                                dangChoi = false; // Thoát vòng lặp hiện tại để bắt đầu game mới
                                 break;
                             }
                             else if (traLoi.Key == ConsoleKey.N)
                             {
                                 Console.WriteLine("\nCảm ơn bạn đã chơi game! Hẹn gặp lại.");
-                                return; // Kết thúc toàn bộ chương trình
+                                return; // Thoát toàn bộ chương trình
                             }
                         }
                         continue;
@@ -60,7 +70,7 @@ namespace Game_2048
                     if (phim == ConsoleKey.Escape)
                     {
                         Console.WriteLine("\nĐang thoát game...");
-                        return; // Kết thúc toàn bộ chương trình
+                        return;
                     }
 
                     // Thực hiện di chuyển
@@ -68,7 +78,7 @@ namespace Game_2048
 
                     if (daDiChuyen)
                     {
-                        // Nếu có sự thay đổi (di chuyển hoặc gộp ô), sinh thêm một số mới
+                        // Sinh thêm một số mới
                         SinhSoNgauNhien();
                     }
                 }
@@ -76,14 +86,77 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Khởi tạo game: Đặt toàn bộ bản đồ về 0 và sinh 2 số ngẫu nhiên ban đầu
+        /// Menu cài đặt trước khi vào game để chọn kích thước và độ khó
+        /// </summary>
+        static void HienThiMenuCaiDat()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("=================================================");
+            Console.WriteLine("          THIẾT LẬP GAME 2048 CUSTOM             ");
+            Console.WriteLine("=================================================");
+            Console.ResetColor();
+
+            // 1. Chọn kích thước ma trận
+            Console.WriteLine("\n[1] CHỌN KÍCH THƯỚC MA TRẬN:");
+            Console.WriteLine("  a. 3 x 3 (Không gian chật hẹp - Rất khó)");
+            Console.WriteLine("  b. 4 x 4 (Bản chuẩn gốc - Cân bằng)");
+            Console.WriteLine("  c. 5 x 5 (Rộng rãi - Dễ chơi)");
+            Console.WriteLine("  d. 6 x 6 (Khổng lồ - Siêu dễ)");
+            Console.Write("Nhập lựa chọn của bạn (a/b/c/d, mặc định b): ");
+            string luaChonKichThuoc = Console.ReadLine() ?? "";
+            
+            switch (luaChonKichThuoc.ToLower().Trim())
+            {
+                case "a":
+                    kichThuoc = 3;
+                    break;
+                case "c":
+                    kichThuoc = 5;
+                    break;
+                case "d":
+                    kichThuoc = 6;
+                    break;
+                default:
+                    kichThuoc = 4;
+                    break;
+            }
+
+            // 2. Chọn độ khó (Xác suất sinh số 2 và 4)
+            Console.WriteLine("\n[2] CHỌN ĐỘ KHÓ (Tỷ lệ sinh số):");
+            Console.WriteLine("  1. Dễ (Chỉ sinh số 2 - Dễ gộp số)");
+            Console.WriteLine("  2. Trung bình (Bản gốc - 90% số 2, 10% số 4)");
+            Console.WriteLine("  3. Khó (70% số 2, 30% số 4)");
+            Console.WriteLine("  4. Siêu khó (90% số 4, 10% số 2)");
+            Console.Write("Nhập lựa chọn của bạn (1/2/3/4, mặc định 2): ");
+            string luaChonDoKho = Console.ReadLine() ?? "";
+
+            switch (luaChonDoKho.Trim())
+            {
+                case "1":
+                    tyLeSinhSo2 = 100;
+                    break;
+                case "3":
+                    tyLeSinhSo2 = 70;
+                    break;
+                case "4":
+                    tyLeSinhSo2 = 10;
+                    break;
+                default:
+                    tyLeSinhSo2 = 90;
+                    break;
+            }
+
+            Console.WriteLine("\n=> Thiết lập hoàn tất! Nhấn Enter để bắt đầu chơi...");
+            Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Khởi tạo game: Khởi tạo mảng động theo kích thước và sinh 2 số ngẫu nhiên ban đầu
         /// </summary>
         static void KhoiTaoGame()
         {
-            for (int i = 0; i < 4; i++)
-                for (int j = 0; j < 4; j++)
-                    banDo[i, j] = 0;
-
+            banDo = new int[kichThuoc, kichThuoc];
             diemSo = 0;
             diemCao = DocDiemCao();
 
@@ -93,143 +166,109 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Sinh ngẫu nhiên số 2 (tỷ lệ 90%) hoặc 4 (tỷ lệ 10%) vào một ô trống
+        /// Sinh ngẫu nhiên số 2 hoặc 4 vào một ô trống dựa trên độ khó đã thiết lập
         /// </summary>
         static void SinhSoNgauNhien()
         {
-            // TODO: Bạn hãy tự viết logic sinh số ngẫu nhiên ở đây!
-            // Gợi ý:
-            // 1. Tạo danh sách chứa tọa độ các ô trống (có giá trị = 0) dạng Tuple: List<(int dong, int cot)> danhSachOTrong
-            // 2. Duyệt ma trận banDo, nếu banDo[i, j] == 0 thì thêm (i, j) vào danh sách.
-            // 3. Nếu danh sách không rỗng:
-            //    - Chọn ngẫu nhiên một vị trí trong danh sách.
-            //    - Gán giá trị tại ô đó là 2 (nếu số ngẫu nhiên từ 0-9 < 9) hoặc 4 (nếu số ngẫu nhiên = 9).
-
-
-
-            //Bước 1 Tìm danh sách các ô trống( giá trị =0)
-            List<(int dong , int cot)> oTrong = new List<(int , int )>();
-            for(int i =0; i<4; i++)
+            List<(int dong, int cot)> oTrong = new List<(int, int)>();
+            for (int i = 0; i < kichThuoc; i++)
             {
-                for(int j = 0; j<4; j++)
+                for (int j = 0; j < kichThuoc; j++)
                 {
-                    if (banDo[i,j]== 0)
+                    if (banDo[i, j] == 0)
                     {
                         oTrong.Add((i, j));
                     }
                 }
             }
 
-            //Bước 2 :Nếu con ít nhất 1 ô trống, chọn ngẫu nhiên và điền số 
             if (oTrong.Count > 0)
             {
                 int viTriNgauNhien = rand.Next(oTrong.Count);
                 var oDuocChon = oTrong[viTriNgauNhien];
 
-                // SINH SỐ 2 VỚI TỶ LỆ 90% (NẾU RAND.NEXT(10)<9) NGƯỢC LẠI SINH SỐ 4(10%)
-                banDo[oDuocChon.dong, oDuocChon.cot] = rand.Next(10) < 9 ? 2 : 4;
+                // Sinh số theo độ khó
+                banDo[oDuocChon.dong, oDuocChon.cot] = rand.Next(100) < tyLeSinhSo2 ? 2 : 4;
             }
-                
         }
 
         /// <summary>
         /// Dồn tất cả các ô số sang bên TRÁI và thực hiện gộp nếu có các ô cạnh nhau bằng nhau.
         /// </summary>
-        /// <returns>True nếu có bất kỳ sự thay đổi nào (dồn hoặc gộp), ngược lại False</returns>
         static bool DonTrai()
         {
             bool daThayDoi = false;
 
-            // TODO: Bạn hãy tự viết thuật toán dồn trái ở đây!
-            // Gợi ý thuật toán dồn trái cho mỗi dòng:
-            // 1. Dồn các số khác 0 về bên trái (loại bỏ khoảng trống 0).
-            //    Ví dụ: [2, 0, 2, 4] -> dồn thành [2, 2, 4, 0]
-            // 2. So sánh và gộp các ô cạnh nhau bằng nhau từ trái sang phải:
-            //    - Nếu ô i và ô i+1 bằng nhau (và khác 0):
-            //      + Ô i = Ô i * 2. Cộng giá trị này vào diemSo.
-            //      + Ô i+1 = 0.
-            //      Ví dụ: [2, 2, 4, 0] -> gộp thành [4, 0, 4, 0]
-            // 3. Dồn các số khác 0 về bên trái một lần nữa sau khi gộp.
-            //    Ví dụ: [4, 0, 4, 0] -> dồn thành [4, 4, 0, 0]
-            // 4. Nếu trạng thái ma trận trước và sau khi dồn có sự khác biệt, gán daThayDoi = true.
-
-
-            for(int i =0; i<4; i++)
+            for (int i = 0; i < kichThuoc; i++)
             {
-                //bước 1:dồn các số khác 0 VỀ BÊN TRÁI VÀ DỒN I SANG MẢNG TẠM 'donMoi'
-                int[] dongMoi = new int[4];
+                // Bước 1: Dồn các số khác 0 về bên trái của dòng i
+                int[] dongMoi = new int[kichThuoc];
                 int index = 0;
-                for(int j =0; j<4; j++)
+                for (int j = 0; j < kichThuoc; j++)
                 {
-                    if (banDo[i,j] != 0)
+                    if (banDo[i, j] != 0)
                     {
                         dongMoi[index++] = banDo[i, j];
                     }
                 }
 
-                //bước 2 duyệt mảng tạm để duyệt các số giống nhau nằm cạnh nhau 
-                for(int j=0; j<3; j++)
+                // Bước 2: Gộp các số giống nhau nằm cạnh nhau
+                for (int j = 0; j < kichThuoc - 1; j++)
                 {
-                    if (dongMoi[j]!=0 && dongMoi[j] == dongMoi[j + 1])
+                    if (dongMoi[j] != 0 && dongMoi[j] == dongMoi[j + 1])
                     {
                         dongMoi[j] *= 2;
                         diemSo += dongMoi[j];
                         dongMoi[j + 1] = 0;
-                        j++;
+                        j++; // Bỏ qua ô tiếp theo đã bị gộp
                     }
                 }
 
-                //bước 3 : dồn lại các số khác 0 về bên trái một lần nữa sau khi gộp 
-                int[] dongCuoi = new int[4];
-                index = 0; 
-                for( int j = 0; j <4; j++)
+                // Bước 3: Dồn lại các số khác 0 về bên trái sau khi gộp
+                int[] dongCuoi = new int[kichThuoc];
+                index = 0;
+                for (int j = 0; j < kichThuoc; j++)
                 {
                     if (dongMoi[j] != 0)
                     {
                         dongCuoi[index++] = dongMoi[j];
-
                     }
                 }
 
-                /// Bước 4: Kiểm tra sự thay đổi của dòng, cập nhật kết quả đè lại banDo
-                for (int j = 0; j < 4; j++)
+                // Bước 4: Kiểm tra sự thay đổi của dòng, cập nhật kết quả đè lại banDo
+                for (int j = 0; j < kichThuoc; j++)
                 {
                     if (banDo[i, j] != dongCuoi[j])
                     {
-                        daThayDoi = true;              // Phát hiện bảng đồ có sự thay đổi
+                        daThayDoi = true;
                     }
                     banDo[i, j] = dongCuoi[j];
                 }
             }
+
             return daThayDoi;
         }
 
         /// <summary>
-        /// Xoay ma trận banDo 90 độ theo chiều kim đồng hồ.
+        /// Xoay ma trận banDo 90 độ theo chiều kim đồng hồ (Hỗ trợ kích thước động)
         /// </summary>
         static void XoayMaTran90()
         {
-            // TODO: Bạn hãy tự viết giải thuật xoay ma trận 90 độ ở đây!
-            // Gợi ý:
-            // 1. Tạo một ma trận tạm 4x4: int[,] temp = new int[4, 4];
-            // 2. Gán temp[j, 3 - i] = banDo[i, j] với mọi i, j từ 0 đến 3.
-            // 3. Sao chép ma trận temp đè ngược lại banDo.
+            int[,] temp = new int[kichThuoc, kichThuoc];
 
-            int[,] temp = new int[4, 4];
-
-            //áp dụng công thức xoay ma trận90 độ theo chiều kim đồng hồ 
-             for( int i = 0; i<4; i++)
+            // Áp dụng công thức xoay ma trận xoay quanh kíchThuoc
+            for (int i = 0; i < kichThuoc; i++)
             {
-                for(int j =0; j<4; j++){
-                    temp[j, 3 - i] = banDo[i, j];
-
+                for (int j = 0; j < kichThuoc; j++)
+                {
+                    temp[j, (kichThuoc - 1) - i] = banDo[i, j];
                 }
             }
 
-             //Sao chép ma trận tạm temp đè ngược lại ma trận banDo gốc
-             for(int i=0; i<4; i++)
+            // Sao chép temp đè ngược lại banDo
+            for (int i = 0; i < kichThuoc; i++)
             {
-                for(int j = 0; j<4; j++)
+                for (int j = 0; j < kichThuoc; j++)
                 {
                     banDo[i, j] = temp[i, j];
                 }
@@ -237,10 +276,8 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Quản lý di chuyển theo 4 hướng bằng cách áp dụng xoay ma trận xoay quanh hàm DonTrai()
+        /// Quản lý di chuyển theo 4 hướng sử dụng xoay ma trận xoay quanh DonTrai()
         /// </summary>
-        /// <param name="phim">Phím người chơi nhấn</param>
-        /// <returns>True nếu di chuyển thành công, ngược lại False</returns>
         static bool DiChuyen(ConsoleKey phim)
         {
             bool daDiChuyen = false;
@@ -254,7 +291,6 @@ namespace Game_2048
 
                 case ConsoleKey.RightArrow:
                 case ConsoleKey.D:
-                    // Dồn Phải = Xoay 180 độ (xoay 90 độ 2 lần) -> Dồn Trái -> Xoay 180 độ ngược lại
                     XoayMaTran90();
                     XoayMaTran90();
                     daDiChuyen = DonTrai();
@@ -264,7 +300,6 @@ namespace Game_2048
 
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.W:
-                    // Dồn Lên = Xoay 270 độ (hoặc xoay 90 độ 3 lần) -> Dồn Trái -> Xoay 90 độ
                     XoayMaTran90();
                     XoayMaTran90();
                     XoayMaTran90();
@@ -274,7 +309,6 @@ namespace Game_2048
 
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.S:
-                    // Dồn Xuống = Xoay 90 độ -> Dồn Trái -> Xoay 270 độ
                     XoayMaTran90();
                     daDiChuyen = DonTrai();
                     XoayMaTran90();
@@ -287,76 +321,77 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Kiểm tra xem game đã kết thúc chưa.
+        /// Kiểm tra điều kiện Game Over cho kích thước động
         /// </summary>
-        /// <returns>True nếu không còn ô trống và không gộp được ô nào nữa, ngược lại False</returns>
         static bool KiemTraGameOver()
         {
-            // TODO: Bạn hãy tự viết logic kiểm tra Game Over ở đây!
-            // Gợi ý:
-            // 1. Kiểm tra xem còn ô trống nào không (có giá trị = 0). Nếu còn -> Chưa Game Over (return false).
-            // 2. Nếu không còn ô trống, kiểm tra xem có ô cạnh nhau nào có giá trị bằng nhau không (theo hàng ngang hoặc hàng dọc).
-            //    Nếu có -> Vẫn có thể gộp được -> Chưa Game Over (return false).
-            // 3. Nếu không thuộc hai trường hợp trên -> Game Over (return true).
-            
-
-            //bướ 1 :kiểm tra xem còn ô trống nào trống (bằng 0 )không . nếu còn chưa thua
-            for(int i =0; i<4; i++)
+            // 1. Kiểm tra xem còn ô trống không
+            for (int i = 0; i < kichThuoc; i++)
             {
-                for(int j = 0; j<4; j++)
+                for (int j = 0; j < kichThuoc; j++)
                 {
-                    if (banDo[i,j] == 0)
+                    if (banDo[i, j] == 0)
                     {
                         return false;
                     }
                 }
             }
 
-            //bướ 2 nếu khôgn còn ô trống , kiểm tra xem có ô canh nhau nào bằng nhau khôgn 
-            for(int i=0; i<4; i++)
+            // 2. Kiểm tra xem các ô cạnh nhau có bằng nhau không
+            for (int i = 0; i < kichThuoc; i++)
             {
-                for(int j =0; j<4; j++)
+                for (int j = 0; j < kichThuoc; j++)
                 {
-                    if(j<3 && banDo[i,j] == banDo[i, j + 1])
+                    // Kiểm tra ô bên phải
+                    if (j < kichThuoc - 1 && banDo[i, j] == banDo[i, j + 1])
                     {
-                        return false; // còn cộng được chưa thua
+                        return false;
                     }
-
-                    if(i<3 && banDo[i,j] == banDo[i+1, j])
+                    // Kiểm tra ô bên dưới
+                    if (i < kichThuoc - 1 && banDo[i, j] == banDo[i + 1, j])
                     {
-                        return false; // vẫn có thể gộp được chưa thua
+                        return false;
                     }
                 }
             }
-
-            //bước 3:không có ô trống và không gộp được ô nào nữa => thua cuộc 
 
             return true;
         }
 
         /// <summary>
-        /// Vẽ giao diện game trực quan bằng màu sắc trên Console
+        /// Vẽ giao diện game co giãn động theo kích thước ma trận
         /// </summary>
         static void VeBanDo()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("=================================");
-            Console.WriteLine("            GAME 2048            ");
-            Console.WriteLine("=================================");
+            int chieuRongKhung = kichThuoc * 7 + 1;
+            string duongVienNgang = new string('=', chieuRongKhung);
+            
+            Console.WriteLine(duongVienNgang);
+            Console.WriteLine($"      GAME 2048 CUSTOM ({kichThuoc}x{kichThuoc})      ");
+            Console.WriteLine(duongVienNgang);
             Console.ResetColor();
+
             if (diemSo > diemCao)
             {
                 diemCao = diemSo;
                 LuuDiemCao(diemCao);
             }
             Console.WriteLine($" Điểm số: {diemSo}  |  Kỷ lục: {diemCao}");
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine(new string('-', chieuRongKhung));
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < kichThuoc; i++)
             {
-                Console.WriteLine("|      |      |      |      |");
-                for (int j = 0; j < 4; j++)
+                // In khoảng trống dòng trên của các ô
+                for (int j = 0; j < kichThuoc; j++)
+                {
+                    Console.Write("|      ");
+                }
+                Console.WriteLine("|");
+
+                // In giá trị các ô số ở giữa
+                for (int j = 0; j < kichThuoc; j++)
                 {
                     Console.Write("|");
                     int so = banDo[i, j];
@@ -367,21 +402,27 @@ namespace Game_2048
                     else
                     {
                         ThietLapMauSac(so);
-                        // In số căn giữa trong khoảng 6 ký tự
+                        // Căn lề số cho thẳng hàng
                         Console.Write($"{so,4}  ");
                         Console.ResetColor();
                     }
                 }
                 Console.WriteLine("|");
-                Console.WriteLine("|______|______|______|______|");
+
+                // In đường gạch chân phân cách các ô
+                for (int j = 0; j < kichThuoc; j++)
+                {
+                    Console.Write("|______");
+                }
+                Console.WriteLine("|");
             }
 
-            Console.WriteLine("\n[W, A, S, D] hoặc [Phím Mũi Tên] để di chuyển.");
-            Console.WriteLine("[ESC] để thoát.");
+            Console.WriteLine("\n[W, A, S, D] hoặc [Phím Mũi Tên] để chơi.");
+            Console.WriteLine("[ESC] để quay lại menu chính.");
         }
 
         /// <summary>
-        /// Thiết lập màu sắc nền và chữ tương ứng với từng con số trong game 2048
+        /// Thiết lập màu sắc hiển thị
         /// </summary>
         static void ThietLapMauSac(int so)
         {
