@@ -211,6 +211,25 @@ feat(game-2048): thêm cài đặt kích thước ma trận động và độ kh
 - Reference #5
 ```
 
+*   **Tính năng nâng cấp Arcade Launcher & Top 10**:
+    - **Trang chủ Menu chính (Play, Rank, Exit)**: Tạo màn hình chính đón người chơi, chỉ dừng chương trình khi bấm Exit.
+    - **Quay lại Menu chính bằng phím ESC**: Nhấn ESC khi đang chơi sẽ giải phóng màn hình và quay lại Menu chính thay vì thoát hẳn chương trình.
+    - **Bảng xếp hạng Top 10 tổng hợp**: Nâng cấp số lượng bản ghi lưu trữ lên Top 10. Cho phép chọn xem bảng xếp hạng của bất kỳ kích thước ma trận và độ khó nào ngay tại Menu chính.
+    - **Tách biệt dữ liệu tuyệt đối**: Các file điểm cao và file xếp hạng Top 10 được phân tách động theo cả kích thước ma trận và độ khó (ví dụ: `bxh_4x4_De.txt`, `bxh_5x5_Kho.txt`), đảm bảo tính công bằng cao nhất.
+
+### Mẫu Git Commit Arcade Launcher:
+```text
+feat(game-2048): tích hợp menu chính Arcade và bảng xếp hạng Top 10 tổng hợp
+
+- Thiết lập Menu chính gồm Play, Rank, Exit trong hàm Main
+- Chuyển logic game sang VaoLuotChoiGame, hỗ trợ phím ESC quay lại Menu chính
+- Nâng cấp bảng xếp hạng lên lưu trữ Top 10 phần tử
+- Cho phép chọn xem bảng xếp hạng bất kỳ kích thước và độ khó nào tại Menu chính
+- Tách biệt tên file bxh và diem_cao theo định dạng [Size]_[DoKho]
+- Reference #5
+```
+
+
 
 
 

@@ -24,9 +24,21 @@ namespace Game_2048
         static int diemCao = 0;
         static Random rand = new Random();
 
-        // Đường dẫn file điểm kỷ lục và bảng xếp hạng theo kích thước ma trận
-        static string fileDiemCao => $"diem_cao_{kichThuoc}x{kichThuoc}.txt";
-        static string fileBXH => $"bxh_{kichThuoc}x{kichThuoc}.txt";
+        // Trả về chuỗi ký tự độ khó để làm tên file lưu trữ
+        static string LayTenDoKho()
+        {
+            switch (tyLeSinhSo2)
+            {
+                case 100: return "De";
+                case 70: return "Kho";
+                case 10: return "CucKho";
+                default: return "TrungBinh";
+            }
+        }
+
+        // Đường dẫn file điểm kỷ lục và bảng xếp hạng theo kích thước ma trận và độ khó
+        static string fileDiemCao => $"diem_cao_{kichThuoc}x{kichThuoc}_{LayTenDoKho()}.txt";
+        static string fileBXH => $"bxh_{kichThuoc}x{kichThuoc}_{LayTenDoKho()}.txt";
 
         static void Main(string[] args)
         {
@@ -37,10 +49,49 @@ namespace Game_2048
 
             while (true)
             {
-                // Bước 1: Cho người chơi thiết lập thông số game
-                HienThiMenuCaiDat();
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("=================================================");
+                Console.WriteLine("                GAME 2048 ARCADE                 ");
+                Console.WriteLine("=================================================");
+                Console.ResetColor();
+                Console.WriteLine("  1. Chơi Game (Play)");
+                Console.WriteLine("  2. Xem Bảng Xếp Hạng (Rank)");
+                Console.WriteLine("  3. Thoát Game (Exit)");
+                Console.WriteLine("=================================================");
+                Console.Write(" Nhập lựa chọn của bạn (1-3): ");
 
-                // Bước 2: Khởi tạo game mới dựa trên cài đặt
+                string luaChonMenu = Console.ReadLine() ?? "";
+                switch (luaChonMenu.Trim())
+                {
+                    case "1":
+                        // Bước 1: Cho người chơi thiết lập thông số game
+                        HienThiMenuCaiDat();
+                        // Bước 2: Vào lượt chơi game
+                        VaoLuotChoiGame();
+                        break;
+                    case "2":
+                        // Xem bảng xếp hạng tổng hợp của các kích thước và độ khó
+                        HienThiMenuXepHangTongHop();
+                        break;
+                    case "3":
+                        Console.WriteLine("\nCảm ơn bạn đã chơi game! Hẹn gặp lại.");
+                        return; // Thoát hẳn chương trình
+                    default:
+                        Console.WriteLine("\nLựa chọn không hợp lệ! Nhấn phím bất kỳ để tiếp tục...");
+                        Console.ReadKey(true);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logic luồng chơi game chính
+        /// </summary>
+        static void VaoLuotChoiGame()
+        {
+            while (true)
+            {
                 KhoiTaoGame();
                 bool dangChoi = true;
 
@@ -55,10 +106,10 @@ namespace Game_2048
                         Console.WriteLine("\n GAME OVER! Không thể di chuyển được nữa.");
                         Console.ResetColor();
 
-                        // Cập nhật và lưu bảng xếp hạng Top 5
+                        // Cập nhật và lưu bảng xếp hạng Top 10
                         CapNhatBangXepHang(diemSo);
 
-                        // Hiển thị bảng xếp hạng
+                        // Hiển thị bảng xếp hạng của chế độ hiện tại
                         HienThiBangXepHang();
                         
                         Console.Write("\n Bạn có muốn chơi lại không? (Y/N): ");
@@ -68,13 +119,12 @@ namespace Game_2048
                             ConsoleKeyInfo traLoi = Console.ReadKey(true);
                             if (traLoi.Key == ConsoleKey.Y)
                             {
-                                dangChoi = false; // Thoát vòng lặp hiện tại để bắt đầu game mới
+                                dangChoi = false; // Thoát vòng chơi hiện tại, lặp ngoài sẽ khởi tạo lại game mới
                                 break;
                             }
                             else if (traLoi.Key == ConsoleKey.N)
                             {
-                                Console.WriteLine("\nCảm ơn bạn đã chơi game! Hẹn gặp lại.");
-                                return; // Thoát toàn bộ chương trình
+                                return; // Quay về Menu chính!
                             }
                         }
                         continue;
@@ -86,7 +136,7 @@ namespace Game_2048
 
                     if (phim == ConsoleKey.Escape)
                     {
-                        Console.WriteLine("\nĐang thoát game...");
+                        // Người chơi bấm ESC để thoát về Menu chính
                         return;
                     }
 
@@ -105,7 +155,7 @@ namespace Game_2048
                             {
                                 if (diemSo > diemTruoc)
                                 {
-                                    // Có gộp ô số -> Tiếng beep cao, vui tai
+                                    // Có gộp ô số -> Tiếng beep cao
                                     Console.Beep(800, 100);
                                 }
                                 else
@@ -117,7 +167,7 @@ namespace Game_2048
                         }
                         catch (Exception)
                         {
-                            // Bỏ qua lỗi beep trên các hệ điều hành không hỗ trợ soundcard console
+                            // Bỏ qua lỗi beep
                         }
 
                         // Sinh thêm một số mới
@@ -191,6 +241,84 @@ namespace Game_2048
 
             Console.WriteLine("\n=> Thiết lập hoàn tất! Nhấn Enter để bắt đầu chơi...");
             Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Menu xem bảng xếp hạng tổng hợp theo kích thước và độ khó
+        /// </summary>
+        static void HienThiMenuXepHangTongHop()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("=================================================");
+            Console.WriteLine("          XEM BẢNG XẾP HẠNG TOP 10               ");
+            Console.WriteLine("=================================================");
+            Console.ResetColor();
+
+            // Chọn kích thước muốn xem
+            Console.WriteLine("Chọn kích thước ma trận muốn xem:");
+            Console.WriteLine("  1. 3 x 3");
+            Console.WriteLine("  2. 4 x 4");
+            Console.WriteLine("  3. 5 x 5");
+            Console.WriteLine("  4. 6 x 6");
+            Console.Write("Lựa chọn (1-4, mặc định 2): ");
+            string cKichThuoc = Console.ReadLine() ?? "";
+            int xemKichThuoc = cKichThuoc.Trim() switch
+            {
+                "1" => 3,
+                "3" => 5,
+                "4" => 6,
+                _ => 4
+            };
+
+            // Chọn độ khó muốn xem
+            Console.WriteLine("\nChọn độ khó muốn xem:");
+            Console.WriteLine("  1. Dễ");
+            Console.WriteLine("  2. Trung bình");
+            Console.WriteLine("  3. Khó");
+            Console.WriteLine("  4. Siêu khó");
+            Console.Write("Lựa chọn (1-4, mặc định 2): ");
+            string cDoKho = Console.ReadLine() ?? "";
+            int xemTyLeSinhSo2 = cDoKho.Trim() switch
+            {
+                "1" => 100,
+                "3" => 70,
+                "4" => 10,
+                _ => 90
+            };
+
+            // Tạm thời lưu trữ cấu hình hiện tại để khôi phục sau
+            int cuKichThuoc = kichThuoc;
+            int cuTyLeSinhSo2 = tyLeSinhSo2;
+
+            // Áp dụng cấu hình xem tạm thời
+            kichThuoc = xemKichThuoc;
+            tyLeSinhSo2 = xemTyLeSinhSo2;
+
+            // Hiển thị bảng xếp hạng
+            Console.Clear();
+            string sDoKho = tyLeSinhSo2 switch
+            {
+                100 => "Dễ",
+                70 => "Khó",
+                10 => "Siêu Khó",
+                _ => "Trung Bình"
+            };
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("=================================================");
+            Console.WriteLine($" BẢNG XẾP HẠNG {kichThuoc}x{kichThuoc} - CHẾ ĐỘ {sDoKho.ToUpper()}");
+            Console.WriteLine("=================================================");
+            Console.ResetColor();
+
+            HienThiBangXepHang();
+
+            Console.WriteLine("\nNhấn Enter để quay lại menu chính...");
+            Console.ReadLine();
+
+            // Khôi phục lại cấu hình ban đầu
+            kichThuoc = cuKichThuoc;
+            tyLeSinhSo2 = cuTyLeSinhSo2;
         }
 
         /// <summary>
@@ -521,7 +649,7 @@ namespace Game_2048
             }
         }
 
-        #region HỆ THỐNG ĐIỂM KỶ LỤC & BẢNG XẾP HẠNG TOP 5
+        #region HỆ THỐNG ĐIỂM KỶ LỤC & BẢNG XẾP HẠNG TOP 10
 
         /// <summary>
         /// Đọc điểm kỷ lục từ file lưu trữ
@@ -562,7 +690,7 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Đọc toàn bộ danh sách Top 5 từ file bxh.txt
+        /// Đọc toàn bộ danh sách Top 10 từ file bxh.txt
         /// </summary>
         static List<KyLucEntry> DocBangXepHang()
         {
@@ -598,7 +726,7 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Lưu danh sách Top 5 xuống file bxh.txt
+        /// Lưu danh sách Top 10 xuống file bxh.txt
         /// </summary>
         static void LuuBangXepHang(List<KyLucEntry> danhSach)
         {
@@ -618,17 +746,17 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Cập nhật điểm của lượt chơi vừa kết thúc vào BXH
+        /// Cập nhật điểm của lượt chơi vừa kết thúc vào BXH Top 10
         /// </summary>
         static void CapNhatBangXepHang(int diemMoi)
         {
             var bxh = DocBangXepHang();
 
-            // Nếu chưa đủ 5 người hoặc điểm mới cao hơn điểm của vị trí thứ 5 hiện tại
-            if (bxh.Count < 5 || diemMoi > bxh[bxh.Count - 1].diem)
+            // Nếu chưa đủ 10 người hoặc điểm mới cao hơn điểm của vị trí thứ 10 hiện tại
+            if (bxh.Count < 10 || diemMoi > bxh[bxh.Count - 1].diem)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n 🎉 KỶ LỤC MỚI! Điểm số {diemMoi} lọt vào TOP 5 Bảng Xếp Hạng!");
+                Console.WriteLine($"\n 🎉 KỶ LỤC MỚI! Điểm số {diemMoi} lọt vào TOP 10 Bảng Xếp Hạng!");
                 Console.Write(" Vui lòng nhập tên của bạn (viết liền hoặc không dấu): ");
                 Console.ResetColor();
 
@@ -646,10 +774,10 @@ namespace Game_2048
                 // Sắp xếp lại danh sách
                 bxh.Sort((x, y) => y.diem.CompareTo(x.diem));
 
-                // Giữ lại tối đa 5 người
-                if (bxh.Count > 5)
+                // Giữ lại tối đa 10 người
+                if (bxh.Count > 10)
                 {
-                    bxh.RemoveAt(5);
+                    bxh.RemoveAt(10);
                 }
 
                 // Lưu lại
@@ -658,21 +786,20 @@ namespace Game_2048
         }
 
         /// <summary>
-        /// Vẽ bảng xếp hạng Top 5 lên Console
+        /// Vẽ bảng xếp hạng Top 10 lên Console
         /// </summary>
         static void HienThiBangXepHang()
         {
             var bxh = DocBangXepHang();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\n🏆 BẢNG XẾP HẠNG TOP 5 🏆");
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("-------------------------------------------------");
             Console.WriteLine($"{"Hạng",-6}{"Tên người chơi",-18}{"Điểm số",-10}{"Ngày chơi"}");
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("-------------------------------------------------");
             Console.ResetColor();
 
             if (bxh.Count == 0)
             {
-                Console.WriteLine(" Chưa có kỷ lục nào được ghi nhận.");
+                Console.WriteLine(" Chưa có kỷ lục nào được ghi nhận ở chế độ này.");
             }
             else
             {
@@ -687,7 +814,7 @@ namespace Game_2048
                     Console.ResetColor();
                 }
             }
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("-------------------------------------------------");
         }
 
         #endregion
