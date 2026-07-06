@@ -20,39 +20,57 @@ namespace Game_2048
             Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
 
-            KhoiTaoGame();
-
             while (true)
             {
-                VeBanDo();
+                KhoiTaoGame();
+                bool dangChoi = true;
 
-                if (KiemTraGameOver())
+                while (dangChoi)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n GAME OVER! Không thể di chuyển được nữa.");
-                    Console.ResetColor();
-                    Console.WriteLine("Nhấn phím bất kỳ để thoát...");
-                    Console.ReadKey(true);
-                    break;
-                }
+                    VeBanDo();
 
-                // Đọc phím bấm từ người chơi
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                ConsoleKey phim = keyInfo.Key;
+                    if (KiemTraGameOver())
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n GAME OVER! Không thể di chuyển được nữa.");
+                        Console.ResetColor();
+                        Console.Write(" Bạn có muốn chơi lại không? (Y/N): ");
+                        
+                        while (true)
+                        {
+                            ConsoleKeyInfo traLoi = Console.ReadKey(true);
+                            if (traLoi.Key == ConsoleKey.Y)
+                            {
+                                dangChoi = false; // Thoát vòng lặp chơi hiện tại, vòng lặp cha sẽ gọi KhoiTaoGame() để bắt đầu lại
+                                break;
+                            }
+                            else if (traLoi.Key == ConsoleKey.N)
+                            {
+                                Console.WriteLine("\nCảm ơn bạn đã chơi game! Hẹn gặp lại.");
+                                return; // Kết thúc toàn bộ chương trình
+                            }
+                        }
+                        continue;
+                    }
 
-                if (phim == ConsoleKey.Escape)
-                {
-                    Console.WriteLine("\nĐang thoát game...");
-                    break;
-                }
+                    // Đọc phím bấm từ người chơi
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                    ConsoleKey phim = keyInfo.Key;
 
-                // Thực hiện di chuyển
-                bool daDiChuyen = DiChuyen(phim);
+                    if (phim == ConsoleKey.Escape)
+                    {
+                        Console.WriteLine("\nĐang thoát game...");
+                        return; // Kết thúc toàn bộ chương trình
+                    }
 
-                if (daDiChuyen)
-                {
-                    // Nếu có sự thay đổi (di chuyển hoặc gộp ô), sinh thêm một số mới
-                    SinhSoNgauNhien();
+                    // Thực hiện di chuyển
+                    bool daDiChuyen = DiChuyen(phim);
+
+                    if (daDiChuyen)
+                    {
+                        // Nếu có sự thay đổi (di chuyển hoặc gộp ô), sinh thêm một số mới
+                        SinhSoNgauNhien();
+                    }
                 }
             }
         }

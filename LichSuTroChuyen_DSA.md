@@ -176,5 +176,22 @@ feat(game-2048): hoàn thành trò chơi 2048 phiên bản Console đầu tiên
 - Đóng tự động Issue #5
 ```
 
+*   **Tính năng nâng cấp**:
+    - **Hệ thống lưu điểm cao**: Đọc/ghi điểm cao kỷ lục ra file `diem_cao.txt` và hiển thị trực quan theo thời gian thực.
+    - **Cân bằng game**: Cấu hình xác suất sinh số ngẫu nhiên chuẩn 90% số 2 và 10% số 4.
+    - **Chơi lại (Replay loop)**: Lồng vòng lặp cho phép người chơi chọn chơi lại (Y/N) thay vì thoát hẳn chương trình khi Game Over.
+
+### Mẫu Git Commit Nâng Cấp:
+```text
+feat(game-2048): tích hợp hệ thống điểm kỷ lục và tính năng chơi lại Y/N
+
+- Cài đặt tính năng lưu điểm kỷ lục vĩnh viễn qua file diem_cao.txt
+- Lồng vòng lặp lặp đi lặp lại hỏi chơi lại (Y/N) khi Game Over
+- Điều chỉnh tỉ lệ sinh số ngẫu nhiên chuẩn gốc (90% số 2, 10% số 4)
+- Cập nhật nhật ký trò chuyện LichSuTroChuyen_DSA.md
+- Reference #5
+```
+
+
 
 
