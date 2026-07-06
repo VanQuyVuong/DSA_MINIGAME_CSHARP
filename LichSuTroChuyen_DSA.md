@@ -153,4 +153,100 @@ feat(dsa): hoàn thành bài 6 đệ quy Fibonacci và thuật toán loang DFS
 - Đóng tự động Issue #3
 ```
 
+---
+
+## 🎮 DỰ ÁN 1: GAME 2048 CONSOLE
+*   **Thư mục dự án**: `Game_2048`
+*   **File mã nguồn**: `Program.cs`
+*   **Cấu trúc dữ liệu**: **Ma trận (Mảng 2 chiều)** kích thước $4 \times 4$.
+*   **Giải thuật**: 
+    - Dồn và gộp mảng từ phải sang trái (`DonTrai`).
+    - Kỹ thuật xoay ma trận $90^{\circ}$ (`XoayMaTran90`) để tái sử dụng giải thuật dồn trái cho cả 4 hướng (Trái, Phải, Lên, Xuống).
+    - Sinh số ngẫu nhiên 2/4 ở vị trí trống (`SinhSoNgauNhien`).
+    - Kiểm tra điều kiện dừng game (`KiemTraGameOver`).
+
+### Mẫu Git Commit:
+```text
+feat(game-2048): hoàn thành trò chơi 2048 phiên bản Console đầu tiên
+
+- Khởi tạo dự án mới Game_2048 và đăng ký vào Learn_DSA.slnx
+- Cài đặt thuật toán dồn và gộp ô số sang trái (DonTrai)
+- Áp dụng kỹ thuật xoay ma trận 90 độ (XoayMaTran90) để xử lý các hướng còn lại
+- Cài đặt logic sinh số ngẫu nhiên và kiểm tra trạng thái Game Over
+- Đóng tự động Issue #5
+```
+
+*   **Tính năng nâng cấp**:
+    - **Hệ thống lưu điểm cao**: Đọc/ghi điểm cao kỷ lục ra file `diem_cao.txt` và hiển thị trực quan theo thời gian thực.
+    - **Cân bằng game**: Cấu hình xác suất sinh số ngẫu nhiên chuẩn 90% số 2 và 10% số 4.
+    - **Chơi lại (Replay loop)**: Lồng vòng lặp cho phép người chơi chọn chơi lại (Y/N) thay vì thoát hẳn chương trình khi Game Over.
+
+### Mẫu Git Commit Nâng Cấp:
+```text
+feat(game-2048): tích hợp hệ thống điểm kỷ lục và tính năng chơi lại Y/N
+
+- Cài đặt tính năng lưu điểm kỷ lục vĩnh viễn qua file diem_cao.txt
+- Lồng vòng lặp lặp đi lặp lại hỏi chơi lại (Y/N) khi Game Over
+- Điều chỉnh tỉ lệ sinh số ngẫu nhiên chuẩn gốc (90% số 2, 10% số 4)
+- Cập nhật nhật ký trò chuyện LichSuTroChuyen_DSA.md
+- Reference #5
+```
+
+*   **Tính năng nâng cấp Custom**:
+    - **Menu cài đặt (Setup Menu)**: Thêm giao diện chọn kích thước ma trận và độ khó trước khi vào chơi.
+    - **Ma trận động (3x3 đến 6x6)**: Tổng quát hóa toàn bộ các vòng lặp cố định `4` thành biến `kichThuoc`, cho phép thay đổi cấu trúc bảng chơi linh hoạt.
+    - **Kỷ lục độc lập**: Tự động phân tách file điểm cao theo từng kích thước ma trận (ví dụ: `diem_cao_3x3.txt`, `diem_cao_5x5.txt`) để đảm bảo tính công bằng.
+    - **Độ khó tùy chọn**: Cho phép điều chỉnh xác suất sinh các ô số 2/4 (Dễ, Trung bình, Khó, Siêu khó).
+    - **Vẽ bảng co giãn động**: Tự động căn chỉnh chiều rộng của khung lưới vẽ trên Console theo kích thước ma trận đã chọn.
+
+### Mẫu Git Commit Custom Settings:
+```text
+feat(game-2048): thêm cài đặt kích thước ma trận động và độ khó custom
+
+- Thiết lập HienThiMenuCaiDat trước khi khởi tạo game
+- Chuyển đổi ma trận tĩnh 4x4 sang động kíchThuoc từ 3x3 đến 6x6
+- Phân tách file điểm cao theo định dạng diem_cao_[Size]x[Size].txt
+- Thêm các tùy chọn độ khó ảnh hưởng đến tỉ lệ sinh ô số
+- Viết lại hàm VeBanDo để co giãn khung vẽ lưới Console theo kích thước
+- Reference #5
+```
+
+*   **Tính năng nâng cấp Arcade Launcher & Top 10**:
+    - **Trang chủ Menu chính (Play, Rank, Exit)**: Tạo màn hình chính đón người chơi, chỉ dừng chương trình khi bấm Exit.
+    - **Quay lại Menu chính bằng phím ESC**: Nhấn ESC khi đang chơi sẽ giải phóng màn hình và quay lại Menu chính thay vì thoát hẳn chương trình.
+    - **Bảng xếp hạng Top 10 tổng hợp**: Nâng cấp số lượng bản ghi lưu trữ lên Top 10. Cho phép chọn xem bảng xếp hạng của bất kỳ kích thước ma trận và độ khó nào ngay tại Menu chính.
+    - **Tách biệt dữ liệu tuyệt đối**: Các file điểm cao và file xếp hạng Top 10 được phân tách động theo cả kích thước ma trận và độ khó (ví dụ: `bxh_4x4_De.txt`, `bxh_5x5_Kho.txt`), đảm bảo tính công bằng cao nhất.
+
+### Mẫu Git Commit Arcade Launcher:
+```text
+feat(game-2048): tích hợp menu chính Arcade và bảng xếp hạng Top 10 tổng hợp
+
+- Thiết lập Menu chính gồm Play, Rank, Exit trong hàm Main
+- Chuyển logic game sang VaoLuotChoiGame, hỗ trợ phím ESC quay lại Menu chính
+- Nâng cấp bảng xếp hạng lên lưu trữ Top 10 phần tử
+- Cho phép chọn xem bảng xếp hạng bất kỳ kích thước và độ khó nào tại Menu chính
+- Tách biệt tên file bxh và diem_cao theo định dạng [Size]_[DoKho]
+- Reference #5
+```
+
+*   **Tính năng nâng cấp Menu xếp hạng dạng cây gấp gọn (Collapsible Tree Menu)**:
+    - **Tương tác trực quan bằng phím mũi tên**: Dùng phím ↑/↓ để di chuyển vạch sáng chọn mục, phím Enter để thao tác và phím ESC để quay lại.
+    - **Đổ dữ liệu động & Gấp gọn (Collapse/Expand)**: Khi chọn kích thước ma trận (nút cha), cây thư mục tự động xổ ra 4 lựa chọn độ khó tương ứng (nút con). Nhấn Enter một lần nữa sẽ thu lại gọn gàng.
+    - **Xem chi tiết xếp hạng**: Chọn một độ khó (nút con) bất kỳ để hiển thị bảng điểm Top 10 của chế độ tương ứng.
+
+### Mẫu Git Commit Collapsible Menu:
+```text
+feat(game-2048): thiết kế bảng xếp hạng dạng cây co xếp bằng phím mũi tên
+
+- Xây dựng lớp MenuNode hỗ trợ hiển thị phân cấp cha-con
+- Cài đặt HienThiMenuXepHangTongHop phản hồi phím UpArrow/DownArrow/Enter/ESC
+- Thêm cơ chế xổ rộng/thu gọn (Expand/Collapse) động cho từng kích thước ma trận
+- Reference #5
+```
+
+
+
+
+
+
 
