@@ -7,6 +7,14 @@ namespace Game_2048
 {
     class Program
     {
+        // Định nghĩa thực thể cho bảng xếp hạng
+        class KyLucEntry
+        {
+            public string ten { get; set; } = "";
+            public int diem { get; set; }
+            public string thoiGian { get; set; } = "";
+        }
+
         // Cấu hình động cho game
         static int kichThuoc = 4; // Mặc định là 4x4
         static int tyLeSinhSo2 = 90; // Tỷ lệ sinh số 2 (mặc định 90%)
@@ -16,8 +24,9 @@ namespace Game_2048
         static int diemCao = 0;
         static Random rand = new Random();
 
-        // Đường dẫn file điểm cao thay đổi động theo kích thước ma trận
+        // Đường dẫn file điểm kỷ lục và bảng xếp hạng theo kích thước ma trận
         static string fileDiemCao => $"diem_cao_{kichThuoc}x{kichThuoc}.txt";
+        static string fileBXH => $"bxh_{kichThuoc}x{kichThuoc}.txt";
 
         static void Main(string[] args)
         {
@@ -41,10 +50,18 @@ namespace Game_2048
 
                     if (KiemTraGameOver())
                     {
+                        VeBanDo(); // Vẽ lại trạng thái cuối cùng
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\n GAME OVER! Không thể di chuyển được nữa.");
                         Console.ResetColor();
-                        Console.Write(" Bạn có muốn chơi lại không? (Y/N): ");
+
+                        // Cập nhật và lưu bảng xếp hạng Top 5
+                        CapNhatBangXepHang(diemSo);
+
+                        // Hiển thị bảng xếp hạng
+                        HienThiBangXepHang();
+                        
+                        Console.Write("\n Bạn có muốn chơi lại không? (Y/N): ");
                         
                         while (true)
                         {
@@ -73,11 +90,36 @@ namespace Game_2048
                         return;
                     }
 
+                    // Lưu điểm số trước khi di chuyển để so sánh phát âm thanh
+                    int diemTruoc = diemSo;
+
                     // Thực hiện di chuyển
                     bool daDiChuyen = DiChuyen(phim);
 
                     if (daDiChuyen)
                     {
+                        // Phát âm thanh phản hồi (Beep)
+                        try
+                        {
+                            if (OperatingSystem.IsWindows())
+                            {
+                                if (diemSo > diemTruoc)
+                                {
+                                    // Có gộp ô số -> Tiếng beep cao, vui tai
+                                    Console.Beep(800, 100);
+                                }
+                                else
+                                {
+                                    // Chỉ di chuyển -> Tiếng beep thấp, ngắn
+                                    Console.Beep(450, 60);
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // Bỏ qua lỗi beep trên các hệ điều hành không hỗ trợ soundcard console
+                        }
+
                         // Sinh thêm một số mới
                         SinhSoNgauNhien();
                     }
@@ -479,6 +521,8 @@ namespace Game_2048
             }
         }
 
+        #region HỆ THỐNG ĐIỂM KỶ LỤC & BẢNG XẾP HẠNG TOP 5
+
         /// <summary>
         /// Đọc điểm kỷ lục từ file lưu trữ
         /// </summary>
@@ -516,5 +560,136 @@ namespace Game_2048
                 // Bỏ qua lỗi ghi file
             }
         }
+
+        /// <summary>
+        /// Đọc toàn bộ danh sách Top 5 từ file bxh.txt
+        /// </summary>
+        static List<KyLucEntry> DocBangXepHang()
+        {
+            List<KyLucEntry> danhSach = new List<KyLucEntry>();
+            try
+            {
+                if (File.Exists(fileBXH))
+                {
+                    string[] dong = File.ReadAllLines(fileBXH);
+                    foreach (string line in dong)
+                    {
+                        string[] phan = line.Split('|');
+                        if (phan.Length == 3 && int.TryParse(phan[1], out int score))
+                        {
+                            danhSach.Add(new KyLucEntry
+                            {
+                                ten = phan[0],
+                                diem = score,
+                                thoiGian = phan[2]
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Bỏ qua lỗi
+            }
+
+            // Đảm bảo danh sách luôn được sắp xếp giảm dần theo điểm số
+            danhSach.Sort((x, y) => y.diem.CompareTo(x.diem));
+            return danhSach;
+        }
+
+        /// <summary>
+        /// Lưu danh sách Top 5 xuống file bxh.txt
+        /// </summary>
+        static void LuuBangXepHang(List<KyLucEntry> danhSach)
+        {
+            try
+            {
+                List<string> dongLuu = new List<string>();
+                foreach (var item in danhSach)
+                {
+                    dongLuu.Add($"{item.ten}|{item.diem}|{item.thoiGian}");
+                }
+                File.WriteAllLines(fileBXH, dongLuu);
+            }
+            catch (Exception)
+            {
+                // Bỏ qua lỗi
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật điểm của lượt chơi vừa kết thúc vào BXH
+        /// </summary>
+        static void CapNhatBangXepHang(int diemMoi)
+        {
+            var bxh = DocBangXepHang();
+
+            // Nếu chưa đủ 5 người hoặc điểm mới cao hơn điểm của vị trí thứ 5 hiện tại
+            if (bxh.Count < 5 || diemMoi > bxh[bxh.Count - 1].diem)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n 🎉 KỶ LỤC MỚI! Điểm số {diemMoi} lọt vào TOP 5 Bảng Xếp Hạng!");
+                Console.Write(" Vui lòng nhập tên của bạn (viết liền hoặc không dấu): ");
+                Console.ResetColor();
+
+                string tenNguoiChoi = Console.ReadLine() ?? "VoDanh";
+                if (string.IsNullOrWhiteSpace(tenNguoiChoi)) tenNguoiChoi = "VoDanh";
+
+                // Thêm kết quả mới
+                bxh.Add(new KyLucEntry
+                {
+                    ten = tenNguoiChoi,
+                    diem = diemMoi,
+                    thoiGian = DateTime.Now.ToString("dd/MM/yyyy")
+                });
+
+                // Sắp xếp lại danh sách
+                bxh.Sort((x, y) => y.diem.CompareTo(x.diem));
+
+                // Giữ lại tối đa 5 người
+                if (bxh.Count > 5)
+                {
+                    bxh.RemoveAt(5);
+                }
+
+                // Lưu lại
+                LuuBangXepHang(bxh);
+            }
+        }
+
+        /// <summary>
+        /// Vẽ bảng xếp hạng Top 5 lên Console
+        /// </summary>
+        static void HienThiBangXepHang()
+        {
+            var bxh = DocBangXepHang();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n🏆 BẢNG XẾP HẠNG TOP 5 🏆");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine($"{"Hạng",-6}{"Tên người chơi",-18}{"Điểm số",-10}{"Ngày chơi"}");
+            Console.WriteLine("-------------------------------------");
+            Console.ResetColor();
+
+            if (bxh.Count == 0)
+            {
+                Console.WriteLine(" Chưa có kỷ lục nào được ghi nhận.");
+            }
+            else
+            {
+                for (int i = 0; i < bxh.Count; i++)
+                {
+                    // Đổi màu sắc cho 3 thứ hạng đầu
+                    if (i == 0) Console.ForegroundColor = ConsoleColor.Yellow; // Vàng
+                    else if (i == 1) Console.ForegroundColor = ConsoleColor.Gray; // Bạc
+                    else if (i == 2) Console.ForegroundColor = ConsoleColor.DarkYellow; // Đồng
+
+                    Console.WriteLine($"{i + 1,-6}{bxh[i].ten,-18}{bxh[i].diem,-10}{bxh[i].thoiGian}");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("-------------------------------------");
+        }
+
+        #endregion
     }
 }
