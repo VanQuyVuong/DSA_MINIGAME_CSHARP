@@ -243,9 +243,111 @@ feat(game-2048): thiết kế bảng xếp hạng dạng cây co xếp bằng ph
 - Thêm cơ chế xổ rộng/thu gọn (Expand/Collapse) động cho từng kích thước ma trận
 - Reference #5
 ```
+*   **Dự án 2: Game Minesweeper (Dò Mìn) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Rải mìn**:
+        - Thiết lập ma trận vuông `kichThuoc x kichThuoc` (mặc định 9x9) và số lượng mìn `soLuongMin` (mặc định 10).
+        - Rải mìn ngẫu nhiên giá trị `-1` vào ma trận, kiểm tra trùng lặp ô.
+        - Duyệt 8 ô lân cận của từng ô đất trống để đếm và điền số mìn bao quanh (1-8).
+        - Vẽ bản đồ hiện lộ (debug) hiển thị rõ các ô mìn `*` màu đỏ, ô trống `.` và các con số chỉ định mìn xung quanh màu Cyan.
 
+### Mẫu Git Commit Minesweeper Bước 1:
+```text
+feat(minesweeper): hoàn thiện tính toán số mìn xung quanh và vẽ bản đồ hiện lộ
 
+- Cài đặt tính toán số mìn ở 8 ô xung quanh cho mỗi ô đất trống
+- Viết hàm VeBanDoHienLo có tiêu đề hàng và cột trực quan
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #7
+```
 
+    - **Bước 2: Tạo bản đồ ẩn & Cơ chế nhấp mở ô (Tái cấu trúc OOP)**:
+        - **Tái cấu trúc (Refactoring)**: Tách riêng phần Logic thuật toán sang [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) và phần giao diện vẽ Console sang [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để dễ quản lý và chuẩn bị tái sử dụng cho Unity sau này.
+        - **Bản đồ ẩn**: Khai báo mảng `banDoHienThi` kiểu `char` và phủ kín ban đầu bằng ký tự ẩn `#`.
+        - **MoO (Mở ô)**: Viết hàm logic kiểm tra trúng mìn (trả về false), hoặc chuyển số mìn lân cận thành ký tự số để hiển thị lên bản đồ che mắt người chơi.
+        - **Vòng lặp tương tác**: Nhận tọa độ từ người chơi (dòng, cột), kiểm tra lỗi nhập không hợp lệ để tránh crash chương trình.
+
+### Mẫu Git Commit Minesweeper Bước 2:
+```text
+feat(minesweeper): cấu trúc OOP 3 file và cơ chế mở ô bản đồ ẩn
+
+- Tách logic game sang MinesweeperLogic.cs và giao diện sang MinesweeperUI.cs
+- Khai báo mảng banDoHienThi và phủ kín ban đầu bằng ký tự ẩn '#'
+- Viết hàm MoO kiểm tra mìn và cập nhật trạng thái mở ô đất trống
+- Xây dựng vòng lặp chính nhận tọa độ nhập từ người chơi ở Program.cs
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #8
+```
+    - **Bước 3: Cài đặt thuật toán Loang DFS (Flood Fill)**:
+        - **Loang DFS (Flood Fill)**: Cài đặt phương thức đệ quy `Loang(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Khi mở trúng ô có `0` mìn lân cận, thuật toán tự động lan ra 8 ô xung quanh để mở rộng vùng an toàn cho đến khi gặp ô có số thì dừng lại.
+        - **Liên kết MoO**: Cập nhật hàm `MoO()` để tự động kích hoạt loang khi người chơi chọn trúng ô `0` mìn.
+
+### Mẫu Git Commit Minesweeper Bước 3:
+```text
+feat(minesweeper): cài đặt thuật toán loang DFS mở rộng vùng an toàn
+
+- Cài đặt đệ quy hàm Loang DFS (Flood Fill) lân cận 8 ô
+- Liên kết hàm MoO gọi đệ quy Loang khi mở trúng ô 0 mìn
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #9
+```
+
+    - **Bước 4: Chức năng Cắm cờ & Điều kiện chiến thắng (Phần 1 - Cắm cờ)**:
+        - **Cắm cờ (`F`)**: Cài đặt phương thức `CamCo(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) cho phép đánh dấu ô chưa mở là cờ `F` hoặc gỡ cờ quay lại `#`.
+        - **Vẽ cờ trên Console UI**: Cập nhật hàm vẽ bản đồ trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) hiển thị ký tự cờ `F` màu tím nổi bật.
+        - **Thay đổi Input Parser**: Viết lại cơ chế phân tích dữ liệu nhập từ người chơi ở [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để nhận dạng cú pháp hành động: `M [dòng] [cột]` (mở) hoặc `F [dòng] [cột]` (cắm cờ).
+
+### Mẫu Git Commit Minesweeper Bước 4 (Commit 1):
+```text
+feat(minesweeper): tích hợp chức năng cắm cờ và gỡ cờ F trên bản đồ
+
+- Viết hàm CamCo hỗ trợ chuyển đổi trạng thái giữa '#' và 'F'
+- Tô màu tím nổi bật cho ký tự F cờ trên bản đồ hiển thị
+- Cập nhật cú pháp nhập lệnh [M/F] [dòng] [cột] trong hàm Main
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #10
+```
+
+        - **Kiểm tra chiến thắng**: Viết hàm `KiemTraChienThang()` ở [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) đếm số ô chưa mở (có ký tự `#` hoặc `F`), nếu bằng đúng số lượng mìn thì chiến thắng. Cập nhật Main loop ở [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để thông báo thắng cuộc.
+
+### Mẫu Git Commit Minesweeper Bước 4 (Commit 2):
+```text
+feat(minesweeper): bổ sung kiểm tra điều kiện chiến thắng
+
+- Cài đặt hàm KiemTraChienThang đếm số lượng ô chưa mở bằng số mìn
+- Thêm kiểm tra điều kiện thắng sau mỗi nước đi hợp lệ ở hàm Main
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #10
+```
+
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 1 - Đồ họa & Thời gian)**:
+        - **Màu sắc chuyên nghiệp**: Viết hàm `ThietLapMauSacKyTu()` ở [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) tô màu chuẩn cho các số từ 1 đến 8 (số 1 màu xanh dương, số 2 xanh lá, số 3 đỏ...).
+        - **Đồng hồ tính giờ**: Sử dụng `DateTime` trong [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tính tổng số giây hoàn thành game và hiển thị khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 1):
+```text
+feat(minesweeper): tích hợp màu sắc cho các con số và đồng hồ tính giờ
+
+- Tô màu chuẩn Windows Minesweeper cho các chữ số từ 1 đến 8
+- Ghi nhận và hiển thị tổng thời gian hoàn thành game bằng giây khi thắng cuộc
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #11
+```
+
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 2 - Bảng xếp hạng)**:
+        - **Hệ thống kỷ lục thời gian**: Khai báo thực thể `KyLucMinesweeper` và các phương thức đọc/ghi dữ liệu xếp hạng trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Dữ liệu được sắp xếp tăng dần theo thời gian (giải nhanh nhất xếp hạng cao nhất) và lưu trữ trong file `bxh_minesweeper_[KíchThước]x[SốMìn].txt`.
+        - **Vẽ bảng xếp hạng**: Cài đặt phương thức `HienThiBangXepHang()` trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để kết xuất bảng Top 10 kèm màu sắc huy chương Vàng, Bạc, Đồng.
+        - **Tích hợp vòng kết thúc**: Cập nhật hàm `Main` của [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tự động kích hoạt bảng ghi danh và vẽ bảng xếp hạng khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 2):
+```text
+feat(minesweeper): tích hợp bảng xếp hạng Top 10 kỷ lục thời gian
+
+- Xây dựng lớp KyLucMinesweeper và phương thức Doc/Luu/CapNhat xếp hạng
+- Sắp xếp kỷ lục tăng dần theo tổng số giây giải mìn
+- Vẽ giao diện bảng xếp hạng Top 10 tô màu huy chương
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #11
+```
 
 
 

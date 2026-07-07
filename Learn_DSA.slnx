@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="Learn_DSA/Learn_DSA.csproj" />
   <Project Path="Game_2048/Game_2048.csproj" />
+  <Project Path="Game_Minesweeper/Game_Minesweeper.csproj" />
 </Solution>
