@@ -63,6 +63,16 @@ namespace Game_Minesweeper
                         dangChoi = false;
                     }
                 }
+
+                // Kiểm tra chiến thắng sau mỗi nước đi hợp lệ
+                if (dangChoi && game.KiemTraChienThang())
+                {
+                    MinesweeperUI.VeBanDoHienThi(game.banDoHienThi, game.kichThuoc);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n 🎉 CHÚC MỪNG! Bạn đã tìm ra tất cả các ô an toàn và giành CHIẾN THẮNG!");
+                    Console.ResetColor();
+                    dangChoi = false;
+                }
             }
 
             Console.WriteLine("\n Nhấn Enter để thoát trò chơi...");

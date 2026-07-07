@@ -147,5 +147,26 @@ namespace Game_Minesweeper
                 banDoHienThi[dong, cot] = '#';
             }
         }
+
+        /// <summary>
+        /// Kiểm tra xem người chơi đã mở hết tất cả ô an toàn chưa
+        /// </summary>
+        public bool KiemTraChienThang()
+        {
+            int soOChuaMo = 0;
+            for (int i = 0; i < kichThuoc; i++)
+            {
+                for (int j = 0; j < kichThuoc; j++)
+                {
+                    // Nếu ô là '#' hoặc 'F' thì tức là chưa mở
+                    if (banDoHienThi[i, j] == '#' || banDoHienThi[i, j] == 'F')
+                    {
+                        soOChuaMo++;
+                    }
+                }
+            }
+            // Chiến thắng khi số lượng ô chưa mở bằng đúng số lượng mìn
+            return soOChuaMo == soLuongMin;
+        }
     }
 }
