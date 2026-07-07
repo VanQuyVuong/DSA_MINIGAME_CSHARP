@@ -83,10 +83,10 @@ namespace Game_Minesweeper
                 return false;
             }
 
-            // Nếu là ô trống (0 mìn xung quanh), hiển thị dấu '.' dạng khoảng trắng ' '
+            // Nếu là ô trống (0 mìn xung quanh), gọi đệ quy loang tự động mở rộng vùng an toàn
             if (banDoMin[dong, cot] == 0)
             {
-                banDoHienThi[dong, cot] = ' ';
+                Loang(dong, cot);
             }
             else
             {
@@ -95,6 +95,42 @@ namespace Game_Minesweeper
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Thuật toán Loang DFS (Flood Fill) tự động mở rộng vùng an toàn
+        /// </summary>
+        private void Loang(int dong, int cot)
+        {
+            // Điều kiện dừng 1: Vượt quá biên của ma trận
+            if (dong < 0 || dong >= kichThuoc || cot < 0 || cot >= kichThuoc) return;
+
+            // Điều kiện dừng 2: Ô này đã được mở từ trước rồi (không còn là '#')
+            if (banDoHienThi[dong, cot] != '#') return;
+
+            // Nếu là ô trống (0 mìn xung quanh)
+            if (banDoMin[dong, cot] == 0)
+            {
+                banDoHienThi[dong, cot] = ' '; // Đánh dấu ô trống đã mở
+
+                // Loang tiếp ra 8 ô lân cận
+                for (int d = dong - 1; d <= dong + 1; d++)
+                {
+                    for (int c = cot - 1; c <= cot + 1; c++)
+                    {
+                        // Bỏ qua chính ô hiện tại
+                        if (d == dong && c == cot) continue;
+                        
+                        // Đệ quy loang tiếp sang ô lân cận
+                        Loang(d, c);
+                    }
+                }
+            }
+            else
+            {
+                // Nếu gặp ô có số (1-8 mìn xung quanh), chỉ hiển thị số và DỪNG LOANG tại ô này
+                banDoHienThi[dong, cot] = (char)('0' + banDoMin[dong, cot]);
+            }
         }
     }
 }

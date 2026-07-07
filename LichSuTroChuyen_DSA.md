@@ -277,4 +277,16 @@ feat(minesweeper): cấu trúc OOP 3 file và cơ chế mở ô bản đồ ẩn
 - Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
 - Reference #8
 ```
+    - **Bước 3: Cài đặt thuật toán Loang DFS (Flood Fill)**:
+        - **Loang DFS (Flood Fill)**: Cài đặt phương thức đệ quy `Loang(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Khi mở trúng ô có `0` mìn lân cận, thuật toán tự động lan ra 8 ô xung quanh để mở rộng vùng an toàn cho đến khi gặp ô có số thì dừng lại.
+        - **Liên kết MoO**: Cập nhật hàm `MoO()` để tự động kích hoạt loang khi người chơi chọn trúng ô `0` mìn.
 
+### Mẫu Git Commit Minesweeper Bước 3:
+```text
+feat(minesweeper): cài đặt thuật toán loang DFS mở rộng vùng an toàn
+
+- Cài đặt đệ quy hàm Loang DFS (Flood Fill) lân cận 8 ô
+- Liên kết hàm MoO gọi đệ quy Loang khi mở trúng ô 0 mìn
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #9
+```
