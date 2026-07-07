@@ -14,6 +14,7 @@ namespace Game_Minesweeper
             MinesweeperLogic game = new MinesweeperLogic(9, 10);
 
             bool dangChoi = true;
+            DateTime thoiDiemBatDau = DateTime.Now;
 
             while (dangChoi)
             {
@@ -64,12 +65,13 @@ namespace Game_Minesweeper
                     }
                 }
 
-                // Kiểm tra chiến thắng sau mỗi nước đi hợp lệ
                 if (dangChoi && game.KiemTraChienThang())
                 {
                     MinesweeperUI.VeBanDoHienThi(game.banDoHienThi, game.kichThuoc);
+                    double tongThoiGian = (DateTime.Now - thoiDiemBatDau).TotalSeconds;
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("\n 🎉 CHÚC MỪNG! Bạn đã tìm ra tất cả các ô an toàn và giành CHIẾN THẮNG!");
+                    Console.WriteLine($" ⏱️ Thời gian hoàn thành: {tongThoiGian:F1} giây.");
                     Console.ResetColor();
                     dangChoi = false;
                 }

@@ -319,4 +319,19 @@ feat(minesweeper): bổ sung kiểm tra điều kiện chiến thắng
 - Closes #10
 ```
 
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 1 - Đồ họa & Thời gian)**:
+        - **Màu sắc chuyên nghiệp**: Viết hàm `ThietLapMauSacKyTu()` ở [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) tô màu chuẩn cho các số từ 1 đến 8 (số 1 màu xanh dương, số 2 xanh lá, số 3 đỏ...).
+        - **Đồng hồ tính giờ**: Sử dụng `DateTime` trong [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tính tổng số giây hoàn thành game và hiển thị khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 1):
+```text
+feat(minesweeper): tích hợp màu sắc cho các con số và đồng hồ tính giờ
+
+- Tô màu chuẩn Windows Minesweeper cho các chữ số từ 1 đến 8
+- Ghi nhận và hiển thị tổng thời gian hoàn thành game bằng giây khi thắng cuộc
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #11
+```
+
+
 

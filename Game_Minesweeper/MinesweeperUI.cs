@@ -51,7 +51,7 @@ namespace Game_Minesweeper
                     else
                     {
                         // Các ô số
-                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        ThietLapMauSacKyTu(kyTu);
                         Console.Write(kyTu + " ");
                     }
                     Console.ResetColor();
@@ -98,12 +98,49 @@ namespace Game_Minesweeper
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        ThietLapMauSacKyTu((char)('0' + giaTri));
                         Console.Write(giaTri + " ");
                     }
                     Console.ResetColor();
                 }
                 Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// Thiết lập màu sắc chuyên nghiệp cho từng con số chỉ định mìn lân cận (1-8)
+        /// </summary>
+        private static void ThietLapMauSacKyTu(char kyTu)
+        {
+            switch (kyTu)
+            {
+                case '1':
+                    Console.ForegroundColor = ConsoleColor.Blue; // Số 1: Xanh dương
+                    break;
+                case '2':
+                    Console.ForegroundColor = ConsoleColor.Green; // Số 2: Xanh lá
+                    break;
+                case '3':
+                    Console.ForegroundColor = ConsoleColor.Red; // Số 3: Đỏ
+                    break;
+                case '4':
+                    Console.ForegroundColor = ConsoleColor.DarkBlue; // Số 4: Xanh dương đậm
+                    break;
+                case '5':
+                    Console.ForegroundColor = ConsoleColor.DarkRed; // Số 5: Đỏ đậm
+                    break;
+                case '6':
+                    Console.ForegroundColor = ConsoleColor.DarkCyan; // Số 6: Xanh ngọc đậm
+                    break;
+                case '7':
+                    Console.ForegroundColor = ConsoleColor.DarkGray; // Số 7: Xám đậm
+                    break;
+                case '8':
+                    Console.ForegroundColor = ConsoleColor.Gray; // Số 8: Xám
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    break;
             }
         }
     }
