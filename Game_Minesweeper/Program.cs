@@ -73,6 +73,13 @@ namespace Game_Minesweeper
                     Console.WriteLine("\n 🎉 CHÚC MỪNG! Bạn đã tìm ra tất cả các ô an toàn và giành CHIẾN THẮNG!");
                     Console.WriteLine($" ⏱️ Thời gian hoàn thành: {tongThoiGian:F1} giây.");
                     Console.ResetColor();
+
+                    // Cập nhật và lưu bảng xếp hạng Top 10
+                    game.CapNhatBangXepHang(tongThoiGian);
+
+                    // Hiển thị bảng xếp hạng
+                    MinesweeperUI.HienThiBangXepHang(game.DocBangXepHang());
+
                     dangChoi = false;
                 }
             }

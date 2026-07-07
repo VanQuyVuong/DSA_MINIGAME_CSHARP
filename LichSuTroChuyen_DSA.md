@@ -333,5 +333,22 @@ feat(minesweeper): tích hợp màu sắc cho các con số và đồng hồ tí
 - Reference #11
 ```
 
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 2 - Bảng xếp hạng)**:
+        - **Hệ thống kỷ lục thời gian**: Khai báo thực thể `KyLucMinesweeper` và các phương thức đọc/ghi dữ liệu xếp hạng trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Dữ liệu được sắp xếp tăng dần theo thời gian (giải nhanh nhất xếp hạng cao nhất) và lưu trữ trong file `bxh_minesweeper_[KíchThước]x[SốMìn].txt`.
+        - **Vẽ bảng xếp hạng**: Cài đặt phương thức `HienThiBangXepHang()` trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để kết xuất bảng Top 10 kèm màu sắc huy chương Vàng, Bạc, Đồng.
+        - **Tích hợp vòng kết thúc**: Cập nhật hàm `Main` của [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tự động kích hoạt bảng ghi danh và vẽ bảng xếp hạng khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 2):
+```text
+feat(minesweeper): tích hợp bảng xếp hạng Top 10 kỷ lục thời gian
+
+- Xây dựng lớp KyLucMinesweeper và phương thức Doc/Luu/CapNhat xếp hạng
+- Sắp xếp kỷ lục tăng dần theo tổng số giây giải mìn
+- Vẽ giao diện bảng xếp hạng Top 10 tô màu huy chương
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #11
+```
+
+
 
 

@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 namespace Game_Minesweeper
 {
@@ -168,5 +170,107 @@ namespace Game_Minesweeper
             // Chiến thắng khi số lượng ô chưa mở bằng đúng số lượng mìn
             return soOChuaMo == soLuongMin;
         }
+
+        #region HỆ THỐNG BẢNG XẾP HẠNG TOP 10
+
+        public class KyLucMinesweeper
+        {
+            public string ten { get; set; } = "";
+            public double thoiGian { get; set; }
+            public string ngayChoi { get; set; } = "";
+        }
+
+        private string fileBXH => $"bxh_minesweeper_{kichThuoc}x{kichThuoc}_{soLuongMin}.txt";
+
+        /// <summary>
+        /// Đọc danh sách xếp hạng từ file text
+        /// </summary>
+        public List<KyLucMinesweeper> DocBangXepHang()
+        {
+            List<KyLucMinesweeper> ds = new List<KyLucMinesweeper>();
+            try
+            {
+                if (File.Exists(fileBXH))
+                {
+                    string[] dong = File.ReadAllLines(fileBXH);
+                    foreach (string line in dong)
+                    {
+                        string[] phan = line.Split('|');
+                        if (phan.Length == 3 && double.TryParse(phan[1], out double time))
+                        {
+                            ds.Add(new KyLucMinesweeper
+                            {
+                                ten = phan[0],
+                                thoiGian = time,
+                                ngayChoi = phan[2]
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception) { }
+
+            // Sắp xếp tăng dần theo thời gian (giải nhanh nhất lên đầu)
+            ds.Sort((x, y) => x.thoiGian.CompareTo(y.thoiGian));
+            return ds;
+        }
+
+        /// <summary>
+        /// Ghi danh sách xếp hạng xuống file text
+        /// </summary>
+        private void LuuBangXepHang(List<KyLucMinesweeper> ds)
+        {
+            try
+            {
+                List<string> dongLuu = new List<string>();
+                foreach (var item in ds)
+                {
+                    dongLuu.Add($"{item.ten}|{item.thoiGian}|{item.ngayChoi}");
+                }
+                File.WriteAllLines(fileBXH, dongLuu);
+            }
+            catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Cập nhật thời gian chơi mới vào bảng xếp hạng Top 10
+        /// </summary>
+        public void CapNhatBangXepHang(double thoiGianMoi)
+        {
+            var bxh = DocBangXepHang();
+
+            // Nếu chưa đủ 10 kỷ lục hoặc thời gian mới nhỏ hơn (nhanh hơn) kỷ lục thứ 10 hiện tại
+            if (bxh.Count < 10 || thoiGianMoi < bxh[bxh.Count - 1].thoiGian)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n 🎉 KỶ LỤC MỚI! Thời gian giải game {thoiGianMoi:F1}s lọt vào TOP 10!");
+                Console.Write(" Vui lòng nhập tên vinh danh của bạn: ");
+                Console.ResetColor();
+
+                string tenNguoiChoi = Console.ReadLine() ?? "VoDanh";
+                if (string.IsNullOrWhiteSpace(tenNguoiChoi)) tenNguoiChoi = "VoDanh";
+
+                bxh.Add(new KyLucMinesweeper
+                {
+                    ten = tenNguoiChoi,
+                    thoiGian = thoiGianMoi,
+                    ngayChoi = DateTime.Now.ToString("dd/MM/yyyy")
+                });
+
+                // Sắp xếp lại tăng dần theo thời gian
+                bxh.Sort((x, y) => x.thoiGian.CompareTo(y.thoiGian));
+
+                // Giữ lại tối đa 10 phần tử
+                if (bxh.Count > 10)
+                {
+                    bxh.RemoveAt(10);
+                }
+
+                // Lưu lại
+                LuuBangXepHang(bxh);
+            }
+        }
+
+        #endregion
     }
 }

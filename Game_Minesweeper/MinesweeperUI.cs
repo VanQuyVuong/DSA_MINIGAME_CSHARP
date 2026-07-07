@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Game_Minesweeper
 {
@@ -142,6 +143,38 @@ namespace Game_Minesweeper
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Vẽ bảng xếp hạng Top 10 kỷ lục thời gian giải mìn nhanh nhất
+        /// </summary>
+        public static void HienThiBangXepHang(List<MinesweeperLogic.KyLucMinesweeper> ds)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n🏆 BẢNG XẾP HẠNG TOP 10 GIẢI MÌN NHANH NHẤT 🏆");
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine($"{"Hạng",-6}{"Tên người chơi",-18}{"Thời gian (s)",-15}{"Ngày chơi"}");
+            Console.WriteLine("-------------------------------------------------");
+            Console.ResetColor();
+
+            if (ds.Count == 0)
+            {
+                Console.WriteLine(" Chưa có kỷ lục nào được ghi nhận ở cấu hình này.");
+            }
+            else
+            {
+                for (int i = 0; i < ds.Count; i++)
+                {
+                    // Màu sắc huy chương cho 3 thứ hạng đầu
+                    if (i == 0) Console.ForegroundColor = ConsoleColor.Yellow; // Vàng
+                    else if (i == 1) Console.ForegroundColor = ConsoleColor.Gray; // Bạc
+                    else if (i == 2) Console.ForegroundColor = ConsoleColor.DarkYellow; // Đồng
+
+                    Console.WriteLine($"{i + 1,-6}{ds[i].ten,-18}{ds[i].thoiGian,-15:F1}{ds[i].ngayChoi}");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("-------------------------------------------------");
         }
     }
 }
