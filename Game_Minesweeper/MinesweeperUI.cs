@@ -39,6 +39,11 @@ namespace Game_Minesweeper
                         Console.ForegroundColor = ConsoleColor.Gray;
                         Console.Write("# "); // Ô chưa mở
                     }
+                    else if (kyTu == 'F')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.Write("F "); // Ô cắm cờ mìn
+                    }
                     else if (kyTu == ' ')
                     {
                         Console.Write(". "); // Ô trống đã mở

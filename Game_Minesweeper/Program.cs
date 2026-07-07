@@ -21,36 +21,47 @@ namespace Game_Minesweeper
                 MinesweeperUI.VeBanDoHienThi(game.banDoHienThi, game.kichThuoc);
 
                 // Yêu cầu người chơi nhập tọa độ để mở
-                Console.Write("\n Nhập tọa độ muốn mở (Ví dụ dòng cột: 3 4): ");
+                Console.Write("\n Nhập thao tác và tọa độ (M: Mở, F: Cắm cờ. Ví dụ: M 3 4 hoặc F 3 4): ");
                 string input = Console.ReadLine() ?? "";
                 string[] phan = input.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                // Kiểm tra tính hợp lệ của dữ liệu nhập vào
-                if (phan.Length != 2 || 
-                    !int.TryParse(phan[0], out int dong) || 
-                    !int.TryParse(phan[1], out int cot) ||
+                // Kiểm tra tính hợp lệ của dữ liệu nhập vào (Thao tác + Dòng + Cột)
+                if (phan.Length != 3 || 
+                    (phan[0].ToUpper() != "M" && phan[0].ToUpper() != "F") ||
+                    !int.TryParse(phan[1], out int dong) || 
+                    !int.TryParse(phan[2], out int cot) ||
                     dong < 0 || dong >= game.kichThuoc || 
                     cot < 0 || cot >= game.kichThuoc)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(" Tọa độ không hợp lệ! Vui lòng nhập lại dòng và cột từ 0 đến 8.");
+                    Console.WriteLine(" Cú pháp không hợp lệ! Vui lòng nhập: [M/F] [Dòng] [Cột] (Ví dụ: M 3 4).");
                     Console.ResetColor();
                     Console.WriteLine(" Nhấn Enter để tiếp tục...");
                     Console.ReadLine();
                     continue;
                 }
 
-                // Thực hiện mở ô
-                bool ketQua = game.MoO(dong, cot);
+                string thaoTac = phan[0].ToUpper();
 
-                if (!ketQua)
+                if (thaoTac == "F")
                 {
-                    // Trúng mìn -> Game Over!
-                    MinesweeperUI.VeBanDoHienLo(game.banDoMin, game.kichThuoc);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n 💥 BÙM!!! Bạn đã giẫm phải mìn! GAME OVER.");
-                    Console.ResetColor();
-                    dangChoi = false;
+                    // Thực hiện cắm cờ hoặc gỡ cờ
+                    game.CamCo(dong, cot);
+                }
+                else if (thaoTac == "M")
+                {
+                    // Thực hiện mở ô
+                    bool ketQua = game.MoO(dong, cot);
+
+                    if (!ketQua)
+                    {
+                        // Trúng mìn -> Game Over!
+                        MinesweeperUI.VeBanDoHienLo(game.banDoMin, game.kichThuoc);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n 💥 BÙM!!! Bạn đã giẫm phải mìn! GAME OVER.");
+                        Console.ResetColor();
+                        dangChoi = false;
+                    }
                 }
             }
 

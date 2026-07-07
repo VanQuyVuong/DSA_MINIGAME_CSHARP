@@ -132,5 +132,20 @@ namespace Game_Minesweeper
                 banDoHienThi[dong, cot] = (char)('0' + banDoMin[dong, cot]);
             }
         }
+
+        /// <summary>
+        /// Cắm cờ hoặc gỡ cờ 'F' tại tọa độ chỉ định
+        /// </summary>
+        public void CamCo(int dong, int cot)
+        {
+            if (banDoHienThi[dong, cot] == '#')
+            {
+                banDoHienThi[dong, cot] = 'F';
+            }
+            else if (banDoHienThi[dong, cot] == 'F')
+            {
+                banDoHienThi[dong, cot] = '#';
+            }
+        }
     }
 }

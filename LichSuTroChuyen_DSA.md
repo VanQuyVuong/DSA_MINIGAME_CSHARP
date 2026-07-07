@@ -290,3 +290,20 @@ feat(minesweeper): cài đặt thuật toán loang DFS mở rộng vùng an toà
 - Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
 - Reference #9
 ```
+
+    - **Bước 4: Chức năng Cắm cờ & Điều kiện chiến thắng (Phần 1 - Cắm cờ)**:
+        - **Cắm cờ (`F`)**: Cài đặt phương thức `CamCo(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) cho phép đánh dấu ô chưa mở là cờ `F` hoặc gỡ cờ quay lại `#`.
+        - **Vẽ cờ trên Console UI**: Cập nhật hàm vẽ bản đồ trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) hiển thị ký tự cờ `F` màu tím nổi bật.
+        - **Thay đổi Input Parser**: Viết lại cơ chế phân tích dữ liệu nhập từ người chơi ở [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để nhận dạng cú pháp hành động: `M [dòng] [cột]` (mở) hoặc `F [dòng] [cột]` (cắm cờ).
+
+### Mẫu Git Commit Minesweeper Bước 4 (Commit 1):
+```text
+feat(minesweeper): tích hợp chức năng cắm cờ và gỡ cờ F trên bản đồ
+
+- Viết hàm CamCo hỗ trợ chuyển đổi trạng thái giữa '#' và 'F'
+- Tô màu tím nổi bật cho ký tự F cờ trên bản đồ hiển thị
+- Cập nhật cú pháp nhập lệnh [M/F] [dòng] [cột] trong hàm Main
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #10
+```
+
