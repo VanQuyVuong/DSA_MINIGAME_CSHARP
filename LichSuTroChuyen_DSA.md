@@ -259,3 +259,22 @@ feat(minesweeper): hoàn thiện tính toán số mìn xung quanh và vẽ bản
 - Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
 - Closes #7
 ```
+
+    - **Bước 2: Tạo bản đồ ẩn & Cơ chế nhấp mở ô (Tái cấu trúc OOP)**:
+        - **Tái cấu trúc (Refactoring)**: Tách riêng phần Logic thuật toán sang [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) và phần giao diện vẽ Console sang [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để dễ quản lý và chuẩn bị tái sử dụng cho Unity sau này.
+        - **Bản đồ ẩn**: Khai báo mảng `banDoHienThi` kiểu `char` và phủ kín ban đầu bằng ký tự ẩn `#`.
+        - **MoO (Mở ô)**: Viết hàm logic kiểm tra trúng mìn (trả về false), hoặc chuyển số mìn lân cận thành ký tự số để hiển thị lên bản đồ che mắt người chơi.
+        - **Vòng lặp tương tác**: Nhận tọa độ từ người chơi (dòng, cột), kiểm tra lỗi nhập không hợp lệ để tránh crash chương trình.
+
+### Mẫu Git Commit Minesweeper Bước 2:
+```text
+feat(minesweeper): cấu trúc OOP 3 file và cơ chế mở ô bản đồ ẩn
+
+- Tách logic game sang MinesweeperLogic.cs và giao diện sang MinesweeperUI.cs
+- Khai báo mảng banDoHienThi và phủ kín ban đầu bằng ký tự ẩn '#'
+- Viết hàm MoO kiểm tra mìn và cập nhật trạng thái mở ô đất trống
+- Xây dựng vòng lặp chính nhận tọa độ nhập từ người chơi ở Program.cs
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #8
+```
+
