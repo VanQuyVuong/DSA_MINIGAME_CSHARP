@@ -379,6 +379,17 @@ feat(snake): bat phim dieu khien huong di non-blocking (#13)
 feat(snake): sinh moi ngau nhien va co che an moi (#14)
 ```
 
+    - **Bước 4: Xử lý va chạm (Tường, Tự cắn thân) & Game Over**:
+        - Thêm kiểm tra điều kiện va chạm tường `if (dongMoi < 0 || dongMoi >= chieuCao || ...)` để dừng game thay vì đi xuyên tường.
+        - Thêm kiểm tra tự va chạm thân bằng hàm `thanRan.Contains((dongMoi, cotMoi))`.
+        - Cập nhật vòng lặp chính của `Main()` kiểm soát theo biến trạng thái `dangChoi` và hiển thị thông báo `GAME OVER` màu đỏ khi trò chơi kết thúc.
+
+### Mẫu Git Commit Snake Bước 4:
+```text
+feat(snake): xu ly va cham va game over (#15)
+```
+
+
 
 
 

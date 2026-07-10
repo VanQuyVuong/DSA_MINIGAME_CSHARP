@@ -24,6 +24,9 @@ namespace Game_Snake
         static (int dong, int cot) moi;
         static Random rand = new Random();
 
+        // Biến kiểm soát trạng thái trò chơi
+        static bool dangChoi = true;
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -33,7 +36,7 @@ namespace Game_Snake
             KhoiTaoRan();
 
             // Vòng lặp chạy game tự động di chuyển
-            while (true)
+            while (dangChoi)
             {
                 VeBanDo();
                 DocPhimDieuKhien();
@@ -42,6 +45,15 @@ namespace Game_Snake
                 // Tạm dừng 150ms để tạo hiệu ứng chuyển động mượt mà
                 Thread.Sleep(150);
             }
+
+            // Màn hình hiển thị khi Game Over
+            Console.Clear();
+            VeBanDo(); // Vẽ lại bản đồ trạng thái cuối cùng
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n 💥 GAME OVER! Rắn đã va chạm tường hoặc tự cắn chính mình!");
+            Console.ResetColor();
+            Console.WriteLine(" Nhấn Enter để thoát trò chơi...");
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -128,9 +140,19 @@ namespace Game_Snake
                 case "RIGHT": cotMoi++; break;
             }
 
-            // 3. Cơ chế đi xuyên tường (Nếu chạm tường thì xuất hiện ở phía đối diện)
-            dongMoi = (dongMoi + chieuCao) % chieuCao;
-            cotMoi = (cotMoi + chieuRong) % chieuRong;
+            // 3. Kiểm tra va chạm tường
+            if (dongMoi < 0 || dongMoi >= chieuCao || cotMoi < 0 || cotMoi >= chieuRong)
+            {
+                dangChoi = false;
+                return;
+            }
+
+            // 3b. Kiểm tra va chạm thân (tự cắn chính mình)
+            if (thanRan.Contains((dongMoi, cotMoi)))
+            {
+                dangChoi = false;
+                return;
+            }
 
             // 4. Thêm đầu mới vào đầu danh sách (Rắn tiến lên)
             thanRan.AddFirst((dongMoi, cotMoi));
