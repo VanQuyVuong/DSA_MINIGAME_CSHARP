@@ -349,6 +349,28 @@ feat(minesweeper): tích hợp bảng xếp hạng Top 10 kỷ lục thời gian
 - Closes #11
 ```
 
+*   **Dự án 3: Game Snake (Rắn Săn Mồi) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Di chuyển cơ bản của Rắn sử dụng LinkedList**:
+        - Khởi tạo dự án [Game_Snake](file:///d:/Csharp/Hoc_DSA/DSA/Game_Snake) và đăng ký vào Solution.
+        - Đại diện thân rắn bằng cấu trúc `LinkedList<(int dong, int cot)>` (Đầu ở First Node, Đuôi ở Last Node).
+        - Thực hiện thuật toán Deque để rắn di chuyển: `AddFirst` đầu mới và `RemoveLast` đuôi cũ.
+        - Tự động vẽ bản đồ cập nhật liên tục thông qua `Thread.Sleep`.
+
+### Mẫu Git Commit Snake Bước 1:
+```text
+feat(snake): khoi tao ran va di chuyen tu dong (#12)
+```
+
+    - **Bước 2: Bắt phím điều khiển hướng đi (Non-blocking Input)**:
+        - Viết hàm `DocPhimDieuKhien()` sử dụng `Console.KeyAvailable` để bắt phím Arrow/WASD mà không làm treo luồng di chuyển của rắn.
+        - Ngăn cấm rắn tự đảo chiều ngược trực tiếp (ví dụ đang bò RIGHT không cho quặt trái LEFT lập tức).
+
+### Mẫu Git Commit Snake Bước 2:
+```text
+feat(snake): bat phim dieu khien huong di non-blocking (#13)
+```
+
+
 
 
 

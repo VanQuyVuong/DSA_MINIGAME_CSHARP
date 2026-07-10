@@ -32,10 +32,41 @@ namespace Game_Snake
             while (true)
             {
                 VeBanDo();
+                DocPhimDieuKhien();
                 DiChuyen();
 
                 // Tạm dừng 150ms để tạo hiệu ứng chuyển động mượt mà
                 Thread.Sleep(150);
+            }
+        }
+
+        /// <summary>
+        /// Bắt phím điều khiển từ người chơi (Arrow keys hoặc WASD) - Không chặn luồng
+        /// </summary>
+        static void DocPhimDieuKhien()
+        {
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo phim = Console.ReadKey(true);
+                switch (phim.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                    case ConsoleKey.W:
+                        if (huongDi != "DOWN") huongDi = "UP";
+                        break;
+                    case ConsoleKey.DownArrow:
+                    case ConsoleKey.S:
+                        if (huongDi != "UP") huongDi = "DOWN";
+                        break;
+                    case ConsoleKey.LeftArrow:
+                    case ConsoleKey.A:
+                        if (huongDi != "RIGHT") huongDi = "LEFT";
+                        break;
+                    case ConsoleKey.RightArrow:
+                    case ConsoleKey.D:
+                        if (huongDi != "LEFT") huongDi = "RIGHT";
+                        break;
+                }
             }
         }
 
@@ -57,7 +88,7 @@ namespace Game_Snake
         static void DiChuyen()
         {
             // 1. Lấy tọa độ đầu rắn hiện tại
-            var dauHienTai = thanRan.First.Value;
+            var dauHienTai = thanRan.First!.Value;
 
             // 2. Tính toán tọa độ đầu mới dựa trên hướng đi
             int dongMoi = dauHienTai.dong;
@@ -109,7 +140,7 @@ namespace Game_Snake
                 for (int j = 0; j < chieuRong; j++)
                 {
                     // Kiểm tra xem ô (i, j) có phải là đầu rắn hay không
-                    if (thanRan.First.Value.dong == i && thanRan.First.Value.cot == j)
+                    if (thanRan.First!.Value.dong == i && thanRan.First.Value.cot == j)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("O "); // Đầu rắn viết hoa 'O' màu xanh lá
@@ -138,8 +169,8 @@ namespace Game_Snake
             Console.Write(new string('-', chieuRong * 2));
             Console.WriteLine("+");
 
-            Console.WriteLine("\n Rắn đang tự động di chuyển sang phải.");
-            Console.WriteLine(" (Chúng ta sẽ bắt phím bấm điều khiển ở Bước 2!)");
+            Console.WriteLine($"\n Hướng di chuyển: {huongDi} | Điều khiển bằng phím mũi tên hoặc W, A, S, D.");
+            Console.WriteLine(" Nhấn Ctrl + C để thoát game.");
         }
     }
 }
