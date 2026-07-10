@@ -389,6 +389,16 @@ feat(snake): sinh moi ngau nhien va co che an moi (#14)
 feat(snake): xu ly va cham va game over (#15)
 ```
 
+    - **Bước 5: Điểm số, Đồ họa màu sắc & Bảng xếp hạng**:
+        - **Tính điểm**: Điểm số được tính toán động dựa trên chiều dài rắn: `diemSo = thanRan.Count - 3`.
+        - **Bảng xếp hạng Top 10**: Thiết lập lớp `KyLucSnake` lưu trữ tên, điểm và ngày chơi. Triển khai đọc/ghi xuống file `bxh_snake.txt`, sắp xếp giảm dần theo điểm số để tìm ra 10 người chơi giỏi nhất. Vẽ giao diện bảng xếp hạng vinh danh màu sắc Gold, Silver, Bronze cực kỳ đẹp mắt khi kết thúc game.
+
+### Mẫu Git Commit Snake Bước 5:
+```text
+feat(snake): diem so va bang xep hang top 10 (#16)
+```
+
+
 
 
 

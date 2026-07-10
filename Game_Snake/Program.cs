@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -52,7 +53,17 @@ namespace Game_Snake
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n 💥 GAME OVER! Rắn đã va chạm tường hoặc tự cắn chính mình!");
             Console.ResetColor();
-            Console.WriteLine(" Nhấn Enter để thoát trò chơi...");
+
+            int diemCuoi = thanRan.Count - 3;
+            Console.WriteLine($" Điểm số của bạn: {diemCuoi}");
+
+            // Cập nhật kỷ lục của người chơi
+            CapNhatBangXepHang(diemCuoi);
+
+            // Hiển thị bảng xếp hạng Top 10
+            HienThiBangXepHang();
+
+            Console.WriteLine("\n Nhấn Enter để thoát trò chơi...");
             Console.ReadLine();
         }
 
@@ -233,8 +244,130 @@ namespace Game_Snake
             Console.Write(new string('-', chieuRong * 2));
             Console.WriteLine("+");
 
-            Console.WriteLine($"\n Hướng di chuyển: {huongDi} | Điều khiển bằng phím mũi tên hoặc W, A, S, D.");
+            Console.WriteLine($"\n 🏆 Điểm số: {thanRan.Count - 3} | Hướng di chuyển: {huongDi} | Điều khiển bằng Arrow/WASD");
             Console.WriteLine(" Nhấn Ctrl + C để thoát game.");
         }
+
+        #region HỆ THỐNG BẢNG XẾP HẠNG TOP 10
+
+        public class KyLucSnake
+        {
+            public string ten { get; set; } = "";
+            public int diem { get; set; }
+            public string ngayChoi { get; set; } = "";
+        }
+
+        private static string fileBXH = "bxh_snake.txt";
+
+        static List<KyLucSnake> DocBangXepHang()
+        {
+            List<KyLucSnake> ds = new List<KyLucSnake>();
+            try
+            {
+                if (File.Exists(fileBXH))
+                {
+                    string[] dong = File.ReadAllLines(fileBXH);
+                    foreach (string line in dong)
+                    {
+                        string[] phan = line.Split('|');
+                        if (phan.Length == 3 && int.TryParse(phan[1], out int score))
+                        {
+                            ds.Add(new KyLucSnake
+                            {
+                                ten = phan[0],
+                                diem = score,
+                                ngayChoi = phan[2]
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception) { }
+
+            // Sắp xếp giảm dần theo điểm (điểm cao nhất lên đầu)
+            ds.Sort((x, y) => y.diem.CompareTo(x.diem));
+            return ds;
+        }
+
+        static void LuuBangXepHang(List<KyLucSnake> ds)
+        {
+            try
+            {
+                List<string> dongLuu = new List<string>();
+                foreach (var item in ds)
+                {
+                    dongLuu.Add($"{item.ten}|{item.diem}|{item.ngayChoi}");
+                }
+                File.WriteAllLines(fileBXH, dongLuu);
+            }
+            catch (Exception) { }
+        }
+
+        static void CapNhatBangXepHang(int diemMoi)
+        {
+            var bxh = DocBangXepHang();
+
+            // Nếu chưa đủ 10 kỷ lục hoặc điểm mới cao hơn kỷ lục thứ 10 hiện tại
+            if (bxh.Count < 10 || diemMoi > bxh[bxh.Count - 1].diem)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n 🎉 KỶ LỤC MỚI! Điểm số {diemMoi} lọt vào TOP 10 bảng xếp hạng!");
+                Console.Write(" Vui lòng nhập tên vinh danh của bạn: ");
+                Console.ResetColor();
+
+                string tenNguoiChoi = Console.ReadLine() ?? "VoDanh";
+                if (string.IsNullOrWhiteSpace(tenNguoiChoi)) tenNguoiChoi = "VoDanh";
+
+                bxh.Add(new KyLucSnake
+                {
+                    ten = tenNguoiChoi,
+                    diem = diemMoi,
+                    ngayChoi = DateTime.Now.ToString("dd/MM/yyyy")
+                });
+
+                // Sắp xếp giảm dần theo điểm
+                bxh.Sort((x, y) => y.diem.CompareTo(x.diem));
+
+                // Giữ lại tối đa 10 phần tử
+                if (bxh.Count > 10)
+                {
+                    bxh.RemoveAt(10);
+                }
+
+                LuuBangXepHang(bxh);
+            }
+        }
+
+        static void HienThiBangXepHang()
+        {
+            var ds = DocBangXepHang();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n🏆 BẢNG XẾP HẠNG TOP 10 KỶ LỤC RẮN SĂN MỒI 🏆");
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine($"{"Hạng",-6}{"Tên người chơi",-18}{"Điểm số",-15}{"Ngày chơi"}");
+            Console.WriteLine("-------------------------------------------------");
+            Console.ResetColor();
+
+            if (ds.Count == 0)
+            {
+                Console.WriteLine(" Chưa có kỷ lục nào được ghi nhận.");
+            }
+            else
+            {
+                for (int i = 0; i < ds.Count; i++)
+                {
+                    // Màu sắc vinh danh 3 thứ hạng đầu
+                    if (i == 0) Console.ForegroundColor = ConsoleColor.Yellow; // Vàng
+                    else if (i == 1) Console.ForegroundColor = ConsoleColor.Gray; // Bạc
+                    else if (i == 2) Console.ForegroundColor = ConsoleColor.DarkYellow; // Đồng
+
+                    Console.WriteLine($"{i + 1,-6}{ds[i].ten,-18}{ds[i].diem,-15}{ds[i].ngayChoi}");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("-------------------------------------------------");
+        }
+
+        #endregion
     }
 }
