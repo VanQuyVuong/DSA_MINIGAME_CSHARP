@@ -349,6 +349,250 @@ feat(minesweeper): tích hợp bảng xếp hạng Top 10 kỷ lục thời gian
 - Closes #11
 ```
 
+*   **Dự án 3: Game Snake (Rắn Săn Mồi) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Di chuyển cơ bản của Rắn sử dụng LinkedList**:
+        - Khởi tạo dự án [Game_Snake](file:///d:/Csharp/Hoc_DSA/DSA/Game_Snake) và đăng ký vào Solution.
+        - Đại diện thân rắn bằng cấu trúc `LinkedList<(int dong, int cot)>` (Đầu ở First Node, Đuôi ở Last Node).
+        - Thực hiện thuật toán Deque để rắn di chuyển: `AddFirst` đầu mới và `RemoveLast` đuôi cũ.
+        - Tự động vẽ bản đồ cập nhật liên tục thông qua `Thread.Sleep`.
 
+### Mẫu Git Commit Snake Bước 1:
+```text
+feat(snake): khoi tao ran va di chuyen tu dong (#12)
+```
 
+    - **Bước 2: Bắt phím điều khiển hướng đi (Non-blocking Input)**:
+        - Viết hàm `DocPhimDieuKhien()` sử dụng `Console.KeyAvailable` để bắt phím Arrow/WASD mà không làm treo luồng di chuyển của rắn.
+        - Ngăn cấm rắn tự đảo chiều ngược trực tiếp (ví dụ đang bò RIGHT không cho quặt trái LEFT lập tức).
 
+### Mẫu Git Commit Snake Bước 2:
+```text
+feat(snake): bat phim dieu khien huong di non-blocking (#13)
+```
+
+    - **Bước 3: Cơ chế sinh mồi ngẫu nhiên và Ăn mồi (Rắn dài ra)**:
+        - Thiết lập hàm `SinhMoi()` sử dụng thuật toán kiểm tra đệ quy/vòng lặp để đảm bảo tọa độ quả táo `@` màu đỏ ngẫu nhiên không đè lên thân rắn (`thanRan.Contains`).
+        - Cập nhật hàm `DiChuyen()`: Khi đầu rắn trùng với tọa độ mồi thì tăng chiều dài bằng cách không xóa đuôi cũ (`RemoveLast`), đồng thời sinh mồi mới.
+
+### Mẫu Git Commit Snake Bước 3:
+```text
+feat(snake): sinh moi ngau nhien va co che an moi (#14)
+```
+
+    - **Bước 4: Xử lý va chạm (Tường, Tự cắn thân) & Game Over**:
+        - Thêm kiểm tra điều kiện va chạm tường `if (dongMoi < 0 || dongMoi >= chieuCao || ...)` để dừng game thay vì đi xuyên tường.
+        - Thêm kiểm tra tự va chạm thân bằng hàm `thanRan.Contains((dongMoi, cotMoi))`.
+        - Cập nhật vòng lặp chính của `Main()` kiểm soát theo biến trạng thái `dangChoi` và hiển thị thông báo `GAME OVER` màu đỏ khi trò chơi kết thúc.
+
+### Mẫu Git Commit Snake Bước 4:
+```text
+feat(snake): xu ly va cham va game over (#15)
+```
+
+    - **Ma trận động (3x3 đến 6x6)**: Tổng quát hóa toàn bộ các vòng lặp cố định `4` thành biến `kichThuoc`, cho phép thay đổi cấu trúc bảng chơi linh hoạt.
+    - **Kỷ lục độc lập**: Tự động phân tách file điểm cao theo từng kích thước ma trận (ví dụ: `diem_cao_3x3.txt`, `diem_cao_5x5.txt`) để đảm bảo tính công bằng.
+    - **Độ khó tùy chọn**: Cho phép điều chỉnh xác suất sinh các ô số 2/4 (Dễ, Trung bình, Khó, Siêu khó).
+    - **Vẽ bảng co giãn động**: Tự động căn chỉnh chiều rộng của khung lưới vẽ trên Console theo kích thước ma trận đã chọn.
+
+### Mẫu Git Commit Custom Settings:
+```text
+feat(game-2048): thêm cài đặt kích thước ma trận động và độ khó custom
+
+- Thiết lập HienThiMenuCaiDat trước khi khởi tạo game
+- Chuyển đổi ma trận tĩnh 4x4 sang động kíchThuoc từ 3x3 đến 6x6
+- Phân tách file điểm cao theo định dạng diem_cao_[Size]x[Size].txt
+- Thêm các tùy chọn độ khó ảnh hưởng đến tỉ lệ sinh ô số
+- Viết lại hàm VeBanDo để co giãn khung vẽ lưới Console theo kích thước
+- Reference #5
+```
+
+*   **Tính năng nâng cấp Arcade Launcher & Top 10**:
+    - **Trang chủ Menu chính (Play, Rank, Exit)**: Tạo màn hình chính đón người chơi, chỉ dừng chương trình khi bấm Exit.
+    - **Quay lại Menu chính bằng phím ESC**: Nhấn ESC khi đang chơi sẽ giải phóng màn hình và quay lại Menu chính thay vì thoát hẳn chương trình.
+    - **Bảng xếp hạng Top 10 tổng hợp**: Nâng cấp số lượng bản ghi lưu trữ lên Top 10. Cho phép chọn xem bảng xếp hạng của bất kỳ kích thước ma trận và độ khó nào ngay tại Menu chính.
+    - **Tách biệt dữ liệu tuyệt đối**: Các file điểm cao và file xếp hạng Top 10 được phân tách động theo cả kích thước ma trận và độ khó (ví dụ: `bxh_4x4_De.txt`, `bxh_5x5_Kho.txt`), đảm bảo tính công bằng cao nhất.
+
+### Mẫu Git Commit Arcade Launcher:
+```text
+feat(game-2048): tích hợp menu chính Arcade và bảng xếp hạng Top 10 tổng hợp
+
+- Thiết lập Menu chính gồm Play, Rank, Exit trong hàm Main
+- Chuyển logic game sang VaoLuotChoiGame, hỗ trợ phím ESC quay lại Menu chính
+- Nâng cấp bảng xếp hạng lên lưu trữ Top 10 phần tử
+- Cho phép chọn xem bảng xếp hạng bất kỳ kích thước và độ khó nào tại Menu chính
+- Tách biệt tên file bxh và diem_cao theo định dạng [Size]_[DoKho]
+- Reference #5
+```
+
+*   **Tính năng nâng cấp Menu xếp hạng dạng cây gấp gọn (Collapsible Tree Menu)**:
+    - **Tương tác trực quan bằng phím mũi tên**: Dùng phím ↑/↓ để di chuyển vạch sáng chọn mục, phím Enter để thao tác và phím ESC để quay lại.
+    - **Đổ dữ liệu động & Gấp gọn (Collapse/Expand)**: Khi chọn kích thước ma trận (nút cha), cây thư mục tự động xổ ra 4 lựa chọn độ khó tương ứng (nút con). Nhấn Enter một lần nữa sẽ thu lại gọn gàng.
+    - **Xem chi tiết xếp hạng**: Chọn một độ khó (nút con) bất kỳ để hiển thị bảng điểm Top 10 của chế độ tương ứng.
+
+### Mẫu Git Commit Collapsible Menu:
+```text
+feat(game-2048): thiết kế bảng xếp hạng dạng cây co xếp bằng phím mũi tên
+
+- Xây dựng lớp MenuNode hỗ trợ hiển thị phân cấp cha-con
+- Cài đặt HienThiMenuXepHangTongHop phản hồi phím UpArrow/DownArrow/Enter/ESC
+- Thêm cơ chế xổ rộng/thu gọn (Expand/Collapse) động cho từng kích thước ma trận
+- Reference #5
+```
+*   **Dự án 2: Game Minesweeper (Dò Mìn) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Rải mìn**:
+        - Thiết lập ma trận vuông `kichThuoc x kichThuoc` (mặc định 9x9) và số lượng mìn `soLuongMin` (mặc định 10).
+        - Rải mìn ngẫu nhiên giá trị `-1` vào ma trận, kiểm tra trùng lặp ô.
+        - Duyệt 8 ô lân cận của từng ô đất trống để đếm và điền số mìn bao quanh (1-8).
+        - Vẽ bản đồ hiện lộ (debug) hiển thị rõ các ô mìn `*` màu đỏ, ô trống `.` và các con số chỉ định mìn xung quanh màu Cyan.
+
+### Mẫu Git Commit Minesweeper Bước 1:
+```text
+feat(minesweeper): hoàn thiện tính toán số mìn xung quanh và vẽ bản đồ hiện lộ
+
+- Cài đặt tính toán số mìn ở 8 ô xung quanh cho mỗi ô đất trống
+- Viết hàm VeBanDoHienLo có tiêu đề hàng và cột trực quan
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #7
+```
+
+    - **Bước 2: Tạo bản đồ ẩn & Cơ chế nhấp mở ô (Tái cấu trúc OOP)**:
+        - **Tái cấu trúc (Refactoring)**: Tách riêng phần Logic thuật toán sang [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) và phần giao diện vẽ Console sang [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để dễ quản lý và chuẩn bị tái sử dụng cho Unity sau này.
+        - **Bản đồ ẩn**: Khai báo mảng `banDoHienThi` kiểu `char` và phủ kín ban đầu bằng ký tự ẩn `#`.
+        - **MoO (Mở ô)**: Viết hàm logic kiểm tra trúng mìn (trả về false), hoặc chuyển số mìn lân cận thành ký tự số để hiển thị lên bản đồ che mắt người chơi.
+        - **Vòng lặp tương tác**: Nhận tọa độ từ người chơi (dòng, cột), kiểm tra lỗi nhập không hợp lệ để tránh crash chương trình.
+
+### Mẫu Git Commit Minesweeper Bước 2:
+```text
+feat(minesweeper): cấu trúc OOP 3 file và cơ chế mở ô bản đồ ẩn
+
+- Tách logic game sang MinesweeperLogic.cs và giao diện sang MinesweeperUI.cs
+- Khai báo mảng banDoHienThi và phủ kín ban đầu bằng ký tự ẩn '#'
+- Viết hàm MoO kiểm tra mìn và cập nhật trạng thái mở ô đất trống
+- Xây dựng vòng lặp chính nhận tọa độ nhập từ người chơi ở Program.cs
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #8
+```
+    - **Bước 3: Cài đặt thuật toán Loang DFS (Flood Fill)**:
+        - **Loang DFS (Flood Fill)**: Cài đặt phương thức đệ quy `Loang(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Khi mở trúng ô có `0` mìn lân cận, thuật toán tự động lan ra 8 ô xung quanh để mở rộng vùng an toàn cho đến khi gặp ô có số thì dừng lại.
+        - **Liên kết MoO**: Cập nhật hàm `MoO()` để tự động kích hoạt loang khi người chơi chọn trúng ô `0` mìn.
+
+### Mẫu Git Commit Minesweeper Bước 3:
+```text
+feat(minesweeper): cài đặt thuật toán loang DFS mở rộng vùng an toàn
+
+- Cài đặt đệ quy hàm Loang DFS (Flood Fill) lân cận 8 ô
+- Liên kết hàm MoO gọi đệ quy Loang khi mở trúng ô 0 mìn
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #9
+```
+
+    - **Bước 4: Chức năng Cắm cờ & Điều kiện chiến thắng (Phần 1 - Cắm cờ)**:
+        - **Cắm cờ (`F`)**: Cài đặt phương thức `CamCo(int dong, int cot)` trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) cho phép đánh dấu ô chưa mở là cờ `F` hoặc gỡ cờ quay lại `#`.
+        - **Vẽ cờ trên Console UI**: Cập nhật hàm vẽ bản đồ trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) hiển thị ký tự cờ `F` màu tím nổi bật.
+        - **Thay đổi Input Parser**: Viết lại cơ chế phân tích dữ liệu nhập từ người chơi ở [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để nhận dạng cú pháp hành động: `M [dòng] [cột]` (mở) hoặc `F [dòng] [cột]` (cắm cờ).
+
+### Mẫu Git Commit Minesweeper Bước 4 (Commit 1):
+```text
+feat(minesweeper): tích hợp chức năng cắm cờ và gỡ cờ F trên bản đồ
+
+- Viết hàm CamCo hỗ trợ chuyển đổi trạng thái giữa '#' và 'F'
+- Tô màu tím nổi bật cho ký tự F cờ trên bản đồ hiển thị
+- Cập nhật cú pháp nhập lệnh [M/F] [dòng] [cột] trong hàm Main
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #10
+```
+
+        - **Kiểm tra chiến thắng**: Viết hàm `KiemTraChienThang()` ở [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs) đếm số ô chưa mở (có ký tự `#` hoặc `F`), nếu bằng đúng số lượng mìn thì chiến thắng. Cập nhật Main loop ở [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để thông báo thắng cuộc.
+
+### Mẫu Git Commit Minesweeper Bước 4 (Commit 2):
+```text
+feat(minesweeper): bổ sung kiểm tra điều kiện chiến thắng
+
+- Cài đặt hàm KiemTraChienThang đếm số lượng ô chưa mở bằng số mìn
+- Thêm kiểm tra điều kiện thắng sau mỗi nước đi hợp lệ ở hàm Main
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #10
+```
+
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 1 - Đồ họa & Thời gian)**:
+        - **Màu sắc chuyên nghiệp**: Viết hàm `ThietLapMauSacKyTu()` ở [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) tô màu chuẩn cho các số từ 1 đến 8 (số 1 màu xanh dương, số 2 xanh lá, số 3 đỏ...).
+        - **Đồng hồ tính giờ**: Sử dụng `DateTime` trong [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tính tổng số giây hoàn thành game và hiển thị khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 1):
+```text
+feat(minesweeper): tích hợp màu sắc cho các con số và đồng hồ tính giờ
+
+- Tô màu chuẩn Windows Minesweeper cho các chữ số từ 1 đến 8
+- Ghi nhận và hiển thị tổng thời gian hoàn thành game bằng giây khi thắng cuộc
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Reference #11
+```
+
+    - **Bước 5: Đồ họa màu sắc, Thời gian chơi & Bảng xếp hạng (Phần 2 - Bảng xếp hạng)**:
+        - **Hệ thống kỷ lục thời gian**: Khai báo thực thể `KyLucMinesweeper` và các phương thức đọc/ghi dữ liệu xếp hạng trong [MinesweeperLogic.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperLogic.cs). Dữ liệu được sắp xếp tăng dần theo thời gian (giải nhanh nhất xếp hạng cao nhất) và lưu trữ trong file `bxh_minesweeper_[KíchThước]x[SốMìn].txt`.
+        - **Vẽ bảng xếp hạng**: Cài đặt phương thức `HienThiBangXepHang()` trong [MinesweeperUI.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/MinesweeperUI.cs) để kết xuất bảng Top 10 kèm màu sắc huy chương Vàng, Bạc, Đồng.
+        - **Tích hợp vòng kết thúc**: Cập nhật hàm `Main` của [Program.cs](file:///d:/Csharp/Hoc_DSA/DSA/Game_Minesweeper/Program.cs) để tự động kích hoạt bảng ghi danh và vẽ bảng xếp hạng khi chiến thắng.
+
+### Mẫu Git Commit Minesweeper Bước 5 (Commit 2):
+```text
+feat(minesweeper): tích hợp bảng xếp hạng Top 10 kỷ lục thời gian
+
+- Xây dựng lớp KyLucMinesweeper và phương thức Doc/Luu/CapNhat xếp hạng
+- Sắp xếp kỷ lục tăng dần theo tổng số giây giải mìn
+- Vẽ giao diện bảng xếp hạng Top 10 tô màu huy chương
+- Cập nhật nhật ký cuộc trò chuyện LichSuTroChuyen_DSA.md
+- Closes #11
+```
+
+*   **Dự án 3: Game Snake (Rắn Săn Mồi) Console**:
+    - **Bước 1: Khởi tạo bản đồ & Di chuyển cơ bản của Rắn sử dụng LinkedList**:
+        - Khởi tạo dự án [Game_Snake](file:///d:/Csharp/Hoc_DSA/DSA/Game_Snake) và đăng ký vào Solution.
+        - Đại diện thân rắn bằng cấu trúc `LinkedList<(int dong, int cot)>` (Đầu ở First Node, Đuôi ở Last Node).
+        - Thực hiện thuật toán Deque để rắn di chuyển: `AddFirst` đầu mới và `RemoveLast` đuôi cũ.
+        - Tự động vẽ bản đồ cập nhật liên tục thông qua `Thread.Sleep`.
+
+### Mẫu Git Commit Snake Bước 1:
+```text
+feat(snake): khoi tao ran va di chuyen tu dong (#12)
+```
+
+    - **Bước 2: Bắt phím điều khiển hướng đi (Non-blocking Input)**:
+        - Viết hàm `DocPhimDieuKhien()` sử dụng `Console.KeyAvailable` để bắt phím Arrow/WASD mà không làm treo luồng di chuyển của rắn.
+        - Ngăn cấm rắn tự đảo chiều ngược trực tiếp (ví dụ đang bò RIGHT không cho quặt trái LEFT lập tức).
+
+### Mẫu Git Commit Snake Bước 2:
+```text
+feat(snake): bat phim dieu khien huong di non-blocking (#13)
+```
+
+    - **Bước 3: Cơ chế sinh mồi ngẫu nhiên và Ăn mồi (Rắn dài ra)**:
+        - Thiết lập hàm `SinhMoi()` sử dụng thuật toán kiểm tra đệ quy/vòng lặp để đảm bảo tọa độ quả táo `@` màu đỏ ngẫu nhiên không đè lên thân rắn (`thanRan.Contains`).
+        - Cập nhật hàm `DiChuyen()`: Khi đầu rắn trùng với tọa độ mồi thì tăng chiều dài bằng cách không xóa đuôi cũ (`RemoveLast`), đồng thời sinh mồi mới.
+
+### Mẫu Git Commit Snake Bước 3:
+```text
+feat(snake): sinh moi ngau nhien va co che an moi (#14)
+```
+
+    - **Bước 4: Xử lý va chạm (Tường, Tự cắn thân) & Game Over**:
+        - Thêm kiểm tra điều kiện va chạm tường `if (dongMoi < 0 || dongMoi >= chieuCao || ...)` để dừng game thay vì đi xuyên tường.
+        - Thêm kiểm tra tự va chạm thân bằng hàm `thanRan.Contains((dongMoi, cotMoi))`.
+        - Cập nhật vòng lặp chính của `Main()` kiểm soát theo biến trạng thái `dangChoi` và hiển thị thông báo `GAME OVER` màu đỏ khi trò chơi kết thúc.
+
+### Mẫu Git Commit Snake Bước 4:
+```text
+feat(snake): xu ly va cham va game over (#15)
+```
+
+    - **Bước 5: Điểm số, Đồ họa màu sắc & Bảng xếp hạng (Tích hợp Menu & Chế độ chơi)**:
+        - **Menu chính & Vòng lặp chơi lại**: Xây dựng menu đầu game (Play, Rank, Exit) và vòng lặp chơi lại không thoát chương trình đột ngột.
+        - **3 Chế độ chơi (Game Modes)**:
+            - *Chế độ Tự do (Free Mode)*: Cho phép xuyên tường, quả táo cộng 1 điểm và rắn dài ra nhanh (thêm 2 đốt).
+            - *Chế độ Bức tường (Border Mode)*: Đâm vào 4 phía tường là chết, quả táo cộng 2 điểm, dài thêm 1 đốt.
+            - *Chế độ Chướng ngại vật (Obstacles Mode)*: Tường viền + các chướng ngại vật phức hợp có hình dạng ngẫu nhiên (đơn, đôi, ba chữ L, vuông 2x2, đường thẳng/chéo) vẽ bằng ký tự đặc biệt `■` màu xanh Cyan cực kỳ nổi bật; ăn táo cộng 3 điểm, dài thêm 1 đốt.
+        - **Bảng xếp hạng riêng biệt**: Tách biệt file bảng xếp hạng cho từng chế độ (`bxh_snake_mode[1-3].txt`) lưu trữ Top 10 và vẽ giao diện Gold/Silver/Bronze.
+
+### Mẫu Git Commit Snake Bước 5:
+```text
+feat(snake): diem so va bang xep hang top 10 (#16)
+```
