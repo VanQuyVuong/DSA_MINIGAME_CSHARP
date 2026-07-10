@@ -136,6 +136,13 @@ namespace Game_Snake
                     diemSo += 5; // Thưởng 5 điểm vì sống sót qua đợt đổi địa hình
                     SinhChuongNgaiVatNgauNhien();
                     thoiDiemDoiChuongNgaiVat = DateTime.Now; // Reset mốc thời gian
+
+                    // Còi báo hiệu đổi địa hình (bíp đúp)
+                    if (OperatingSystem.IsWindows())
+                    {
+                        Console.Beep(500, 80);
+                        Console.Beep(600, 80);
+                    }
                 }
 
                 // Tốc độ game (150ms)
@@ -145,6 +152,13 @@ namespace Game_Snake
             // Màn hình hiển thị khi Game Over
             Console.Clear();
             VeBanDo(); 
+            
+            // Âm thanh thua cuộc (bíp trầm buồn)
+            if (OperatingSystem.IsWindows())
+            {
+                Console.Beep(300, 300);
+            }
+
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n 💥 GAME OVER! Rắn đã va chạm!");
             Console.ResetColor();
@@ -365,6 +379,12 @@ namespace Game_Snake
                 }
 
                 SinhMoi();
+
+                // Âm thanh ăn mồi (bíp cao)
+                if (OperatingSystem.IsWindows())
+                {
+                    Console.Beep(850, 70);
+                }
             }
             else
             {
