@@ -20,6 +20,10 @@ namespace Game_Snake
         // Hướng di chuyển hiện tại của rắn: "UP", "DOWN", "LEFT", "RIGHT"
         static string huongDi = "RIGHT";
 
+        // Tọa độ của mồi và đối tượng sinh số ngẫu nhiên
+        static (int dong, int cot) moi;
+        static Random rand = new Random();
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -80,6 +84,28 @@ namespace Game_Snake
             thanRan.AddLast((7, 10)); // Đầu rắn (First Node)
             thanRan.AddLast((7, 9));  // Thân rắn
             thanRan.AddLast((7, 8));  // Đuôi rắn (Last Node)
+
+            // Sinh mồi lần đầu tiên
+            SinhMoi();
+        }
+
+        /// <summary>
+        /// Thuật toán sinh mồi ngẫu nhiên trên bản đồ không trùng lên cơ thể rắn
+        /// </summary>
+        static void SinhMoi()
+        {
+            while (true)
+            {
+                int d = rand.Next(chieuCao);
+                int c = rand.Next(chieuRong);
+
+                // Không sinh mồi đè lên cơ thể rắn
+                if (!thanRan.Contains((d, c)))
+                {
+                    moi = (d, c);
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -109,8 +135,17 @@ namespace Game_Snake
             // 4. Thêm đầu mới vào đầu danh sách (Rắn tiến lên)
             thanRan.AddFirst((dongMoi, cotMoi));
 
-            // 5. Trong Bước 1 chưa có mồi, nên mỗi bước di chuyển rắn phải cắt bỏ đuôi cũ
-            thanRan.RemoveLast();
+            // 5. Kiểm tra nếu đầu mới trùng với vị trí của mồi
+            if (dongMoi == moi.dong && cotMoi == moi.cot)
+            {
+                // Ăn mồi: Không xóa đuôi (rắn dài ra) và sinh mồi mới
+                SinhMoi();
+            }
+            else
+            {
+                // Di chuyển bình thường: Cắt đuôi cũ ở cuối danh sách
+                thanRan.RemoveLast();
+            }
         }
 
         /// <summary>
@@ -144,6 +179,13 @@ namespace Game_Snake
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("O "); // Đầu rắn viết hoa 'O' màu xanh lá
+                        Console.ResetColor();
+                    }
+                    // Kiểm tra xem ô (i, j) có phải là mồi hay không
+                    else if (moi.dong == i && moi.cot == j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("@ "); // Quả táo mồi màu đỏ nổi bật
                         Console.ResetColor();
                     }
                     // Kiểm tra xem ô (i, j) có phải là thân rắn hay không

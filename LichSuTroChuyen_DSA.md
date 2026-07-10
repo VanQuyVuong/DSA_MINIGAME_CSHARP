@@ -370,6 +370,16 @@ feat(snake): khoi tao ran va di chuyen tu dong (#12)
 feat(snake): bat phim dieu khien huong di non-blocking (#13)
 ```
 
+    - **Bước 3: Cơ chế sinh mồi ngẫu nhiên và Ăn mồi (Rắn dài ra)**:
+        - Thiết lập hàm `SinhMoi()` sử dụng thuật toán kiểm tra đệ quy/vòng lặp để đảm bảo tọa độ quả táo `@` màu đỏ ngẫu nhiên không đè lên thân rắn (`thanRan.Contains`).
+        - Cập nhật hàm `DiChuyen()`: Khi đầu rắn trùng với tọa độ mồi thì tăng chiều dài bằng cách không xóa đuôi cũ (`RemoveLast`), đồng thời sinh mồi mới.
+
+### Mẫu Git Commit Snake Bước 3:
+```text
+feat(snake): sinh moi ngau nhien va co che an moi (#14)
+```
+
+
 
 
 
