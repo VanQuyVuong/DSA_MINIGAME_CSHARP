@@ -47,8 +47,34 @@ namespace HaiConTro_TwoPointers
 
         public static bool Giai_KiemTraDoiXuong(string s)
         {
-            // TODO: Lập trình thuật toán Hai con trỏ kiểm tra đối xứng tại đây ở commit sau!
-            return false;
+            int left = 0;
+            int right = s.Length - 1;
+
+            while (left < right)
+            {
+                // Bỏ qua các ký tự không phải chữ và số ở bên trái
+                if (!char.IsLetterOrDigit(s[left]))
+                {
+                    left++;
+                }
+                // Bỏ qua các ký tự không phải chữ và số ở bên phải
+                else if (!char.IsLetterOrDigit(s[right]))
+                {
+                    right--;
+                }
+                // So sánh hai ký tự đã chuyển đổi chữ thường
+                else
+                {
+                    if (char.ToLower(s[left]) != char.ToLower(s[right]))
+                    {
+                        return false;
+                    }
+                    left++;
+                    right--;
+                }
+            }
+
+            return true;
         }
     }
 }
