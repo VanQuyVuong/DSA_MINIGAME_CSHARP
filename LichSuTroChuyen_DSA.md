@@ -596,3 +596,16 @@ feat(snake): xu ly va cham va game over (#15)
 ```text
 feat(snake): diem so va bang xep hang top 10 (#16)
 ```
+
+## 📖 BÀI HỌC 10: KỸ THUẬT HAI CON TRỎ (TWO POINTERS PATTERN)
+*   **Mục tiêu**: Giải quyết 3 bài toán LeetCode thực tế, tổ chức thành một dự án C# Console riêng biệt mang tên `HaiConTro_TwoPointers` để luyện tập thuật toán tối ưu.
+    - **Bài toán 1: Đảo ngược chuỗi (LeetCode 344)**:
+        - Tạo tệp [Bai10_DaoNguocChuoi.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_DaoNguocChuoi.cs).
+        - Sử dụng con trỏ `left = 0` và `right = s.Length - 1`. Hoán vị hai phần tử ở đầu/cuối và dịch chuyển dần vào giữa để đảo ngược mảng tại chỗ với bộ nhớ thêm $O(1)$.
+
+### Mẫu Git Commit Two Pointers Bài 1:
+```text
+feat(dsa): giai quyet Bai 1 Dao nguoc chuoi (#17)
+```
+
+

@@ -35,9 +35,9 @@ namespace Learn_DSA
                 Console.WriteLine("   7. Bài 7: Sắp xếp nổi bọt (Bubble Sort)");
                 Console.WriteLine("   8. Bài 8: Sắp xếp chọn (Selection Sort)");
                 Console.WriteLine("   9. Bài 9: Sắp xếp chèn (Insertion Sort)");
-                Console.WriteLine("=================================================================");
+                Console.WriteLine("=================================================");
                 Console.WriteLine("   0. Thoát chương trình");
-                Console.WriteLine("=================================================================");
+                Console.WriteLine("=================================================");
                 Console.Write("Chọn bài học của bạn (0-9): ");
 
                 string input = Console.ReadLine() ?? "";
