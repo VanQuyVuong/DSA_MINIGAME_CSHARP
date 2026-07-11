@@ -617,5 +617,15 @@ feat(dsa): giai quyet Bai 1 Dao nguoc chuoi (#17)
 feat(dsa): giai quyet Bai 2 Two Sum II (#17)
 ```
 
+    - **Bài toán 3: Di chuyển số 0 về cuối mảng (LeetCode 283 - Move Zeroes)**:
+        - Tạo tệp [Bai10_MoveZeroes.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_MoveZeroes.cs).
+        - Sử dụng hai con trỏ cùng chiều (nhanh - chậm). Con trỏ chậm `writePointer = 0` giữ vị trí ghi phần tử khác 0 tiếp theo. Con trỏ nhanh `i` chạy qua mảng; khi gặp phần tử khác 0 ta hoán vị nó với vị trí chậm và dịch chậm lên.
+
+### Mẫu Git Commit Two Pointers Bài 3:
+```text
+feat(dsa): giai quyet Bai 3 Move Zeroes (#17)
+```
+
+
 
 
