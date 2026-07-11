@@ -15,6 +15,8 @@ namespace HaiConTro_TwoPointers
                 Console.WriteLine("=================================================================");
                 Console.WriteLine("        BÀI 10: KỸ THUẬT HAI CON TRỎ (TWO POINTERS PATTERN)      ");
                 Console.WriteLine("=================================================================");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("  [Chủ đề luyện tập: Tối ưu hóa Bộ nhớ O(1) & Thời gian O(N)]");
                 Console.ResetColor();
                 Console.WriteLine("   1. Bài toán 1: Đảo ngược chuỗi (LeetCode 344)");
                 Console.WriteLine("   2. Bài toán 2: Hai số có tổng bằng Target (LeetCode 167 - Two Sum II)");

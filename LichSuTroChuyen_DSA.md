@@ -658,6 +658,15 @@ feat(dsa): de bai 5 loai bo ky tu dac biet kiem tra chuoi doi xuong (#19)
 feat(dsa): hoan thanh thuat toan bai 5 loai bo ky tu dac biet kiem tra chuoi doi xuong (#19)
 ```
 
+    - **Tinh chỉnh giao diện Menu chính**:
+        - Bổ sung dòng thông tin mô tả mục tiêu học tập `[Chủ đề luyện tập: Tối ưu hóa Bộ nhớ O(1) & Thời gian O(N)]` trong hàm `Main` của `Program.cs`.
+
+### Mẫu Git Commit Tinh chỉnh Menu:
+```text
+style(dsa): bo sung dong phu de tieu chi toi uu hoa vao menu chinh (#19)
+```
+
+
 
 
 
