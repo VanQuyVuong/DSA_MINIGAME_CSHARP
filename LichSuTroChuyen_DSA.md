@@ -627,12 +627,28 @@ feat(dsa): giai quyet Bai 3 Move Zeroes (#17)
 ```
 
     - **Bài toán thực tế 4: Tối ưu hóa dung tích bể chứa nước mưa (LeetCode 11 - Container With Most Water)**:
-        - Tạo tệp đề bài [BTTT_Bài4_BeChuaNuocToiDa.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài4_BeChuaNuocToiDa.txt).
-        - Tạo tệp code sườn [Bai10_BeChuaNuocToiDa.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_BeChuaNuocToiDa.cs) đọc đề bài tự động từ file txt và thiết lập bộ kiểm thử tự động.
+        - Tạo tệp đề bài [BTTT_Bài10 4_BeChuaNuocToiDa.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài10 4_BeChuaNuocToiDa.txt).
+        - Tạo tệp code sườn [Bai10 4_BeChuaNuocToiDa.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10 4_BeChuaNuocToiDa.cs) đọc đề bài tự động từ file txt và thiết lập bộ kiểm thử tự động.
 
 ### Mẫu Git Commit Two Pointers Bài 4 (Khởi tạo):
 ```text
 feat(dsa): de bai 4 so sanh cot chieu cao tim dung tich be nuoc lon nhat (#17)
+```
+
+        - **Hoàn thành thuật toán**: Cài đặt thuật toán hai con trỏ co cụm từ ngoài vào trong: tính lượng nước `Math.Min(height[left], height[right]) * (right - left)`, so sánh cập nhật giá trị cực đại và dịch con trỏ của cột thấp hơn.
+
+### Mẫu Git Commit Two Pointers Bài 4 (Hoàn thành):
+```text
+feat(dsa): hoan thanh thuat toan bai 4 toi uu dung tich be chua nuoc (#17)
+```
+
+    - **Bài toán thực tế 5: Kiểm tra cụm từ đối xứng (LeetCode 125 - Valid Palindrome)**:
+        - Tạo tệp đề bài [BTTT_Bài10 5_ChuoiDoiXuong.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài10 5_ChuoiDoiXuong.txt).
+        - Tạo tệp code sườn [Bai10 5_ChuoiDoiXuong.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10 5_ChuoiDoiXuong.cs) đọc đề bài từ file txt và thiết lập bộ kiểm thử tự động.
+
+### Mẫu Git Commit Two Pointers Bài 5 (Khởi tạo):
+```text
+feat(dsa): de bai 5 loai bo ky tu dac biet kiem tra chuoi doi xuong (#17)
 ```
 
 

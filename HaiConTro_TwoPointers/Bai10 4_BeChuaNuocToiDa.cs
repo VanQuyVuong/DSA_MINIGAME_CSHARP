@@ -13,7 +13,7 @@ namespace HaiConTro_TwoPointers
             Console.ResetColor();
 
             // Đọc đề bài trực tiếp từ file txt
-            string docDeBaiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../BTTT_Bài4_BeChuaNuocToiDa.txt");
+            string docDeBaiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../BTTT_Bài10 4_BeChuaNuocToiDa.txt");
             if (File.Exists(docDeBaiPath))
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -47,8 +47,32 @@ namespace HaiConTro_TwoPointers
 
         public static int Giai_ChuaNuocToiDa(int[] height)
         {
-            // TODO: Lập trình thuật toán Hai con trỏ tại đây ở commit sau!
-            return 0;
+            int left = 0;
+            int right = height.Length - 1;
+            int maxNuoc = 0;
+
+            while (left < right)
+            {
+                // Chiều cao thành bể bị giới hạn bởi cột thấp hơn
+                int chieuCaoMin = Math.Min(height[left], height[right]);
+                int chieuRong = right - left;
+                int luongNuoc = chieuCaoMin * chieuRong;
+
+                // Cập nhật dung tích lớn nhất thu được
+                maxNuoc = Math.Max(maxNuoc, luongNuoc);
+
+                // Dịch chuyển con trỏ của cột thấp hơn hướng vào trong
+                if (height[left] < height[right])
+                {
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+
+            return maxNuoc;
         }
     }
 }
