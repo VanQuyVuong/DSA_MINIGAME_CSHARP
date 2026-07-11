@@ -608,4 +608,14 @@ feat(snake): diem so va bang xep hang top 10 (#16)
 feat(dsa): giai quyet Bai 1 Dao nguoc chuoi (#17)
 ```
 
+    - **Bài toán 2: Hai số có tổng bằng Target (LeetCode 167 - Two Sum II)**:
+        - Tạo tệp [Bai10_TwoSumSorted.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_TwoSumSorted.cs).
+        - Sử dụng con trỏ `left` ở đầu mảng, `right` ở cuối mảng. Dịch `left` tiến lên nếu tổng hiện tại nhỏ hơn target, dịch `right` lùi xuống nếu tổng lớn hơn target. Trả về mảng 1-indexed của vị trí 2 số khi tổng đúng bằng target ($O(N)$ time, $O(1)$ space).
+
+### Mẫu Git Commit Two Pointers Bài 2:
+```text
+feat(dsa): giai quyet Bai 2 Two Sum II (#17)
+```
+
+
 

@@ -17,10 +17,11 @@ namespace HaiConTro_TwoPointers
                 Console.WriteLine("=================================================================");
                 Console.ResetColor();
                 Console.WriteLine("   1. Bài toán 1: Đảo ngược chuỗi (LeetCode 344)");
+                Console.WriteLine("   2. Bài toán 2: Hai số có tổng bằng Target (LeetCode 167 - Two Sum II)");
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài toán để giải (0-1): ");
+                Console.Write("Chọn bài toán để giải (0-2): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (input == "0")
@@ -33,6 +34,9 @@ namespace HaiConTro_TwoPointers
                 {
                     case "1":
                         Bai10_DaoNguocChuoi.Run();
+                        break;
+                    case "2":
+                        Bai10_TwoSumSorted.Run();
                         break;
                     
                     default:
