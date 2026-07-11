@@ -19,10 +19,11 @@ namespace HaiConTro_TwoPointers
                 Console.WriteLine("   1. Bài toán 1: Đảo ngược chuỗi (LeetCode 344)");
                 Console.WriteLine("   2. Bài toán 2: Hai số có tổng bằng Target (LeetCode 167 - Two Sum II)");
                 Console.WriteLine("   3. Bài toán 3: Di chuyển số 0 về cuối mảng (LeetCode 283 - Move Zeroes)");
+                Console.WriteLine("   4. Bài toán thực tế 4: Tối ưu bể chứa nước mưa (LeetCode 11)");
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài toán để giải (0-3): ");
+                Console.Write("Chọn bài toán để giải (0-4): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (input == "0")
@@ -41,6 +42,9 @@ namespace HaiConTro_TwoPointers
                         break;
                     case "3":
                         Bai10_MoveZeroes.Run();
+                        break;
+                    case "4":
+                        Bai10_BeChuaNuocToiDa.Run();
                         break;
                     
                     default:

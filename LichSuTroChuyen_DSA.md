@@ -626,6 +626,16 @@ feat(dsa): giai quyet Bai 2 Two Sum II (#17)
 feat(dsa): giai quyet Bai 3 Move Zeroes (#17)
 ```
 
+    - **Bài toán thực tế 4: Tối ưu hóa dung tích bể chứa nước mưa (LeetCode 11 - Container With Most Water)**:
+        - Tạo tệp đề bài [BTTT_Bài4_BeChuaNuocToiDa.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài4_BeChuaNuocToiDa.txt).
+        - Tạo tệp code sườn [Bai10_BeChuaNuocToiDa.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_BeChuaNuocToiDa.cs) đọc đề bài tự động từ file txt và thiết lập bộ kiểm thử tự động.
+
+### Mẫu Git Commit Two Pointers Bài 4 (Khởi tạo):
+```text
+feat(dsa): de bai 4 so sanh cot chieu cao tim dung tich be nuoc lon nhat (#17)
+```
+
+
 
 
 

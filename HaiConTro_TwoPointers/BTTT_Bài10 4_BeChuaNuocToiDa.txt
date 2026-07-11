@@ -1,0 +1,27 @@
+================================================================================
+BÀI TOÁN THỰC TẾ 4: TỐI ƯU HÓA DUNG TÍCH BỂ CHỨA NƯỚC MƯA
+================================================================================
+
+[BỐI CẢNH THỰC TẾ]
+Trong một dự án thiết kế công viên xanh thu nước mưa tự động, các kỹ sư dựng một dãy gồm N cột mốc bê tông thẳng đứng có độ cao khác nhau dọc theo một trục đường. Khoảng cách giữa các cột liên tiếp đều bằng 1 mét.
+Để tiết kiệm chi phí xây dựng, ban quản lý quyết định chọn ra 2 cột bê tông bất kỳ để xây dựng tường bao nối giữa chúng, tạo thành một bể chứa nước mưa (với đáy là mặt đất và hai thành bể chính là 2 cột bê tông đã chọn).
+
+Hãy viết chương trình tính toán lượng nước mưa tối đa (mét khối) mà hệ thống bể chứa này có thể giữ được, nhằm tối ưu hóa hiệu quả lưu trữ nước.
+
+[CÔNG THỨC DUNG TÍCH BỂ]
+Lượng nước chứa lớn nhất được giới hạn bởi cột thấp hơn trong hai cột được chọn (để nước không bị tràn ra ngoài).
+Dung tích nước chứa giữa hai cột tại vị trí chỉ số 'left' và 'right' (với left < right) được tính bằng:
+  Dung_Tích = Chiều_Cao_Thành_Bể * Chiều_Rộng_Bể
+  Dung_Tích = Min(height[left], height[right]) * (right - left)
+
+[VÍ DỤ CỤ THỂ]
+Giả sử dãy cột bê tông có chiều cao là: height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+  - Nếu ta chọn cột tại chỉ số 1 (chiều cao = 8) và chỉ số 8 (chiều cao = 7):
+    + Chiều rộng bể (khoảng cách): 8 - 1 = 7 mét.
+    + Chiều cao thành bể hiệu dụng: Min(8, 7) = 7 mét.
+    + Dung tích thu được: 7 * 7 = 49 mét khối.
+Đây là phương án tối ưu nhất mang lại dung tích lớn nhất.
+
+[RÀNG BUỘC KỸ THUẬT]
+  - Số lượng cột bê tông (N): 2 <= N <= 10^5
+  - Chiều cao của mỗi cột: 0 <= height[i] <= 10^4
