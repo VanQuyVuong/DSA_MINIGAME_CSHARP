@@ -1,0 +1,26 @@
+================================================================================
+BÀI TOÁN THỰC TẾ 5: KIỂM TRA CỤM TỪ ĐỐI XỨNG (VALID PALINDROME)
+================================================================================
+
+[BỐI CẢNH THỰC TẾ]
+Trong các hệ thống phân tích dữ liệu văn bản và xử lý ngôn ngữ tự nhiên (NLP), việc xác định một chuỗi có đối xứng hay không (đọc xuôi hay đọc ngược đều như nhau) là một bài toán nền tảng.
+Tuy nhiên, dữ liệu thực tế do người dùng nhập vào thường chứa nhiều ký tự đặc biệt, dấu câu, khoảng trắng và chữ hoa chữ thường không đồng đều.
+
+Hãy viết chương trình kiểm tra xem một cụm từ có phải là cụm từ đối xứng hay không, sau khi đã:
+  - Loại bỏ hoàn toàn các ký tự không phải chữ cái và chữ số (khoảng trắng, dấu phẩy, dấu chấm, gạch ngang...).
+  - Chuyển đổi toàn bộ chữ hoa thành chữ thường.
+
+[VÍ DỤ CỤ THỂ]
+Đầu vào: s = "A man, a plan, a canal: Panama"
+Quy trình xử lý:
+  - Loại bỏ ký tự đặc biệt và viết thường -> "amanaplanacanalpanama"
+  - Kiểm tra đối xứng bằng hai con trỏ -> Kết quả: TRUE.
+
+Đầu vào: s = "race a car"
+Quy trình xử lý:
+  - Loại bỏ ký tự đặc biệt và viết thường -> "raceacar"
+  - Kiểm tra đối xứng -> Kết quả: FALSE.
+
+[RÀNG BUỘC KỸ THUẬT]
+  - 1 <= s.Length <= 2 * 10^5
+  - s chỉ chứa các ký tự ASCII có thể in được.

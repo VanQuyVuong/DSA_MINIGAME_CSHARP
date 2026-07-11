@@ -3,4 +3,5 @@
   <Project Path="Game_2048/Game_2048.csproj" />
   <Project Path="Game_Minesweeper/Game_Minesweeper.csproj" />
   <Project Path="Game_Snake/Game_Snake.csproj" />
+  <Project Path="HaiConTro_TwoPointers/HaiConTro_TwoPointers.csproj" />
 </Solution>

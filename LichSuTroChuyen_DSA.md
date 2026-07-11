@@ -596,3 +596,70 @@ feat(snake): xu ly va cham va game over (#15)
 ```text
 feat(snake): diem so va bang xep hang top 10 (#16)
 ```
+
+## 📖 BÀI HỌC 10: KỸ THUẬT HAI CON TRỎ (TWO POINTERS PATTERN)
+*   **Mục tiêu**: Giải quyết 3 bài toán LeetCode thực tế, tổ chức thành một dự án C# Console riêng biệt mang tên `HaiConTro_TwoPointers` để luyện tập thuật toán tối ưu.
+    - **Bài toán 1: Đảo ngược chuỗi (LeetCode 344)**:
+        - Tạo tệp [Bai10_DaoNguocChuoi.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_DaoNguocChuoi.cs).
+        - Sử dụng con trỏ `left = 0` và `right = s.Length - 1`. Hoán vị hai phần tử ở đầu/cuối và dịch chuyển dần vào giữa để đảo ngược mảng tại chỗ với bộ nhớ thêm $O(1)$.
+
+### Mẫu Git Commit Two Pointers Bài 1:
+```text
+feat(dsa): giai quyet Bai 1 Dao nguoc chuoi (#17)
+```
+
+    - **Bài toán 2: Hai số có tổng bằng Target (LeetCode 167 - Two Sum II)**:
+        - Tạo tệp [Bai10_TwoSumSorted.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_TwoSumSorted.cs).
+        - Sử dụng con trỏ `left` ở đầu mảng, `right` ở cuối mảng. Dịch `left` tiến lên nếu tổng hiện tại nhỏ hơn target, dịch `right` lùi xuống nếu tổng lớn hơn target. Trả về mảng 1-indexed của vị trí 2 số khi tổng đúng bằng target ($O(N)$ time, $O(1)$ space).
+
+### Mẫu Git Commit Two Pointers Bài 2:
+```text
+feat(dsa): giai quyet Bai 2 Two Sum II (#17)
+```
+
+    - **Bài toán 3: Di chuyển số 0 về cuối mảng (LeetCode 283 - Move Zeroes)**:
+        - Tạo tệp [Bai10_MoveZeroes.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10_MoveZeroes.cs).
+        - Sử dụng hai con trỏ cùng chiều (nhanh - chậm). Con trỏ chậm `writePointer = 0` giữ vị trí ghi phần tử khác 0 tiếp theo. Con trỏ nhanh `i` chạy qua mảng; khi gặp phần tử khác 0 ta hoán vị nó với vị trí chậm và dịch chậm lên.
+
+### Mẫu Git Commit Two Pointers Bài 3:
+```text
+feat(dsa): giai quyet Bai 3 Move Zeroes (#19)
+```
+
+    - **Bài toán thực tế 4: Tối ưu hóa dung tích bể chứa nước mưa (LeetCode 11 - Container With Most Water)**:
+        - Tạo tệp đề bài [BTTT_Bài10 4_BeChuaNuocToiDa.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài10 4_BeChuaNuocToiDa.txt).
+        - Tạo tệp code sườn [Bai10 4_BeChuaNuocToiDa.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10 4_BeChuaNuocToiDa.cs) đọc đề bài tự động từ file txt và thiết lập bộ kiểm thử tự động.
+
+### Mẫu Git Commit Two Pointers Bài 4 (Khởi tạo):
+```text
+feat(dsa): de bai 4 so sanh cot chieu cao tim dung tich be nuoc lon nhat (#19)
+```
+
+        - **Hoàn thành thuật toán**: Cài đặt thuật toán hai con trỏ co cụm từ ngoài vào trong: tính lượng nước `Math.Min(height[left], height[right]) * (right - left)`, so sánh cập nhật giá trị cực đại và dịch con trỏ của cột thấp hơn.
+
+### Mẫu Git Commit Two Pointers Bài 4 (Hoàn thành):
+```text
+feat(dsa): hoan thanh thuat toan bai 4 toi uu dung tich be chua nuoc (#19)
+```
+
+    - **Bài toán thực tế 5: Kiểm tra cụm từ đối xứng (LeetCode 125 - Valid Palindrome)**:
+        - Tạo tệp đề bài [BTTT_Bài10 5_ChuoiDoiXuong.txt](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/BTTT_Bài10 5_ChuoiDoiXuong.txt).
+        - Tạo tệp code sườn [Bai10 5_ChuoiDoiXuong.cs](file:///d:/Csharp/Hoc_DSA/DSA/HaiConTro_TwoPointers/Bai10 5_ChuoiDoiXuong.cs) đọc đề bài từ file txt và thiết lập bộ kiểm thử tự động.
+
+### Mẫu Git Commit Two Pointers Bài 5 (Khởi tạo):
+```text
+feat(dsa): de bai 5 loai bo ky tu dac biet kiem tra chuoi doi xuong (#19)
+```
+
+        - **Hoàn thành thuật toán**: Cài đặt thuật toán hai con trỏ co cụm từ hai đầu. Sử dụng `char.IsLetterOrDigit` để bỏ qua khoảng trắng, dấu câu và so sánh không phân biệt chữ hoa chữ thường bằng `char.ToLower`.
+
+### Mẫu Git Commit Two Pointers Bài 5 (Hoàn thành):
+```text
+feat(dsa): hoan thanh thuat toan bai 5 loai bo ky tu dac biet kiem tra chuoi doi xuong (#19)
+```
+
+
+
+
+
+
