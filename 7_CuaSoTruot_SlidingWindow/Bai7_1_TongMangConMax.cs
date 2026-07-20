@@ -73,14 +73,20 @@ namespace _7_CuaSoTruot_SlidingWindow
             Console.ReadKey();
         }
 
-        /// <summary>
-        /// Hãy hoàn thiện giải thuật tìm tổng lớn nhất của mảng con liên tiếp có độ dài K.
-        /// Độ phức tạp mong muốn: Thời gian O(N) | Không gian O(1)
-        /// </summary>
         public static int Giai_TongMangConMaxK(int[] nums, int k)
         {
-            // TODO: Viết code giải thuật của bạn ở đây
-            return -1;
+            int currentSum = 0;
+            for (int i = 0; i < k; i++)
+                currentSum += nums[i];
+
+            int maxSum = currentSum;
+            for (int i = k; i < nums.Length; i++)
+            {
+                currentSum += nums[i] - nums[i - k];
+                maxSum = Math.Max(maxSum, currentSum);
+            }
+
+            return maxSum;
         }
     }
 }
