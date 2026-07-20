@@ -666,9 +666,22 @@ feat(dsa): hoan thanh thuat toan bai 5 loai bo ky tu dac biet kiem tra chuoi doi
 style(dsa): bo sung dong phu de tieu chi toi uu hoa vao menu chinh (#19)
 ```
 
+---
 
+## 📖 BÀI HỌC 11: KỸ THUẬT CỬA SỔ TRƯỢT (SLIDING WINDOW PATTERN)
+*   **Mục tiêu**: Giải quyết 3 bài toán từ Dễ đến Trung bình về kỹ thuật Cửa sổ trượt, tổ chức thành một dự án Console riêng biệt mang tên `7_CuaSoTruot_SlidingWindow`.
+    - **Bài toán 1: Tìm tổng mảng con lớn nhất có độ dài K**:
+        - Thiết lập tệp đề bài [BTTT_Bai7_1_TongMangConMax.txt](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/BTTT_Bai7_1_TongMangConMax.txt).
+        - Thiết lập tệp code sườn [Bai7_1_TongMangConMax.cs](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/Bai7_1_TongMangConMax.cs).
+    - **Bài toán 2: Mảng con ngắn nhất có tổng >= Target (LeetCode 209)**:
+        - Thiết lập tệp đề bài [BTTT_Bai7_2_MangConNganNhat.txt](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/BTTT_Bai7_2_MangConNganNhat.txt).
+        - Thiết lập tệp code sườn [Bai7_2_MangConNganNhat.cs](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/Bai7_2_MangConNganNhat.cs).
+    - **Bài toán 3: Chuỗi con dài nhất không lặp lại ký tự (LeetCode 3)**:
+        - Thiết lập tệp đề bài [BTTT_Bai7_3_ChuoiConDaiNhat.txt](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/BTTT_Bai7_3_ChuoiConDaiNhat.txt).
+        - Thiết lập tệp code sườn [Bai7_3_ChuoiConDaiNhat.cs](file:///d:/Csharp/Hoc_DSA/DSA/7_CuaSoTruot_SlidingWindow/Bai7_3_ChuoiConDaiNhat.cs).
 
-
-
-
+### Kế hoạch Git Commit & Pull Request:
+- **Nhánh**: `7_CuaSoTruot_SlidingWindow`
+- Mỗi khi hoàn thành xong 1 bài toán, bạn sẽ commit và push lên nhánh này.
+- Sau khi hoàn thành đủ cả 3 bài toán, bạn sẽ thực hiện tạo Pull Request và merge vào nhánh `master`.
 

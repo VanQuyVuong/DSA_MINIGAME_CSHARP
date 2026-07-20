@@ -22,6 +22,8 @@ Dưới đây là danh sách các bài học hiện tại được sắp xếp t
 | **07** | **Sắp xếp nổi bọt (Bubble Sort)** | 🟢 Đã Có | Duyệt từ cuối mảng về đầu, so sánh và hoán đổi các cặp phần tử cạnh nhau bị ngược thứ tự để phần tử nhỏ nhất "nổi lên". | $O(N^2)$ / $O(1)$ | [BUBBLESORT.cs](./Learn_DSA/BUBBLESORT.cs) |
 | **08** | **Sắp xếp chọn (Selection Sort)** | 🟢 Đã Có | Chia mảng thành 2 phần. Tìm phần tử nhỏ nhất từ phần chưa sắp xếp rồi đổi chỗ nó lên vị trí đầu tiên của phần đó. | $O(N^2)$ / $O(1)$ | [SelectionSort.cs](./Learn_DSA/SelectionSort.cs) |
 | **09** | **Sắp xếp chèn (Insertion Sort)** | 🟢 Đã Có | Lấy từng phần tử và chèn nó vào vị trí thích hợp trong đoạn mảng đã được sắp xếp phía trước. | $O(N^2)$ / $O(1)$ | [InsertionSort.cs](./Learn_DSA/InsertionSort.cs) |
+| **10** | **Kỹ thuật hai con trỏ (Two Pointers)** | 🟢 Đã Xong | Đảo ngược chuỗi, Two Sum II, Move Zeroes, Tối ưu bể nước mưa, Cụm từ đối xứng. | $O(N)$ / $O(1)$ | [HaiConTro_TwoPointers](./HaiConTro_TwoPointers) |
+| **11** | **Kỹ thuật Cửa sổ trượt (Sliding Window)** | 🟡 Đang Luyện | Tìm tổng mảng con lớn nhất có độ dài K, Mảng con ngắn nhất có tổng >= Target, Chuỗi con dài nhất không lặp lại ký tự. | $O(N)$ / $O(1)$ | [7_CuaSoTruot_SlidingWindow](./7_CuaSoTruot_SlidingWindow) |
 
 ---
 
