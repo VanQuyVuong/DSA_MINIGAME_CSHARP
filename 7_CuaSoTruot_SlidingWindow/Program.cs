@@ -20,13 +20,12 @@ namespace _7_CuaSoTruot_SlidingWindow
                 Console.ResetColor();
                 Console.WriteLine("   1. Bài toán 1: Tổng mảng con lớn nhất có độ dài K (Fixed Window)");
                 Console.WriteLine("   2. Bài toán 2: Mảng con ngắn nhất có tổng >= Target (LeetCode 209)");
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("   3. Bài toán 3: [Chưa mở khóa - hoàn thành Bài 2 trước]");
+                Console.WriteLine("   3. Bài toán 3: Chuỗi con dài nhất không lặp lại ký tự (LeetCode 3)");
                 Console.ResetColor();
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài toán để giải (0-2): ");
+                Console.Write("Chọn bài toán để giải (0-3): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (input == "0")
@@ -42,6 +41,9 @@ namespace _7_CuaSoTruot_SlidingWindow
                         break;
                     case "2":
                         Bai7_2_MangConNganNhat.Run();
+                        break;
+                    case "3":
+                        Bai7_3_ChuoiConDaiNhat.Run();
                         break;
                     default:
                         Console.WriteLine("\nLựa chọn không hợp lệ! Nhấn phím bất kỳ để tiếp tục...");
