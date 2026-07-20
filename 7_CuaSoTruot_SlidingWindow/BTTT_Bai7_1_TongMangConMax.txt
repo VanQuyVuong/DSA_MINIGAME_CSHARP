@@ -1,0 +1,30 @@
+================================================================================
+BÀI TOÁN THỰC TẾ 1: TÌM TỔNG MẢNG CON LỚN NHẤT CÓ ĐỘ DÀI K
+================================================================================
+
+[BỐI CẢNH THỰC TẾ]
+Trong các chiến dịch marketing số, ban truyền thông theo dõi lượng truy cập (views) của trang chủ theo từng giờ trong ngày. Để tối ưu hóa hiệu quả, họ cần chọn ra một khoảng thời gian gồm K giờ liên tiếp sao cho tổng lượng truy cập là lớn nhất để đặt quảng cáo VIP.
+
+Hãy viết chương trình tính toán tổng lượng truy cập lớn nhất có thể đạt được trong cửa sổ thời gian K giờ liên tiếp này.
+
+[CÔNG THỨC SLIDING WINDOW]
+Thay vì duyệt lặp 2 vòng (nested loop) với độ phức tạp O(N*K):
+  - Ta khởi tạo cửa sổ đầu tiên từ chỉ số 0 đến K - 1, tính tổng của cửa sổ này (gọi là currentSum).
+  - Từ giờ thứ K trở đi, khi dịch chuyển cửa sổ sang phải thêm 1 vị trí:
+      + Cộng thêm phần tử mới bước vào cửa sổ bên phải: currentSum += nums[i]
+      + Trừ đi phần tử cũ trôi ra ngoài ở bên trái: currentSum -= nums[i - k]
+      + Cập nhật tổng lớn nhất: maxSum = Max(maxSum, currentSum)
+Cách tiếp cận này giúp giảm độ phức tạp thời gian từ O(N*K) xuống O(N).
+
+[VÍ DỤ CỤ THỂ]
+Giả sử lượng truy cập theo các giờ là: nums = [2, 1, 5, 1, 3, 2], k = 3
+  - Cửa sổ đầu tiên [2, 1, 5] -> tổng = 8.
+  - Dịch sang phải [1, 5, 1] -> tổng = 8 + 1 - 2 = 7.
+  - Dịch sang phải [5, 1, 3] -> tổng = 7 + 3 - 1 = 9.
+  - Dịch sang phải [1, 3, 2] -> tổng = 9 + 2 - 5 = 8.
+Kết quả tổng lớn nhất thu được: 9.
+
+[RÀNG BUỘC KỸ THUẬT]
+  - Số lượng phần tử trong mảng (N): 1 <= N <= 10^5
+  - Giá trị phần tử: 0 <= nums[i] <= 10^4
+  - Độ dài cửa sổ: 1 <= k <= N

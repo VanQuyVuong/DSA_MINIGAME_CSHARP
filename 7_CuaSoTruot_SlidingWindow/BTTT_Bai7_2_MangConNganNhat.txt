@@ -1,0 +1,30 @@
+================================================================================
+BÀI TOÁN THỰC TẾ 2: MẢNG CON NGẮN NHẤT CÓ TỔNG >= TARGET
+================================================================================
+
+[BỐI CẢNH THỰC TẾ]
+Một tập đoàn Logistics đang lập kế hoạch phân phối hàng hóa. Họ có một chuỗi N kho hàng xếp dọc theo một tuyến quốc lộ, mỗi kho có sức chứa hàng hóa tương ứng.
+Để phục vụ một đơn hàng khẩn cấp cần tối thiểu TARGET đơn vị hàng hóa, họ muốn chọn ra một nhóm các kho hàng LIÊN TIẾP nằm cạnh nhau sao cho tổng lượng hàng của nhóm này đủ đáp ứng yêu cầu (tổng >= TARGET), đồng thời số lượng kho cần huy động là ÍT NHẤT để giảm chi phí vận chuyển.
+
+Hãy tìm độ dài ngắn nhất của nhóm các kho hàng liên tiếp này. Nếu không có bất kỳ nhóm kho nào đủ đáp ứng, hãy trả về 0.
+
+[THUẬT TOÁN CỬA SỔ TRƯỢT CO DÃN]
+Sử dụng 2 con trỏ left và right để tạo một cửa sổ trượt có kích thước thay đổi:
+  1. Dịch chuyển right từ đầu đến cuối mảng, nạp dần các phần tử vào cửa sổ: currentSum += nums[right].
+  2. Khi currentSum >= target, ghi nhận độ dài và thu hẹp cửa sổ từ bên trái:
+     - minLength = Min(minLength, right - left + 1)
+     - currentSum -= nums[left], left++
+     - Lặp lại cho đến khi currentSum < target.
+Mỗi phần tử được nạp vào và loại ra tối đa 1 lần => O(N).
+
+[VÍ DỤ CỤ THỂ]
+nums = [2, 3, 1, 2, 4, 3], target = 7
+  - Cửa sổ [2,3,1,2]: tổng=8>=7, độ dài=4. Thu hẹp: bỏ 2 -> [3,1,2] tổng=6<7, dừng.
+  - Thêm 4: [3,1,2,4] tổng=10>=7, độ dài=4. Thu hẹp: bỏ 3->[1,2,4] tổng=7>=7, độ dài=3. Bỏ 1->[2,4] tổng=6<7, dừng.
+  - Thêm 3: [2,4,3] tổng=9>=7, độ dài=3. Thu hẹp: bỏ 2->[4,3] tổng=7>=7, độ dài=2. Bỏ 4->[3] tổng=3<7, dừng.
+Kết quả: 2.
+
+[RÀNG BUỘC KỸ THUẬT]
+  - 1 <= N <= 10^5
+  - 1 <= nums[i] <= 10^4
+  - 1 <= target <= 10^9

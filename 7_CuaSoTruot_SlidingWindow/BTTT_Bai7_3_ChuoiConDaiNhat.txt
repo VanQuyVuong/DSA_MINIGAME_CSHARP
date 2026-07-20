@@ -1,0 +1,34 @@
+================================================================================
+BÀI TOÁN THỰC TẾ 3: CHUỖI CON DÀI NHẤT KHÔNG LẶP LẠI KÝ TỰ
+================================================================================
+
+[BỐI CẢNH THỰC TẾ]
+Trong hệ thống truyền tín hiệu vô tuyến, thiết bị nhận một dòng ký tự liên tục s.
+Để đảm bảo tín hiệu không bị nhiễu do trùng tần số, bộ giải mã cần tìm khoảng thời gian nhận được chuỗi ký tự liên tiếp dài nhất mà KHÔNG CÓ KÝ TỰ NÀO BỊ TRÙNG LẶP.
+
+Hãy tìm độ dài của chuỗi con liên tiếp dài nhất không chứa ký tự trùng lặp.
+
+[THUẬT TOÁN CỬA SỔ TRƯỢT CO DÃN + HASHSET]
+Dùng 2 con trỏ left, right và một HashSet lưu các ký tự trong cửa sổ:
+  1. Dịch right sang phải, thêm s[right] vào cửa sổ.
+  2. Nếu s[right] ĐÃ TỒN TẠI trong HashSet (trùng lặp):
+     - Xóa s[left] khỏi HashSet, tăng left++ cho đến khi hết trùng.
+  3. Thêm s[right] vào HashSet.
+  4. Cập nhật maxLength = Max(maxLength, right - left + 1).
+Mỗi ký tự được thêm/xóa tối đa 1 lần => O(N).
+
+[VÍ DỤ CỤ THỂ]
+s = "abcabcbb"
+  - right=0 'a': {"a"}, max=1
+  - right=1 'b': {"a","b"}, max=2
+  - right=2 'c': {"a","b","c"}, max=3
+  - right=3 'a' trùng: xóa 'a'(left=0)->left=1. Thêm 'a': {"b","c","a"}, max=3
+  - right=4 'b' trùng: xóa 'b'(left=1)->left=2. Thêm 'b': {"c","a","b"}, max=3
+  - right=5 'c' trùng: xóa 'c'(left=2)->left=3. Thêm 'c': {"a","b","c"}, max=3
+  - right=6 'b' trùng: xóa 'a','b'->left=5. Thêm 'b': {"c","b"}, max=3
+  - right=7 'b' trùng: xóa 'c','b'->left=7. Thêm 'b': {"b"}, max=3
+Kết quả: 3.
+
+[RÀNG BUỘC KỸ THUẬT]
+  - 0 <= s.Length <= 5 * 10^4
+  - s gồm chữ cái tiếng Anh, chữ số, ký hiệu và dấu cách.
