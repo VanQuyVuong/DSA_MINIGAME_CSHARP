@@ -1,0 +1,50 @@
+================================================================================
+  BÀI TOÁN LEETCODE 217: KIỂM TRA PHẦN TỬ TRÙNG LẶP (CONTAINS DUPLICATE)
+================================================================================
+
+[1. ĐỀ BÀI TÓM TẮT]
+Cho một mảng số nguyên `nums`. 
+Hãy trả về `true` nếu trong mảng có ít nhất một giá trị xuất hiện ít nhất 2 lần. 
+Ngược lại, trả về `false` nếu tất cả các phần tử trong mảng đều phân biệt (duy nhất).
+
+[2. VÍ DỤ MINH HỌA]
+- Ví dụ 1:
+  + Input: nums = [1, 2, 3, 1]
+  + Output: true
+  + Giải thích: Số 1 xuất hiện ở vị trí index 0 và index 3.
+
+- Ví dụ 2:
+  + Input: nums = [1, 2, 3, 4]
+  + Output: false
+  + Giải thích: Tất cả các số 1, 2, 3, 4 đều xuất hiện đúng 1 lần.
+
+- Ví dụ 3:
+  + Input: nums = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
+  + Output: true
+  + Giải thích: Có nhiều số trùng lặp như 1, 3, 4, 2.
+
+[3. RÀNG BUỘC (CONSTRAINTS)]
+- 1 <= nums.Length <= 10^5
+- -10^9 <= nums[i] <= 10^9
+
+[4. PHÂN TÍCH THUẬT TOÁN (APPROACH & COMPLEXITY)]
+- Cách 1: Vét cạn (Brute Force)
+  + Dùng 2 vòng lặp lồng nhau so sánh mọi cặp phần tử (i, j).
+  + Độ phức tạp: Thời gian O(N^2), Bộ nhớ O(1).
+  + Đánh giá: Quá chậm, bị TLE (Time Limit Exceeded) khi N = 10^5.
+
+- Cách 2: Sắp xếp mảng (Sorting)
+  + Sắp xếp mảng tăng dần O(N log N).
+  + Duyệt 1 vòng từ i = 0 đến N - 2, kiểm tra nếu nums[i] == nums[i + 1] -> return true.
+  + Độ phức tạp: Thời gian O(N log N), Bộ nhớ O(1).
+
+- Cách 3: Bảng băm / Tập hợp băm (HashSet - TỐI ƯU NHẤT)
+  + Khởi tạo một `HashSet<int>`.
+  + Duyệt qua từng số x trong mảng `nums`:
+    * Nếu x đã tồn tại trong HashSet (`seen.Contains(x)`) -> return true.
+    * Ngược lại -> Thêm x vào HashSet (`seen.Add(x)`).
+  + Nếu kết thúc vòng lặp mà không thấy trùng -> return false.
+  + Độ phức tạp:
+    * Thời gian: O(N) - vì phép tra cứu & thêm vào HashSet mất O(1) trung bình.
+    * Bộ nhớ: O(N) - không gian lưu tối đa N phần tử vào HashSet.
+================================================================================
