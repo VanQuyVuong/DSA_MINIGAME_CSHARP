@@ -19,11 +19,12 @@ namespace LeetCode
                 Console.WriteLine("  [Dự án tổng hợp LeetCode - Rèn luyện thuật toán & Clean Code]");
                 Console.ResetColor();
                 Console.WriteLine("   1. Bài 1: Kiểm tra phần tử trùng lặp (LeetCode 217 - Contains Duplicate)");
+                Console.WriteLine("   2. Bài 2: Kiểm tra chuỗi đảo chữ (LeetCode 242 - Valid Anagram)");
                 Console.ResetColor();
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("   0. Thoát chương trình");
                 Console.WriteLine("=================================================================");
-                Console.Write("Chọn bài toán để giải (0-1): ");
+                Console.Write("Chọn bài toán để giải (0-2): ");
 
                 string input = Console.ReadLine() ?? "";
                 if (input == "0")
@@ -36,6 +37,9 @@ namespace LeetCode
                 {
                     case "1":
                         _LC_Bai1_ContainsDuplicate.Run();
+                        break;
+                    case "2":
+                        _LC_Bai2_ChuoiDaoChu.Run();
                         break;
                     default:
                         Console.WriteLine("\nLựa chọn không hợp lệ! Nhấn phím bất kỳ để tiếp tục...");
