@@ -88,7 +88,33 @@ namespace LeetCode
         {
             // TODO: Bạn hãy tự viết code xử lý thuật toán tại đây nhé!
 
-            return false; // Giá trị trả về mặc định để không bị lỗi biên dịch
+
+            //bước 1 : nếu độ dài hai chuỗi khác nháu -> trả về false ngay 
+            if(s.Length != t.Length)
+            {
+                return false;
+            }
+            // bước 2 khởi tạo  mảng đếm tầng suất 26 chữ cái tiếng anh
+            int[] counts = new int[26];
+
+            //bước 3 :duyệt qua 2 chuỗi đồng thời 
+            for(int i =0; i<s.Length; i++)
+            {
+                counts[s[i] - 'a']++; //tăng đếm ký tự ở chuỗi s 
+                counts[t[i] - 'a']--; //trừ đếm ký tự ở chuỗi t
+
+            }
+
+            // bước 4 kiểm tra xem có ký tự nào bị lệch số lượng hay không 
+            foreach(int count in counts)
+            {
+                if(count != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true; // Bước 5: Hai chuỗi là Anagram hoàn hảo
         }
     }
 }
