@@ -6,4 +6,5 @@
   <Project Path="HaiConTro_TwoPointers/HaiConTro_TwoPointers.csproj" />
   <Project Path="Learn_BCrypt/Learn_BCrypt.csproj" Id="14902f9e-193e-4e1c-8409-12c36a7c30c9" />
   <Project Path="Learn_DSA/Learn_DSA.csproj" />
+  <Project Path="LeetCode/LeetCode.csproj" />
 </Solution>
