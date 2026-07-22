@@ -1,0 +1,49 @@
+================================================================================
+  BÀI TOÁN LEETCODE 242: KIỂM TRA CHUỖI ĐẢO CHỮ (VALID ANAGRAM)
+================================================================================
+
+[1. ĐỀ BÀI TÓM TẮT]
+Cho hai chuỗi ký tự `s` và `t`. 
+Hãy trả về `true` nếu `t` là chuỗi đảo chữ (Anagram) của `s`, và trả về `false` nếu ngược lại.
+
+Ghi chú: Một chuỗi `t` được gọi là Anagram của `s` nếu chuỗi `t` được tạo ra bằng cách hoán đổi vị trí các ký tự của chuỗi `s`, trong đó mỗi ký tự xuất hiện với đúng số lần như cũ.
+
+[2. VÍ DỤ MINH HỌA]
+- Ví dụ 1:
+  + Input: s = "anagram", t = "nagaram"
+  + Output: true
+  + Giải thích: Cả 2 chuỗi đều có 3 chữ 'a', 1 chữ 'n', 1 chữ 'g', 1 chữ 'r', 1 chữ 'm'.
+
+- Ví dụ 2:
+  + Input: s = "rat", t = "car"
+  + Output: false
+  + Giải thích: Chuỗi s có 't' nhưng chuỗi t lại có 'c'.
+
+- Ví dụ 3:
+  + Input: s = "a", t = "ab"
+  + Output: false
+  + Giải thích: Độ dài hai chuỗi khác nhau.
+
+[3. RÀNG BUỘC (CONSTRAINTS)]
+- 1 <= s.Length, t.Length <= 5 * 10^4
+- `s` và `t` chỉ bao gồm các ký tự tiếng Anh viết thường ('a' đến 'z').
+
+[4. PHÂN TÍCH THUẬT TOÁN (APPROACH & COMPLEXITY)]
+- Điểm kiểm tra nhanh: Nếu `s.Length != t.Length` -> return false ngay lập tức.
+
+- Cách 1: Sắp xếp chuỗi (Sorting)
+  + Chuyển 2 chuỗi thành mảng `char[]`, sắp xếp tăng dần O(N log N).
+  + So sánh 2 chuỗi sau khi sắp xếp.
+  + Độ phức tạp: Thời gian O(N log N), Bộ nhớ O(N).
+
+- Cách 2: Mảng đếm tần suất / Bảng băm (Frequency Array / Hash Map - TỐI ƯU NHẤT)
+  + Vì chuỗi chỉ chứa 26 ký tự từ 'a' đến 'z', ta dùng mảng `int[] counts = new int[26]`.
+  + Duyệt qua từng chỉ số `i` từ 0 đến N - 1:
+    * Cộng tần suất xuất hiện của ký tự `s[i]`: `counts[s[i] - 'a']++`
+    * Trừ tần suất xuất hiện của ký tự `t[i]`: `counts[t[i] - 'a']--`
+  + Duyệt lại mảng `counts`: Nếu có bất kỳ phần tử nào khác 0 -> return false.
+  + Nếu tất cả đều bằng 0 -> return true.
+  + Độ phức tạp:
+    * Thời gian: O(N) - duyệt qua chuỗi đúng 1 lần.
+    * Bộ nhớ: O(1) - mảng 26 phần tử kích thước cố định.
+================================================================================
