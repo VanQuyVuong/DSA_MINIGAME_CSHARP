@@ -86,8 +86,20 @@ namespace LeetCode
         public static bool Giai_ContainsDuplicate(int[] nums)
         {
             // TODO: Bạn hãy tự viết code xử lý thuật toán tại đây nhé!
+            //Bươsc 1 :khởi tạo tập hợp hàm (hashset ) lưu trữ các phần tử đã từng gặp 
 
-            return false; // Giá trị trả về mặc định để không bị lỗi biên dịch
+            var seen = new HashSet<int >();
+
+            //bước 2 duyệ t từng phần tử x trong mảng nums
+            foreach (int x in nums)
+            {
+                if (seen.Contains(x))
+                {
+                    return true;
+                }
+                seen.Add(x);
+            }
+                return false; // Giá trị trả về mặc định để không bị lỗi biên dịch
         }
     }
 }
